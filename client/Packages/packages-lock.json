@@ -11,6 +11,12 @@
       },
       "url": "https://nexus.beamable.com/nexus/content/repositories/unity"
     },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.addressables": {
       "version": "1.2.4",
       "depth": 1,
