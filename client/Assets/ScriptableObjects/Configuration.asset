@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3911db0875ba10f4e865abf8c7093ed0, type: 3}
+  m_Name: Configuration
+  m_EditorClassIdentifier: 
+  _introSceneName: 1.Intro
+  _lobbySceneName: 2.Lobby
+  _gameSceneName: 3.Game
+  _delayBeforeLoadScene: 0.1
+  _treeViewRotationMin: {x: 0, y: 0.25, z: 0}
+  _treeViewRotationMax: {x: 0, y: 0.5, z: 0}
+  _delayFadeInUI: 0.25
+  _delayFadeInRoundedCube: 1
+  _gameDuration: 5
+  _pregameDuration: 3.9
+  _leaderboardMinRowCount: 10
+  _highScoreDefault: 30
+  _mockRandomScoreMin: 0
+  _mockRandomScoreMax: 25
