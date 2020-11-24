@@ -110,11 +110,13 @@ namespace Beamable.Samples.TBF
          get
          {
             string text = "";
-            text += "You are offline." + "\n\n";
+            text += "You are currently offline." + "\n\n";
             text += "<color=#ff0000>";
-            text += TBFHelper.GetBulletList("Todo", new List<string> {
-               "Connect to the internet.",
-               "Close and Restart the game."
+            text += TBFHelper.GetBulletList("Suggestions", new List<string> {
+               "Stop the Scene in the Unity Editor",
+               "Connect to the internet",
+               "Play the Scene in the Unity Editor",
+               "Enjoy!"
             }); ;
             text += "</color>";
             return text;
