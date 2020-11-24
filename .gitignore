@@ -9,7 +9,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Mm]emoryCaptures/
-/[Mm]icroservice/
+# /[Mm]icroservice/ IGNORE THIS LATER #
 
 # Logging
 /client/debug.log
@@ -25,6 +25,10 @@
 
 # Visual Studio cache directory
 .vs/
+
+# User-specific files
+config-defaults.txt
+config-defaults.txt.meta
 
 # Gradle cache directory
 .gradle/
