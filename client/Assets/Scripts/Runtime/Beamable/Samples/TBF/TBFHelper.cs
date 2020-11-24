@@ -86,7 +86,7 @@ namespace Beamable.Samples.TBF
 
             text += "Choose strategic attacks to win! Only the bravest knight survives." + "\n\n";
 
-            text += "This sample project demonstrates the Beamable Multiplayer feature.\n\n";
+            text += "This sample project demonstrates Beamable's Multiplayer feature.\n\n";
 
             text += TBFHelper.GetBulletList("Resources", new List<string> 
             {

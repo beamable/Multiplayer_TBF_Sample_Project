@@ -120,7 +120,6 @@ MonoBehaviour:
   _canvasGroups:
   - {fileID: 9068480537573128390}
   - {fileID: 3401065245991368914}
-  - {fileID: 0}
   - {fileID: 909780677885640767}
 --- !u!1 &370093652646499064
 GameObject:
@@ -331,7 +330,7 @@ MonoBehaviour:
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 200
+  m_FlexibleHeight: 150
   m_LayoutPriority: 1
 --- !u!1 &1615122528401986252
 GameObject:
@@ -559,8 +558,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.31
-  m_fontSizeBase: 29.31
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -679,9 +678,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 70
+  m_MinHeight: 50
   m_PreferredWidth: -1
-  m_PreferredHeight: 70
+  m_PreferredHeight: 50
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
   m_LayoutPriority: 2

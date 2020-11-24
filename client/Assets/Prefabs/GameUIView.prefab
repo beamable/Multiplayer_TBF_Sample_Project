@@ -467,13 +467,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: -1
+  m_MinWidth: 100
   m_MinHeight: -1
-  m_PreferredWidth: -1
+  m_PreferredWidth: 100
   m_PreferredHeight: 10
-  m_FlexibleWidth: 1
+  m_FlexibleWidth: -1
   m_FlexibleHeight: -1
-  m_LayoutPriority: 1
+  m_LayoutPriority: 2
 --- !u!1 &2596921607806533029
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 8580835493518452578}
   - component: {fileID: 2981127441306685226}
   m_Layer: 5
-  m_Name: BackButton_01
+  m_Name: MoveButton_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,7 +646,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1934021169456393024
 CanvasRenderer:
@@ -744,9 +744,9 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 10
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: -1
+  m_PreferredHeight: 54.05
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
 --- !u!1 &3208538095500777694
 GameObject:
@@ -892,8 +892,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7980567364635833530}
   - component: {fileID: 8365436708115513874}
+  - component: {fileID: 8888221519369910055}
   m_Layer: 5
-  m_Name: ButtonsPanel
+  m_Name: MoveButtonsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -918,8 +919,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -10.750008, y: 118.8}
-  m_SizeDelta: {x: 112.7, y: 173.5}
+  m_AnchoredPosition: {x: -10, y: 52}
+  m_SizeDelta: {x: 100, y: 200}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &8365436708115513874
 MonoBehaviour:
@@ -938,14 +939,26 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 10
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
+  m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!225 &8888221519369910055
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3228084039606761379}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3378542510185913541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1065,7 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: 7
+  m_FlexibleWidth: 1000
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!1 &4598108368854036925
@@ -1171,14 +1184,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _configuration: {fileID: 11400000, guid: 28e7b012a002a51458322ba2fc05964d, type: 2}
   _statusText: {fileID: 6518793486460843988}
-  _backButton: {fileID: 0}
+  _backButton: {fileID: 1464352103338948160}
+  _moveButton_01: {fileID: 8580835493518452578}
+  _moveButton_02: {fileID: 40453316078955455}
+  _moveButton_03: {fileID: 3985931171462986704}
+  _moveButtonsCanvasGroup: {fileID: 8888221519369910055}
   _avatarUIView_01: {fileID: 282869786937950239}
   _avatarUIView_02: {fileID: 2707012640526823097}
   _canvasGroups:
   - {fileID: 2334514631003324871}
   - {fileID: 439124628113239905}
   - {fileID: 1575723129626276544}
-  - {fileID: 0}
+  - {fileID: 8888221519369910055}
 --- !u!1 &4598108370310748394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,7 +1287,7 @@ GameObject:
   - component: {fileID: 40453316078955455}
   - component: {fileID: 8411212320535117118}
   m_Layer: 5
-  m_Name: BackButton_02
+  m_Name: MoveButton_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1294,7 +1311,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3624739033078762800
 CanvasRenderer:
@@ -1392,9 +1409,9 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 10
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: -1
+  m_PreferredHeight: 54.05
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
 --- !u!1 &8210652980274564143
 GameObject:
@@ -1607,7 +1624,7 @@ GameObject:
   - component: {fileID: 3985931171462986704}
   - component: {fileID: 5738193041436816223}
   m_Layer: 5
-  m_Name: BackButton_03
+  m_Name: MoveButton_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1631,7 +1648,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2167840056076871412
 CanvasRenderer:
@@ -1729,9 +1746,9 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 10
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: -1
+  m_PreferredHeight: 54.05
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
 --- !u!1001 &6517982659839613110
 PrefabInstance:
@@ -2001,32 +2018,32 @@ PrefabInstance:
     - target: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 142.87498
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 137.15
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -508.79
+      value: 106.73999
       objectReference: {fileID: 0}
     - target: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -234.29999
+      value: 62.700012
       objectReference: {fileID: 0}
     - target: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
         type: 3}

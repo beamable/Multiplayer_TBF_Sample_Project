@@ -505,7 +505,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
---- !u!1 &1761307606
+--- !u!1 &2021877306
 GameObject:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -513,8 +513,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1761307608}
-  - component: {fileID: 1761307607}
+  - component: {fileID: 2021877308}
+  - component: {fileID: 2021877307}
   m_Layer: 0
   m_Name: UndoProRecords
   m_TagString: Untagged
@@ -522,13 +522,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1761307607
+--- !u!114 &2021877307
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761307606}
+  m_GameObject: {fileID: 2021877306}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f9eb70e479f547f2bb99bde5281612c, type: 3}
@@ -542,29 +542,23 @@ MonoBehaviour:
     - Selection Change
     - Selection Change
     - Selection Change
-    - Add TMPHyperlinkHandler
     - Selection Change
-    - Remove MonoBehaviour
     - Selection Change
-    - Add TMPHyperlinkHandler
-    - Inspector
     - Selection Change
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
     - Selection Change
-    - ApplyAll
-    - ApplyAll
-    - Apply instance to prefab
-    - Apply instance to prefab
-    - ApplyAll
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Add LayoutElement
     - Driving RectTransform
     - Driving RectTransform
     - Driving RectTransform
     - Selection Change
-    - Add PhysicsRaycaster
     - Selection Change
     - Selection Change
     - Selection Change
@@ -573,47 +567,6 @@ MonoBehaviour:
     - Selection Change
     - Selection Change
     - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Modify Color of Avatar_01
-    - Selection Change
-    - Selection Change
-    - Modify Color of Avatar_02
-    - Modify Color of Avatar_02
-    - Modify Color of Avatar_02
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Driving RectTransform
     - Driving RectTransform
     - Driving RectTransform
     - Driving RectTransform
@@ -623,15 +576,16 @@ MonoBehaviour:
     - ApplyAll
     - Apply instance to prefab
     - Apply instance to prefab
+    - ApplyAll
     - Driving RectTransform
     - Selection Change
---- !u!4 &1761307608
+--- !u!4 &2021877308
 Transform:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761307606}
+  m_GameObject: {fileID: 2021877306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}

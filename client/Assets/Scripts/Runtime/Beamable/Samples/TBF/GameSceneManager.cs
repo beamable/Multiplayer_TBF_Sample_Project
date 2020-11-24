@@ -1,13 +1,12 @@
-﻿using Beamable.Samples.TBF;
-using Beamable.Samples.TBF.Audio;
-using Beamable.Samples.TBF.Data;
+﻿using Beamable.Samples.TBF.Data;
+using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;
 using DisruptorBeam;
 using DisruptorBeam.Content;
-using DisruptorBeam.Stats;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Beamable.Samples.TBF
 {
@@ -23,53 +22,47 @@ namespace Beamable.Samples.TBF
       [SerializeField]
       private GameUIView _gameUIView = null;
 
-      [SerializeField]
-      private LeaderboardRef _leaderboardRef = null;
-
-      [SerializeField]
-      private StatBehaviour _currentScoreStatBehaviour = null;
-
-      [SerializeField]
-      private StatBehaviour _highScoreStatBehaviour = null;
-
-      private bool _hasFalseStart = false;
       private Coroutine _runGameCoroutine;
       private float _gameTimeRemaining = 0;
       private LeaderboardContent _leaderboardContent;
       private IDisruptorEngine _disruptorEngine = null;
-
-      /// <summary>
-      /// Calculated each time the main menu opens.
-      /// </summary>
-      private int _lastGlobalHighScore = -1;
+      private TBFMultiplayerSession _multiplayerSession;
 
       //  Unity Methods   ------------------------------
       protected void Start ()
       {
          _gameUIView.BackButton.onClick.AddListener(BackButton_OnClicked);
-
-         //Setup Stat - High Score set to default, unless higher backend score exists
-         //This is used for the cosmetics of the tree & audio
-         _highScoreStatBehaviour.OnStatReceived.AddListener(HighScoreStatBehaviour_OnStatReceived);
-
-         //Setup Stat - Score
-         _currentScoreStatBehaviour.OnStatReceived.AddListener(CurrentScoreStatBehaviour_OnStatReceived);
+         _gameUIView.MoveButtonsCanvasGroup.interactable = false;
 
          SetupBeamable();
       }
 
+      protected void Update()
+      {
+         _multiplayerSession?.Tick();
+      }
 
       //  Other Methods --------------------------------
       private async void SetupBeamable()
       {
-         _leaderboardContent = await _leaderboardRef.Resolve();
-
          await DisruptorEngine.Instance.Then(de =>
          {
             try
             {
                _disruptorEngine = de;
-               RestartGame();
+
+               //TODO: Fetch the found matchmaking info from the previous scene
+               long localPlayerDbid = _disruptorEngine.User.id;
+               string roomId = TBFMatchmaking.RoomId;
+               int targetPlayerCount = 1;
+
+               _multiplayerSession = new TBFMultiplayerSession(localPlayerDbid,
+                  targetPlayerCount, roomId);
+
+               _multiplayerSession.OnConnect += MultiplayerSession_OnConnect;
+               _multiplayerSession.OnDisconnect += MultiplayerSession_OnDisconnect;
+               _multiplayerSession.Initialize();
+
 
             }
             catch (Exception)
@@ -78,7 +71,6 @@ namespace Beamable.Samples.TBF
             }
          });
       }
-
 
       private void RestartGame()
       {
@@ -93,93 +85,60 @@ namespace Beamable.Samples.TBF
       private IEnumerator RunGame_Coroutine()
       {
          //Initialize
-         _hasFalseStart = false;
-         _currentScoreStatBehaviour.SetCurrentValue("0");
 
-         //Countdown Pregame
-         float pregameDuration = 11;
-         float pregameElapsed = 0;
-         while (pregameElapsed <= pregameDuration && !_hasFalseStart)
+         //Countdown Before Move
+         float delayGameBeforeMove = _configuration.DelayGameBeforeMove;
+         float elapsedGameBeforeMove = 0;
+         while (elapsedGameBeforeMove <= delayGameBeforeMove)
          {
-            pregameElapsed += Time.deltaTime;
-            float pregameRemaining = pregameDuration - pregameElapsed;
+            elapsedGameBeforeMove += Time.deltaTime;
+            float pregameRemaining = delayGameBeforeMove - elapsedGameBeforeMove;
 
             //Show as "3.2 seconds"
             _gameUIView.StatusText.text = $"Prepare to click!\nStarting in {TBFHelper.GetRoundedTime(pregameRemaining)}...";
             yield return new WaitForEndOfFrame();
          }
 
-         float gameDuration = 11;
-         if (!_hasFalseStart)
+         //Countdown During Move
+         float delayGameMaxDuringMove = _configuration.DelayGameMaxDuringMove;
+         float elapsedGameDuringMove = 0;
+         while (elapsedGameDuringMove <= delayGameMaxDuringMove)
          {
-            //Motivation
-            SoundManager.Instance.PlayAudioClip(SoundConstants.Coin01);
+            elapsedGameDuringMove += Time.deltaTime;
+            float pregameRemaining = delayGameMaxDuringMove - elapsedGameDuringMove;
 
-            //Countdown Game
-            float gameElapsed = 0;
-            while (gameElapsed <= gameDuration && !_hasFalseStart)
-            {
-               gameElapsed += Time.deltaTime;
-               _gameTimeRemaining = gameDuration - gameElapsed;
-
-               //Show as "3.2 seconds"
-               yield return new WaitForEndOfFrame();
-            }
+            //Show as "3.2 seconds"
+            _gameUIView.StatusText.text = $"Prepare to click!\nStarting in {TBFHelper.GetRoundedTime(pregameRemaining)}...";
+            yield return new WaitForEndOfFrame();
          }
 
-         //Gameover state
-         if (_hasFalseStart)
-         {
-            SoundManager.Instance.PlayAudioClip(SoundConstants.GameOverLoss);
-            _gameUIView.StatusText.text = $"<color=#91291B>False start!</color>\nWait before clicking.\nTry again.";
-         }
-         else
-         {
-            SoundManager.Instance.PlayAudioClip(SoundConstants.GameOverWin);
-            _gameUIView.StatusText.text = $"{_currentScoreStatBehaviour.Value} clicks" +
-               $" in {gameDuration} seconds!\nCheck the Leaderboard.";
-
-            double finalScore = TBFHelper.GetRoundedScore(_currentScoreStatBehaviour.Value);
-            _disruptorEngine.LeaderboardService.SetScore(_leaderboardContent.Id, finalScore);
-         }
       }
 
 
       //  Event Handlers -------------------------------
-      private void ClickMeButton_OnClicked()
-      {
-         switch ("blah")
-         {
-            default:
-               throw new Exception("Not possible");
-         }
-      }
-
 
       private void BackButton_OnClicked()
       {
          //TEMP - restart game
          //RestartGame();
+   
+         //TODO: Disconnect the player?
 
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
       }
 
-
-      private void CurrentScoreStatBehaviour_OnStatReceived(string value)
+      private void MultiplayerSession_OnConnect(long playerDbid)
       {
-         if (_lastGlobalHighScore == TBFConstants.UnsetValue)
-         {
-            return;
-         }
+         if (_multiplayerSession.PlayerDbids.Count == _multiplayerSession.TargetPlayerCount)
+            RestartGame();
+      }
 
-         //Debug.Log("_treeView.GrowthPercentage() : " + _treeView.GrowthPercentage);
+      private void MultiplayerSession_OnDisconnect(long playerDbid)
+      {
+         throw new NotImplementedException();
       }
 
 
-      private void HighScoreStatBehaviour_OnStatReceived(string value)
-      {
-         Debug.Log("HighScoreStatBehaviour_OnStatReceived(): " + _lastGlobalHighScore);
-      }
    }
 }
