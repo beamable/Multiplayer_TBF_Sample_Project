@@ -20,26 +20,29 @@ MonoBehaviour:
     m_Url: https://packages.unity.com
     m_Scopes: []
     m_IsDefault: 1
-  - m_Id: scoped:Beamable
-    m_Name: Beamable
+  - m_Id: scoped:Disruptor Beam
+    m_Name: Disruptor Beam
     m_Url: https://nexus.beamable.com/nexus/content/repositories/unity
     m_Scopes:
     - com.disruptorbeam
+    - com.beamable
     m_IsDefault: 0
   m_UserSelectedRegistryName: 
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
     m_ErrorMessage: 
     m_Original:
-      m_Id: scoped:Beamable
-      m_Name: Beamable
+      m_Id: scoped:Disruptor Beam
+      m_Name: Disruptor Beam
       m_Url: https://nexus.beamable.com/nexus/content/repositories/unity
       m_Scopes:
       - com.disruptorbeam
+      - com.beamable
       m_IsDefault: 0
     m_Modified: 0
-    m_Name: Beamable
+    m_Name: Disruptor Beam
     m_Url: https://nexus.beamable.com/nexus/content/repositories/unity
     m_Scopes:
     - com.disruptorbeam
+    - com.beamable
     m_SelectedScopeIndex: 0
