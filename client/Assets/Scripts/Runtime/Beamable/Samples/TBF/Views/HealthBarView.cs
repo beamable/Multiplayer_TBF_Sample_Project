@@ -14,28 +14,14 @@ namespace Beamable.Samples.TBF.Views
    public class HealthBarView : MonoBehaviour
    {
       //  Properties -----------------------------------
-      public int Health
-      {
-         set
-         {
-            value = Mathf.Clamp(value, 0, 100);
+      public int Health { set { _health = Mathf.Clamp(value, 0, 100); Render(); } get { return _health; } }
+      public string Title { set { _title = value; Render(); } get { return _title; } }
+      public Color BackgroundColor { set { _backgroundColor = value; Render(); } get { return _backgroundColor; } }
 
-            SetFillImageWidthPercent (value);
-
-            if (_isAlignedLeft)
-            {
-               _text.text = $"{_name} {value}%";
-            }
-            else
-            {
-               _text.text = $"{value}% {_name}";
-            }
-         }
-      }
-
+      
       //  Fields ---------------------------------------
       [SerializeField]
-      private string _name = null;
+      private string _title = "";
 
       [SerializeField]
       private Color _backgroundColor = Color.white;
@@ -44,7 +30,7 @@ namespace Beamable.Samples.TBF.Views
       private Image _backgroundImage = null;
 
       [SerializeField]
-      private Image _fillImage = null;
+      private Slider _slider = null;
 
       [SerializeField]
       private TMP_Text _text = null;
@@ -52,39 +38,64 @@ namespace Beamable.Samples.TBF.Views
       [SerializeField]
       private bool _isAlignedLeft = false;
 
+      [SerializeField]
+      private int _health = 100;
+
       private Tween _tween = null;
+
 
       //  Unity Methods   ------------------------------
       protected void OnValidate()
       {
-         if (!Application.isPlaying)
-         {
-            // DOTween works only at runtime
-            Health = 100;
-         }
+         //cap values
+         Health = _health;
 
+         //Debug the rendering in edit mode
+         //as the inspector values are manually changed
+         Render();
+      }
+
+
+      //  Other Methods   ------------------------------
+      private void Render()
+      {
          if (_backgroundImage != null)
          {
             _backgroundImage.color = _backgroundColor;
          }
+
+         SetFillImageWidthPercent(_health);
+
+         if (_isAlignedLeft)
+         {
+            _text.text = $"{_title} {_health}%";
+         }
+         else
+         {
+            _text.text = $"{_health}% {_title}";
+         }
       }
 
-      //  Other Methods   ------------------------------
+
       private void SetFillImageWidthPercent(float targetPercent)
       {
-         float maxWidth = _backgroundImage.rectTransform.sizeDelta.x;
-         float fromWidth = _fillImage.rectTransform.sizeDelta.x;
-         float toWidth = (maxWidth * targetPercent) / 100;
-
          if (_tween != null)
          {
             _tween.Kill();
          }
 
-         _tween = DOTween.To(nextWidth =>
+         //DOTween works only at runtime
+         if (Application.isPlaying)
          {
-            _fillImage.rectTransform.SetSizeWithCurrentAnchors(Axis.Horizontal, nextWidth);
-         }, fromWidth, toWidth, 0.5f);
+            _tween = DOTween.To(nextWidth =>
+            {
+               _slider.value = nextWidth;
+            }, _slider.value, targetPercent, 0.5f);
+         }
+         else
+         {
+            _slider.value = targetPercent;
+         }
       }
    }
 }

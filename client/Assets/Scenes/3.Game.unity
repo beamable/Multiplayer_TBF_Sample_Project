@@ -278,7 +278,7 @@ PrefabInstance:
     - target: {fileID: 5961624701748834721, guid: cebf1cfcf2e14c245bb4e3755fc19524,
         type: 3}
       propertyPath: m_Name
-      value: AvatarView_01
+      value: AvatarView_02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cebf1cfcf2e14c245bb4e3755fc19524, type: 3}
@@ -288,6 +288,159 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 159254468}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &159254470 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8108222163253012647, guid: cebf1cfcf2e14c245bb4e3755fc19524,
+    type: 3}
+  m_PrefabInstance: {fileID: 159254468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbe153ddbf2b614b915ec1a828d7f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &422738206
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 422738208}
+  - component: {fileID: 422738207}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &422738207
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422738206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9eb70e479f547f2bb99bde5281612c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Add LayoutElement
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - ApplyAll
+    - ApplyAll
+    - Apply instance to prefab
+    - Apply instance to prefab
+    - ApplyAll
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - ApplyAll
+    - ApplyAll
+    - Apply instance to prefab
+    - Apply instance to prefab
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - Selection Change
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - ApplyAll
+    - ApplyAll
+    - Apply instance to prefab
+    - Apply instance to prefab
+    - Driving RectTransform
+    - Driving RectTransform
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+--- !u!4 &422738208
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422738206}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &508502651
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,197 +485,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &891796306
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 891796308}
-  - component: {fileID: 891796307}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &891796307
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 891796306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f9eb70e479f547f2bb99bde5281612c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Rename Panel
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - ApplyAll
-    - ApplyAll
-    - Apply instance to prefab
-    - Apply instance to prefab
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Create GameObject
-    - Driving RectTransform
-    - Reparenting
-    - Transform parenting workaround
-    - Add RectTransform
-    - Driving RectTransform
-    - Transform parenting workaround 2
-    - Create GameObject
-    - Selection Change
-    - Apply Added GameObject
-    - Apply Added GameObject
-    - Apply Added GameObject
-    - Driving RectTransform
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - ApplyAll
-    - ApplyAll
-    - Apply instance to prefab
-    - Apply instance to prefab
-    - Driving RectTransform
-    - Driving RectTransform
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Add HorizontalLayoutGroup
-    - Driving RectTransform
-    - Create GameObject
-    - Driving RectTransform
-    - Reparenting
-    - Transform parenting workaround
-    - Add RectTransform
-    - Driving RectTransform
-    - Transform parenting workaround 2
-    - Create GameObject
-    - Selection Change
-    - Apply Added GameObject
-    - Apply Added GameObject
-    - Apply Added GameObject
-    - Driving RectTransform
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Change Rectangle Anchors
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - ApplyAll
-    - ApplyAll
-    - Apply instance to prefab
-    - Apply instance to prefab
-    - ApplyAll
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Add VirtualVerticalList
-    - Selection Change
-    - Remove MonoBehaviour
-    - Add VerticalLayoutGroup
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - ApplyAll
-    - ApplyAll
-    - Apply instance to prefab
-    - Apply instance to prefab
-    - ApplyAll
-    - Driving RectTransform
-    - Driving RectTransform
---- !u!4 &891796308
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 891796306}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &919519389
 PrefabInstance:
@@ -664,7 +626,7 @@ PrefabInstance:
     - target: {fileID: 5961624701748834721, guid: cebf1cfcf2e14c245bb4e3755fc19524,
         type: 3}
       propertyPath: m_Name
-      value: AvatarView_02
+      value: AvatarView_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cebf1cfcf2e14c245bb4e3755fc19524, type: 3}
@@ -674,6 +636,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1010994012}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1010994014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8108222163253012647, guid: cebf1cfcf2e14c245bb4e3755fc19524,
+    type: 3}
+  m_PrefabInstance: {fileID: 1010994012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbe153ddbf2b614b915ec1a828d7f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1123308893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1183,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7102396843781980557, guid: fd39caf993b537142b82f807f7a6302d,
+        type: 3}
+      propertyPath: _avatarViews.Array.data[0]
+      value: 
+      objectReference: {fileID: 1010994014}
+    - target: {fileID: -7102396843781980557, guid: fd39caf993b537142b82f807f7a6302d,
+        type: 3}
+      propertyPath: _avatarViews.Array.data[1]
+      value: 
+      objectReference: {fileID: 159254470}
     - target: {fileID: 664319375834748367, guid: fd39caf993b537142b82f807f7a6302d,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1589,6 +1573,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5637933571195498964, guid: fd39caf993b537142b82f807f7a6302d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5637933571195498964, guid: fd39caf993b537142b82f807f7a6302d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6169062926944205652, guid: fd39caf993b537142b82f807f7a6302d,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1677,6 +1671,16 @@ PrefabInstance:
     - target: {fileID: 7406302170047440173, guid: fd39caf993b537142b82f807f7a6302d,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7512074013203242866, guid: fd39caf993b537142b82f807f7a6302d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7512074013203242866, guid: fd39caf993b537142b82f807f7a6302d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7980567364635833530, guid: fd39caf993b537142b82f807f7a6302d,

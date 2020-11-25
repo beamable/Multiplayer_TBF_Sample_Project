@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Beamable.Samples.TBF.Data;
+using System;
+using UnityEngine;
 
 namespace Beamable.Samples.TBF.Views
 {
@@ -9,14 +11,26 @@ namespace Beamable.Samples.TBF.Views
    {
       //  Properties -----------------------------------
       public HealthBarView HealthBarView { get { return _healthBarView; } }
+      public AvatarData AvatarData { set { _avatarData = value; Render(); } get { return _avatarData; } }
+
 
       //  Fields ---------------------------------------
       [SerializeField]
       private HealthBarView _healthBarView = null;
 
+      private AvatarData _avatarData = null;
+
       //  Unity Methods   ------------------------------
       protected void Start()
       {
+      }
+
+
+      //  Other Methods   ------------------------------
+      private void Render()
+      {
+         _healthBarView.BackgroundColor = _avatarData.Color;
+         _healthBarView.Title = _avatarData.Location;
       }
    }
 }

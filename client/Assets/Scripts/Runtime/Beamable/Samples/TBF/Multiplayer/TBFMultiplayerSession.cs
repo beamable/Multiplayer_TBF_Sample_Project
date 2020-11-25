@@ -8,19 +8,20 @@ namespace Beamable.Samples.TBF.Multiplayer
 {
    public class TBFMultiplayerSession
    {
+      public event EventCallback<long> OnInit;
       public event EventCallback<long> OnConnect;
       public event EventCallback<long> OnDisconnect;
 
       private const long FramesPerSecond = 20;
       private const long TargetNetworkLead = 4;
 
-      public string SessionSeed { get { return _sessionSeed; } }
+      public long SessionSeed { get { return _sessionSeed; } }
       public List<long> PlayerDbids { get { return _playerDbids; } }
       public int TargetPlayerCount { get { return _targetPlayerCount; } }
 
       public bool IsLocalPlayerDbid (long dbid) { return dbid == _localPlayerDbid; }
 
-      private string _sessionSeed;
+      private long _sessionSeed;
       private List<long> _playerDbids = new List<long>();
       private SimClient _simClient;
       private long _currentFrame;
@@ -77,8 +78,9 @@ namespace Beamable.Samples.TBF.Multiplayer
 
       private void SimClient_OnInit(string sessionSeed)
       {
-         _sessionSeed = sessionSeed;
-         Debug.Log($"SimClient_OnInit(): {_roomId} {sessionSeed}");
+         _sessionSeed = long.Parse(sessionSeed);
+         OnInit?.Invoke(_sessionSeed);
+         Debug.Log($"SimClient_OnInit(): {_roomId} {_sessionSeed}");
       }
 
       private void SimClient_OnConnect(string dbid)

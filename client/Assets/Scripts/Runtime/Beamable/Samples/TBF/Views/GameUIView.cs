@@ -59,7 +59,11 @@ namespace Beamable.Samples.TBF.Views
       //  Unity Methods   ------------------------------
       protected void Start()
       {
-         _statusText.text = "";
+         for (int i = 0; i < _avatarUIViews.Count; i++)
+         {
+            _avatarUIViews[i].AvatarData = _configuration.AvatarDatas[i];
+         }
+
          TweenHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
       }
    }

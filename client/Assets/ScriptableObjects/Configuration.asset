@@ -15,14 +15,14 @@ MonoBehaviour:
   _introSceneName: 1.Intro
   _lobbySceneName: 2.Lobby
   _gameSceneName: 3.Game
+  _delayGameBeforeMove: 1
+  _delayGameMaxDuringMove: 10
+  _delayGameAfterMove: 1
+  _delayMatchmakingMax: 10
+  _avatarDatas:
+  - _location: Local
+    _color: {r: 0, g: 0.072282314, b: 1, a: 1}
+  - _location: Remote
+    _color: {r: 1, g: 0, b: 0.29803923, a: 1}
   _delayBeforeLoadScene: 0.1
-  _treeViewRotationMin: {x: 0, y: 0.25, z: 0}
-  _treeViewRotationMax: {x: 0, y: 0.5, z: 0}
   _delayFadeInUI: 0.25
-  _delayFadeInRoundedCube: 1
-  _gameDuration: 5
-  _pregameDuration: 3.9
-  _leaderboardMinRowCount: 10
-  _highScoreDefault: 30
-  _mockRandomScoreMin: 0
-  _mockRandomScoreMax: 25

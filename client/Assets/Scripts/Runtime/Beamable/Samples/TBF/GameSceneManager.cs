@@ -5,7 +5,6 @@ using DisruptorBeam;
 using DisruptorBeam.Content;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Beamable.Samples.TBF
@@ -33,10 +32,18 @@ namespace Beamable.Samples.TBF
       protected void Start ()
       {
          _gameUIView.BackButton.onClick.AddListener(BackButton_OnClicked);
-         _gameUIView.MoveButtonsCanvasGroup.interactable = false;
 
+         //
+         _gameUIView.MoveButtonsCanvasGroup.interactable = false;
+         SetStatusText("");
+         _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health = 100;
+         _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health = 100;
+
+         //
          SetupBeamable();
       }
+
+
 
       protected void Update()
       {
@@ -46,8 +53,10 @@ namespace Beamable.Samples.TBF
       //  Other Methods --------------------------------
       private async void SetupBeamable()
       {
+         SetStatusText(TBFConstants.StatusText_Beamable_Loading);
          await DisruptorEngine.Instance.Then(de =>
          {
+            SetStatusText(TBFConstants.StatusText_Beamable_Loaded);
             try
             {
                _disruptorEngine = de;
@@ -60,18 +69,23 @@ namespace Beamable.Samples.TBF
                _multiplayerSession = new TBFMultiplayerSession(localPlayerDbid,
                   targetPlayerCount, roomId);
 
+               SetStatusText(TBFConstants.StatusText_Multiplayer_Initializing);
+               _multiplayerSession.OnInit += MultiplayerSession_OnInit;
                _multiplayerSession.OnConnect += MultiplayerSession_OnConnect;
                _multiplayerSession.OnDisconnect += MultiplayerSession_OnDisconnect;
                _multiplayerSession.Initialize();
-
+               Debug.Log("no Error");
 
             }
             catch (Exception)
             {
-               _gameUIView.StatusText.text = TBFHelper.InternetOfflineInstructionsText;
+               Debug.Log("Error");
+               SetStatusText(TBFHelper.InternetOfflineInstructionsText);
             }
          });
       }
+
+
 
       private void RestartGame()
       {
@@ -93,10 +107,9 @@ namespace Beamable.Samples.TBF
          while (elapsedGameBeforeMove <= delayGameBeforeMove)
          {
             elapsedGameBeforeMove += Time.deltaTime;
-            float pregameRemaining = delayGameBeforeMove - elapsedGameBeforeMove;
+            float remainingGameBeforeMove = delayGameBeforeMove - elapsedGameBeforeMove;
 
-            //Show as "3.2 seconds"
-            _gameUIView.StatusText.text = $"Prepare to click!\nStarting in {TBFHelper.GetRoundedTime(pregameRemaining)}...";
+            SetStatusText(string.Format(TBFConstants.StatusText_Before_Move, remainingGameBeforeMove));
             yield return new WaitForEndOfFrame();
          }
 
@@ -106,13 +119,17 @@ namespace Beamable.Samples.TBF
          while (elapsedGameDuringMove <= delayGameMaxDuringMove)
          {
             elapsedGameDuringMove += Time.deltaTime;
-            float pregameRemaining = delayGameMaxDuringMove - elapsedGameDuringMove;
+            float remainingGameDuringMove = delayGameMaxDuringMove - elapsedGameDuringMove;
 
             //Show as "3.2 seconds"
-            _gameUIView.StatusText.text = $"Prepare to click!\nStarting in {TBFHelper.GetRoundedTime(pregameRemaining)}...";
+            SetStatusText(string.Format(TBFConstants.StatusText_During_Move, remainingGameDuringMove));
             yield return new WaitForEndOfFrame();
          }
+      }
 
+      private void SetStatusText(string message)
+      {
+         _gameUIView.StatusText.text = message;
       }
 
 
@@ -129,11 +146,18 @@ namespace Beamable.Samples.TBF
             _configuration.DelayBeforeLoadScene));
       }
 
+      private void MultiplayerSession_OnInit(long body)
+      {
+         SetStatusText(TBFConstants.StatusText_Multiplayer_Initialized);
+      }
+
       private void MultiplayerSession_OnConnect(long playerDbid)
       {
          if (_multiplayerSession.PlayerDbids.Count == _multiplayerSession.TargetPlayerCount)
          {
-            Debug.Log("waiting");
+            SetStatusText(string.Format(TBFConstants.StatusText_Multiplayer_OnConnect,
+                  _multiplayerSession.PlayerDbids.Count.ToString(), 
+                  _multiplayerSession.TargetPlayerCount));
          }
          else
          {

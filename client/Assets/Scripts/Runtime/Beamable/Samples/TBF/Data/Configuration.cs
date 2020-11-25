@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Beamable.Samples.TBF.Data
 {
@@ -28,6 +29,9 @@ namespace Beamable.Samples.TBF.Data
       public float DelayGameMaxDuringMove { get { return _delayGameMaxDuringMove; } }
       public float DelayGameAfterMove { get { return _delayGameAfterMove; } }
 
+      public List<AvatarData> AvatarDatas { get { return _avatarDatas; } }
+
+
       //  Fields ---------------------------------------
       [Header("Scene Names")]
       [SerializeField]
@@ -38,14 +42,6 @@ namespace Beamable.Samples.TBF.Data
 
       [SerializeField]
       private string _gameSceneName = "";
-
-      [Header("Cosmetic Delays")]
-      [SerializeField]
-      private float _delayBeforeLoadScene = 0;
-
-      [Header("Cosmetic Animation")]
-      [SerializeField]
-      private float _delayFadeInUI = 0.25f;
 
       [Header("Game Data")]
       [SerializeField]
@@ -60,11 +56,19 @@ namespace Beamable.Samples.TBF.Data
       [SerializeField]
       private float _delayMatchmakingMax = 10f;
 
-      [Header("Mock Data")]
+      [Header("Cosmetic Data")]
       [SerializeField]
-      private string _avatarTitle_01 = "You";
+      private List<AvatarData> _avatarDatas = null;
 
+      [Header("Cosmetic Delays")]
       [SerializeField]
-      private string _avatarTitle_02 = "Opponent";
+      private float _delayBeforeLoadScene = 0;
+
+      [Header("Cosmetic Animation")]
+      [SerializeField]
+      private float _delayFadeInUI = 0.25f;
+
+
+
    }
 }
