@@ -1,0 +1,19 @@
+
+#content-type-list {
+    flex-grow: 1;
+}
+
+#content-type-list > TemplateContainer {
+    flex-grow: 1;
+}
+
+#search-box {
+    flex-direction: row;
+    display: flex;
+}
+#search-box TextField {
+    flex-grow: 1;
+}
+#search-box Label {
+    color: #FFFFFF;
+}

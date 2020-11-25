@@ -1,0 +1,3 @@
+#statusIcon.inSync {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/in-sync 1.png");
+}

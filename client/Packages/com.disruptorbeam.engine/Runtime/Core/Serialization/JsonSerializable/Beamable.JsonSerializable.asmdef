@@ -1,0 +1,17 @@
+{
+    "name": "Beamable.JsonSerializable",
+    "references": [
+        "Beamable.Pooling",
+        "Beamable.Extensions",
+        "Beamable.Spew",
+        "Beamable.Service"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

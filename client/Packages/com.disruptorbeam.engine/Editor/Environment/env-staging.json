@@ -1,0 +1,5 @@
+{
+    "environment": "staging",
+    "apiUrl": "https://staging.api.disruptorbeam.com",
+    "portalUrl": "http://disruptor-engine-staging.s3-website-us-west-2.amazonaws.com/"
+}

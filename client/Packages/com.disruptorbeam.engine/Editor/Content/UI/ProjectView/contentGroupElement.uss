@@ -1,0 +1,99 @@
+
+.content-group-root {
+    padding-left: 10px;
+    background-color: #383838;
+}
+
+#create-new-button{
+    width:35px;
+    height:35px;
+    right:20px;
+    top:-3px;
+    position:absolute;
+    cursor:pan;
+    border-width: 0px;
+    background-color: rgba(0,0,0,0);
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/Add_new.png")
+}
+
+.content-group-root .group-title {
+    position: absolute;
+    top: 6px;
+    left: 35px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Editor/Font/Lato-Semibold.ttf");
+}
+
+.content-group-root #list {
+
+    cursor: pan;
+    flex-direction: column;
+    background-color: #272727;
+}
+
+/// For version 2019.3
+.unity-foldout__toggle {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.unity-foldout > Toggle > VisualElement > #unity-checkmark {
+    margin-top: 0px;
+    left: -4px;
+    height: 25px;
+    width: 25px;
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/close.png");
+}
+.unity-foldout > Toggle:checked > VisualElement > #unity-checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/open.png");
+}
+.unity-foldout > Toggle:focus > VisualElement > #unity-checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/close.png");
+}
+.unity-foldout > Toggle:focus:checked > VisualElement > #unity-checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/open.png");
+}
+.unity-foldout > Toggle:hover:active > VisualElement > #unity-checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/close-click.png");
+}
+.unity-foldout > Toggle:hover:active:checked > VisualElement > #unity-checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/open-click.png");
+}
+/// For version 2018.3
+.unity-foldout-toggle {
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+.unity-foldout-toggle > #Checkmark {
+    margin-top: -5px;
+    left:-6px;
+    height: 25px;
+    width: 25px;
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/close.png");
+}
+.unity-foldout-toggle:checked > #Checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/open.png");
+}
+.unity-foldout-toggle:focus > #Checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/close.png");
+}
+.unity-foldout-toggle:focus:checked > #Checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/open.png");
+}
+.unity-foldout-toggle:hover:active > #Checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/close-click.png");
+}
+.unity-foldout-toggle:hover:active:checked > #Checkmark {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/Icons/open-click.png");
+}
+
+
+
+.unity-foldout-content {
+
+    margin-left: 0px;
+    padding-left: 5px;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    color: #272727;
+}

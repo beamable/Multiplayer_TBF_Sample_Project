@@ -1,0 +1,5 @@
+﻿{
+    "environment": "dev",
+    "apiUrl": "http://dev.api.beamable.com",
+    "portalUrl": "http://disruptor-engine-dev.s3-website-us-west-2.amazonaws.com"
+}

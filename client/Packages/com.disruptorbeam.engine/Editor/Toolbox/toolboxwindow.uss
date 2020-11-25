@@ -1,0 +1,198 @@
+/*
+    NOTE: word-wrap is honored in 2018 but not white-space
+          white-space is honored in 2019 but not word-wrap
+*/
+
+
+#style {
+    /* Needs to flex and have strict height bounds to render correctly in both 2018 and 2019 */
+    flex-grow: 1;
+    height: 25px;
+    min-height: 25px;
+    max-height: 25px;
+}
+
+#unity-imgui-container {
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Regular.ttf");
+    color: #FFFFFF;
+}
+
+#open-portal {
+    color: #ffffff;
+    height: 23px;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Regular.ttf");
+}
+﻿#open-content-list {
+
+    height:23px;
+    color: #ffffff;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Regular.ttf");
+}
+
+
+/* SCROLL AREA */
+#category-listings {
+    flex-grow: 1;
+    margin-left: 12px;
+    margin-right: 12px;
+    color: #ffffff;
+}
+
+#category-listings TemplateContainer {
+    flex-grow: 1;
+}
+
+Image.drop-down {
+	height: 45px;
+	width: 45px;
+	position:absolute;
+	top: 20px;
+	right: 30px;
+	background-image: resource("Packages/com.disruptorbeam.engine/Editor/Toolbox/Icons/panelclose.png");
+}
+
+Image.drop-down:hover {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Toolbox/Icons/panelclose_hover.png");
+}
+
+Image.drop-down.open {
+	height: 45px;
+	width: 45px;
+	position:absolute;
+	top: 20px;
+	right: 30px;
+	background-image: resource("Packages/com.disruptorbeam.engine/Editor/Toolbox/Icons/panelopen.png");
+}
+
+Image.drop-down.open:hover {
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Toolbox/Icons/panelopen_hover.png");
+}
+
+#main {
+    flex-grow: 1;
+}
+
+/* WIDGET */
+
+.widget-detail {
+    flex-shrink: 1;
+    cursor: pan;
+}
+
+.widget-content {
+    flex-direction: row;
+    cursor: pan;
+    border-width: 2px;
+}
+
+.widget-content.dark {
+    background-color: #282828;
+}
+
+.widget-content.light {
+    background-color: rgba(0,0,0,.2)
+}
+
+.widget-content.dark.highlight {
+    background-color: rgba(0,0,0,.4)
+}
+.widget-content.light.highlight {
+    background-color: rgba(0,0,0,.4)
+}
+
+
+.widget-content:hover {
+    border-color: #ffffff;
+    border-width: 2px;
+    cursor: pan;
+}
+
+.widget-icon {
+    min-width: 100px;
+    max-width: 100px;
+    width: 64px;
+    height: 64px;
+    cursor: pan;
+}
+
+
+.widget-name {
+    white-space: normal;
+    font-size: 24px;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Regular.ttf");
+    color: #FFFFFF;
+    cursor: pan;
+}
+
+.widget-desc {
+    font-size: 14px;
+    white-space: normal;
+    cursor: pan;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Regular.ttf");
+    color: #FFFFFF;
+}
+
+/* /WIDGET */
+
+/* CATEGORY */
+
+.category-detail
+{
+    flex-grow: 1;
+}
+.category-header {
+    flex-direction: row;
+    background-color: rgba(0,0,0,.5);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-color: rgba(0,0,0,.5);
+    border-width: 2px;
+}
+
+.category-header:hover {
+    background-color: rgba(0,0,0,.6);
+    border-color: #ffffff;
+    border-width: 2px;
+    /* padding-bottom: 4px; // Removed by SamR */
+}
+
+.category-content {
+    overflow: hidden;
+}
+
+.category-content.open {
+
+}
+
+.category-icon {
+    padding-top: 10px;
+    width: 75px;
+    height: 75px;
+}
+
+.content-view {
+    left: 0;
+    right: 0;
+}
+
+.category-list {
+    padding-left: 70px;
+    overflow: hidden;
+}
+.category-name {
+    white-space: normal;
+    font-size: 32px;
+    white-space: normal;
+    color: #FFFFFF;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Regular.ttf");
+}
+
+.category-desc {
+    font-size: 16px;
+    white-space: normal;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Regular.ttf");
+    color: #C4C4C4;
+    white-space: normal;
+}
+
+/* /CATEGORY*/

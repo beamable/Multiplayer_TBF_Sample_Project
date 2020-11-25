@@ -1,0 +1,39 @@
+#actionBarVisualElement{
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/actionBarBackground.png");
+}
+.boundedButton {
+    border-color: #383838;
+}
+.unboundedButton {
+    border-color: #383838;
+}
+#tagButtonImg {
+    width: 30px;
+    height: 30px;
+    margin-top: -3px;
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Tag.png")
+}
+
+
+#typeButtonImg {
+    width: 30px;
+    height: 30px;
+    margin-top: -3px;
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Type.png")
+}
+
+
+#statusButtonImg {
+    width: 30px;
+    height: 30px;
+    margin-top: -3px;
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Statuses.png")
+}
+
+
+#refreshButtonImg {
+    width: 30px;
+    height: 30px;
+    margin-top: -3px;
+    background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Refresh.png")
+}

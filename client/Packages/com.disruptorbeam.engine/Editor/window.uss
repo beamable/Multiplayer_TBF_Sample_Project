@@ -1,0 +1,89 @@
+/*
+    We must be explicit about what colors we want for text and buttons.
+    Otherwise, depending on the version of Unity running, foreground/background contrasts will be too low.
+    Start of Beamable-wide color styles
+ */
+    Button {
+        background-color: #454545;
+        background-image: none;
+        color: rgba(230, 230, 230, 1);
+        border-color: rgba(0,0,0,0);
+        border-left-width: 2px;
+        border-right-width: 2px;
+        border-top-width: 2px;
+        border-bottom-width: 2px;
+        border-radius: 5px;
+
+    }
+
+    Button:hover {
+        background-color: #292929;
+        border-color: rgba(255, 255, 255, 1);
+        color: #FFFFFF;
+    }
+
+    Label {
+        color: #FFFFFF;
+    }
+
+/* End of Beamable-wide color styles */
+
+
+#_windowRoot {
+    flex-grow: 1;
+    background-color: #282828;
+}
+#de-window-content {
+    flex-grow: 1;
+}
+
+.player-info {
+    background-image: url("project:///Packages/com.disruptorbeam.engine/Editor/Toolbox/Icons/beamable_gradient.png");
+    min-height: 60px;
+}
+
+.de-window-logout.hide {
+    right: -10000px;
+}
+.de-window-logout {
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Medium.ttf");
+    width: 100px;
+    height: 25px;
+    bottom: 5px;
+    right: 10px;
+    color: #ffffff;
+    border-radius: 5px;
+    position: absolute;
+}
+
+.de-window-logout:hover {
+    border-color: #FFFFFF;
+}
+
+.lblProject {
+    color: #FFFFFF;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Bold.ttf");
+    padding-bottom: 5px;
+    font-size: 30px;
+    left: 10px;
+}
+
+.lblEmail {
+    color: #FFFFFF;
+    -unity-font: url("project:///Packages/com.disruptorbeam.engine/Runtime/DisruptorEngine/UI/Fonts/Ubuntu-Medium.ttf");
+    padding-bottom: 5px;
+    left: 10px;
+}
+
+.agree-text TextElement {
+    color: #FFFFFF;
+}
+.agree-text {
+    background-color: rgba(0, 0, 0, .3);
+    margin-left: 12px;
+    margin-right: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+}

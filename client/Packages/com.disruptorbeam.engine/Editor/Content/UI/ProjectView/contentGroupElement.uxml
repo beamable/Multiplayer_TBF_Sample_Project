@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML xmlns:engine="UnityEngine.Experimental.UIElements" xmlns:editor="UnityEditor.Experimental.UIElements">
+    
+    <engine:VisualElement class="content-group-root">
+    
+        <engine:Label name="title" class="group-title" text="Content"/>
+        <engine:Image name="cloud-data-image"/>
+        
+        <engine:Foldout>
+            <engine:VisualElement name="list">
+
+        </engine:VisualElement>
+
+        </engine:Foldout>
+        
+        <engine:Button name="create-new-button"/>
+    </engine:VisualElement>
+
+
+</engine:UXML>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.Experimental.UIElements"
+        xmlns:contentManager="Beamable.Editor.Content.Components"
+        xsi:noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+        xsi:schemaLocation="UnityEngine.Experimental.UIElements ../UIElementsSchema/UnityEngine.Experimental.UIElements.xsd">
+
+  <engine:VisualElement name="mainVisualElement">
+    <engine:Button text="View" name="view-btn"/>
+    <engine:VisualElement name="status-icon">
+        </engine:VisualElement>
+    <engine:VisualElement name="status-color-bar"/>
+    
+    <engine:Label name="description"/>
+    <contentManager:CountVisualElement name="count1"/>
+    <engine:Label name="description2"/>
+    <contentManager:CountVisualElement name="count2"/>
+    <engine:Label name="description3"/>
+    <contentManager:CountVisualElement name="count3"/>
+    <engine:Label name="description4"/>
+  </engine:VisualElement>
+
+</engine:UXML>

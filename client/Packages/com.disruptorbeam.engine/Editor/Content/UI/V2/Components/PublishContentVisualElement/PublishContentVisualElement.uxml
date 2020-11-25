@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.Experimental.UIElements"
+        xmlns:editor="UnityEditor.Experimental.UIElements"
+        xmlns:beamable="Beamable.Editor.UI.Components"
+        xmlns:contentManager="Beamable.Editor.Content.Components"
+        xsi:noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+        xsi:schemaLocation="UnityEngine.Experimental.UIElements ../UIElementsSchema/UnityEngine.Experimental.UIElements.xsd Beamable.Editor.Content.Components">
+    <engine:VisualElement>
+        <beamable:LoadingIndicatorVisualElement/>
+    </engine:VisualElement>
+    <beamable:LoadingBarVisualElement/>
+
+    <engine:VisualElement name="mainVisualElement" >
+
+        <engine:Label name="message" text="placeholder"/>
+
+        <engine:VisualElement name="summaryContainer">
+            <engine:VisualElement class="summaryAlignLeft">
+                <engine:Label name="summary" text="Summary:  "/>
+                <contentManager:CountVisualElement name="overrideCount"/>
+                <engine:Label text="  Modified,  "/>
+                <contentManager:CountVisualElement name="addInCount"/>
+                <engine:Label text="  Created"/>
+                <contentManager:CountVisualElement name="deleted"/>
+                <engine:Label text="  Deleted"/>
+            </engine:VisualElement>
+            <engine:VisualElement class="summaryAlignRight">
+                <engine:Button name="detailBtn" text="Detail"/>
+            </engine:VisualElement>
+            <!--            <engine:Label name="overwriteCount"/>-->
+            <!--            <engine:Label name="addCount"/>-->
+        </engine:VisualElement>
+
+        <engine:ScrollView name="publishPreviewContainer">
+            <engine:Foldout name="modifyFoldout">
+            </engine:Foldout>
+            <engine:Foldout name="addFoldout">
+            </engine:Foldout>
+            <engine:Foldout name="deleteFoldout">
+            </engine:Foldout>
+            <engine:Label name="noDownloadLbl"/>
+        </engine:ScrollView>
+
+        <engine:VisualElement name="buttonStrip">
+            <engine:Button name="cancelBtn" text="cancel"/>
+            <engine:Button name="publishBtn" text="publish"/>
+        </engine:VisualElement>
+    </engine:VisualElement>
+
+</engine:UXML>

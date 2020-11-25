@@ -1,0 +1,12 @@
+{
+    "name": "Beamable.Spew.Editor",
+    "references": [
+        "Beamable.Spew"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

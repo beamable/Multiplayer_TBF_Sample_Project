@@ -1,0 +1,5 @@
+﻿{
+    "environment": "prod",
+    "apiUrl": "https://api.beamable.com",
+    "portalUrl": "https://portal.beamable.com"
+}

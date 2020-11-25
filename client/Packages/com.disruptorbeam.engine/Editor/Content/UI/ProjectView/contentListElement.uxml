@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML xmlns:engine="UnityEngine.Experimental.UIElements" xmlns:editor="UnityEditor.Experimental.UIElements">
+
+<!--    THROW A SCROLL VIEW IN HERE-->
+    <engine:VisualElement name="search-box">
+        <engine:Label text="filter content"/>
+        <engine:TextField name="filter-text"/>
+    </engine:VisualElement>
+
+    <engine:VisualElement name="content-type-list">
+
+    </engine:VisualElement>
+
+</engine:UXML>

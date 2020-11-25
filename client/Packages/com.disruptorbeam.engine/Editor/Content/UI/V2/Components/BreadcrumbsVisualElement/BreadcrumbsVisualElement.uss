@@ -1,0 +1,44 @@
+BreadcrumbsVisualElement #mainVisualElement {
+	height:30px;
+	justify-content:flex-end;
+}
+
+BreadcrumbsVisualElement #mainVisualElement {
+	flex-direction:row;
+	align-items:center;
+	justify-content:space-between;
+}
+
+BreadcrumbsVisualElement #tokenListVisualElement {
+	height:20px;
+	flex-direction:row;
+	flex-grow:1;
+	justify-content:flex-start;
+}
+
+BreadcrumbsVisualElement .tokenTextWord {
+	-unity-font-style: bold;
+	font-size:12px;
+	padding-left:0px;
+	padding-right:0px;
+}
+
+BreadcrumbsVisualElement .tokenTextArrow {
+	-unity-font-style: bold;
+	font-size:12px;
+	padding-left:0px;
+	padding-right:0px;
+}
+
+BreadcrumbsVisualElement #counterVisualElement {
+	border-radius:10px;
+	/*background-color: #646667;*/
+    background-color: rgba(0,0,0,.7);
+	margin-right: 6px;
+}
+BreadcrumbsVisualElement #counterVisualElement > Label {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}

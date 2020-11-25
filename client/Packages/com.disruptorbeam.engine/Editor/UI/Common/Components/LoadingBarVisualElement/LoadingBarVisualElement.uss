@@ -1,0 +1,17 @@
+#progress {
+    background-color: #3e7de7;
+    height: 6px;
+    flex-grow: 0;
+}
+#space {
+    height: 6px;
+    flex-grow:1;
+}
+
+TemplateContainer {
+    flex-grow: 1;
+    flex-direction: row;
+}
+LoadingBarVisualElement {
+    height: 6px;
+}

@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47dd087d23d14871b7e254be1842a8b, type: 3}
+  m_Name: defaultToolbox
+  m_EditorClassIdentifier: 
+  ForceUpdate: 0
+  Categories:
+  - Name: GAME ADMIN
+    Description: Developer tools for debugging
+    OpenByDefault: 0
+    Icon: {fileID: 2800000, guid: eece6b3c4631aaa46943e82ba445bb75, type: 3}
+    Widgets:
+    - Name: Admin Flow
+      Description: "UI for game commands and cheats. Use \u201C~\u201D to open in-game
+        console"
+      Icon: {fileID: 2800000, guid: 081acf002cd90324fb556703391f19b8, type: 3}
+      DFab: {fileID: 637265495396818175, guid: e9fa306a98c29420ea7bc2c17da51254, type: 3}
+  - Name: HUD
+    Description: UI for user content
+    OpenByDefault: 0
+    Icon: {fileID: 2800000, guid: e3bf88b0a542bbe4f8cd719e6ace672a, type: 3}
+    Widgets:
+    - Name: Currency HUD
+      Description: UI for virtual currency
+      Icon: {fileID: 2800000, guid: fd17d69d797866a429f0288fbd49791c, type: 3}
+      DFab: {fileID: 1538361852517479061, guid: bbbde9ef3c8224fe69016a84827690c6,
+        type: 3}
+    - Name: Account HUD
+      Description: UI to open login flow
+      Icon: {fileID: 2800000, guid: 407bfc27a07d0124cb1d78c7f7f62048, type: 3}
+      DFab: {fileID: 2453450058678432510, guid: a14607bd54ddb49458fbc1125c8f8f10,
+        type: 3}
+  - Name: COMMON
+    Description: 'Common user experience flows '
+    OpenByDefault: 0
+    Icon: {fileID: 2800000, guid: 9ab67dc6879fd87458f3992e0dc439ff, type: 3}
+    Widgets:
+    - Name: Login Flow
+      Description: Allow user to manage account
+      Icon: {fileID: 2800000, guid: ed18d0cc1d682084f93dc581ea408f7c, type: 3}
+      DFab: {fileID: 5536497098831726557, guid: 658e52cdd751b48478d9da3300ff9c59,
+        type: 3}
+    - Name: Leaderboard Flow
+      Description: Allow user to manage leaderboard
+      Icon: {fileID: 2800000, guid: 796b6e22b8a7c6b4aa354a2786e86562, type: 3}
+      DFab: {fileID: 5960774261714958974, guid: 1b85b3a11dfa349b0933bc289d82af9f,
+        type: 3}
+    - Name: Announcements Flow
+      Description: Allow user to manage announcements
+      Icon: {fileID: 2800000, guid: 45cbb4b514590604087fdab95cbf3bca, type: 3}
+      DFab: {fileID: 1348922302504892013, guid: 617a55c3b68a545d2a49b29556460894,
+        type: 3}
+    - Name: Inventory Flow
+      Description: Allow user to manage inventory
+      Icon: {fileID: 2800000, guid: c5c1e2aba7df98f4f8d8ec4c2112caa6, type: 3}
+      DFab: {fileID: 1855707606240579186, guid: a48fff1d8103e4de9bbbca24b1ec16d3,
+        type: 3}
+    - Name: Tournament Flow
+      Description: Allow user set up a recurring tournament
+      Icon: {fileID: 2800000, guid: 8172d1bf0426714469f08081a60b7d71, type: 3}
+      DFab: {fileID: 8036622181152675863, guid: 6b1f10e6922a243ea8c5023fbc64881e,
+        type: 3}
+  - Name: COMMERCE
+    Description: UI for game monetization
+    OpenByDefault: 0
+    Icon: {fileID: 2800000, guid: 6e45c8592d94d654e8e15936c53f43b2, type: 3}
+    Widgets:
+    - Name: Store Flow
+      Description: 'Allow user to shop '
+      Icon: {fileID: 2800000, guid: 298543349706c324cb212cc1e3e1d565, type: 3}
+      DFab: {fileID: 3430546881456503221, guid: a97507b4b127e4f88ab7dedd815fa760,
+        type: 3}
+  - Name: UI COMPONENTS
+    Description: UI building blocks for general use
+    OpenByDefault: 0
+    Icon: {fileID: 2800000, guid: 7fb35a1006400984784d4fc3e28f1a04, type: 3}
+    Widgets:
+    - Name: Back Button
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 1150741313932349104, guid: 4b63f9bb970644cddbfce3509a7ebc50,
+        type: 3}
+    - Name: Background
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 111213872017286866, guid: 271c5c262137f48708e20c91b57e679a, type: 3}
+    - Name: Button Primary
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 3966682830340290838, guid: d6b9e5aca364d4cfc9ef3755090e1136,
+        type: 3}
+    - Name: Button Primary - with Icon
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 7488219559226772852, guid: 3a37697f0a642499096075d95bac5d57,
+        type: 3}
+    - Name: Button Secondary
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 7254991933001704467, guid: 14a396ecd447f4324bf9a743c21fd575,
+        type: 3}
+    - Name: Button Secondary - with Icon
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 645462216659584480, guid: 9650f7167bc4746c2bfe24fce676dd9e, type: 3}
+    - Name: Close Button
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 2994370629541192049, guid: 112e55a71f90a46e0bb52e8331703ff3,
+        type: 3}
+    - Name: Extended Layout Template
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 3509410274718121833, guid: 2a8ab4e4b663a44b19346fd02cfb4528,
+        type: 3}
+    - Name: 'Header '
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 1953933317121552195, guid: 8fb4cbc029dc6404093cea3a309ca187,
+        type: 3}
+    - Name: Input Field
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 1084439022821249819, guid: d32fa8c1da82e49faa2bae10e9e61e93,
+        type: 3}
+    - Name: Input Field - Password
+      Description: 
+      Icon: {fileID: 0}
+      DFab: {fileID: 2864279680464286028, guid: a29b5f57ee9bd41678d4cee757188e2b,
+        type: 3}

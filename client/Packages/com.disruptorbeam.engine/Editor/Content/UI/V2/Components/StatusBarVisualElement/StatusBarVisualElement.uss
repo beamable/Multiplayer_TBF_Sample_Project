@@ -1,0 +1,168 @@
+StatusBarVisualElement #mainVisualElement {
+	flex-direction:row;
+	flex-grow:1;
+}
+
+StatusBarVisualElement Label {
+	min-width:20px;
+	top: 5px;
+}
+
+#status-icon {
+	width: 20px;
+	height: 20px;
+	top: 5px;
+}
+#status-icon.current {
+	background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Checked.png");
+}
+#status-icon.modified {
+	background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Warning.png");
+}
+#status-icon.error {
+	background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Warning.png");
+}
+
+#status-color-bar {
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 3px;
+	top: 5px;
+}
+#status-color-bar.current {
+	visibility: hidden;
+}
+#status-color-bar.modified {
+	background-color: #4F80F8;
+}
+#status-color-bar.error {
+	background-color: #FF0000;
+}
+
+#description {
+	
+}
+
+#view-btn{
+	width: 80px;
+	height: 25px;
+	right: 10px;
+	top:0px;
+	position: absolute;
+	font-size: 10px;
+	-unity-font: url("project:///Packages/com.disruptorbeam.engine/Editor/Font/Lato-Semibold.ttf");
+}
+#view-btn.current {
+	visibility: hidden;
+}
+#view-btn.modified {
+	visibility: visible;
+}
+#view-btn.error {
+	visibility: visible;
+}
+
+
+
+
+
+
+
+
+.testImages
+{
+	width:30px;
+	height:30px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-top-width:1px;
+	border-bottom-width:1px;
+	border-color:#000000;
+}
+
+#testImage01
+{
+	/* Keep empty */
+}
+
+#testImage02
+{
+	width:100px;
+
+}
+
+#testImage03
+{
+	height:100px;
+}
+
+#testVisualElement04
+{
+	width:10px;
+	background-image: url("project:///Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Resources/SampleImage.png");
+	-unity-background-scale-mode: stretch-to-fill;
+}
+
+#testVisualElement05
+{
+	width:100px;
+	align-self:stretch;
+
+	background-image: resource("SampleImage.png");
+	width:10px;
+}
+
+#testVisualElement06
+{
+	height:10px;
+	background-image: url("project:///Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Resources/SampleImage.png");
+	-unity-background-scale-mode: scale-to-fit;
+/*}.testImages*/
+/*{*/
+/*	width:30px;*/
+/*	height:30px;*/
+/*	border-left-width:1px;*/
+/*	border-right-width:1px;*/
+/*	border-top-width:1px;*/
+/*	border-bottom-width:1px;*/
+/*	border-color:#000000;*/
+/*}*/
+
+/*#testImage01*/
+/*{*/
+/*	!* Keep empty *!*/
+/*}*/
+
+/*#testImage02*/
+/*{*/
+/*	width:100px;*/
+
+/*}*/
+
+/*#testImage03*/
+/*{*/
+/*	height:100px;*/
+/*}*/
+
+/*#testVisualElement04*/
+/*{*/
+/*	width:10px;*/
+/*	background-image: url("project:///Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Resources/SampleImage.png");*/
+/*	-unity-background-scale-mode: stretch-to-fill;*/
+/*}*/
+
+/*#testVisualElement05*/
+/*{*/
+/*	width:100px;*/
+/*	align-self:stretch;*/
+
+/*	background-image: resource("SampleImage.png");*/
+/*	width:10px;*/
+/*}*/
+
+/*#testVisualElement06*/
+/*{*/
+/*	height:10px;*/
+/*	background-image: url("project:///Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Resources/SampleImage.png");*/
+/*	-unity-background-scale-mode: scale-to-fit;*/
+/*}*/
