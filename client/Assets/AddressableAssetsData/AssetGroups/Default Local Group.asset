@@ -15,15 +15,15 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_Data:
     m_SerializedData: []
-  m_GUID: 5df0f3ef84386fb45893e26fda4664c6
+  m_GUID: ca52ebd20fa430c4fb5e14ac687367b4
   m_SerializeEntries:
   - m_GUID: f819a6beb22c04c8d9f8222f930252b5
     m_Address: Assets/DisruptorEngine/DefaultAssets/currency/icon.png
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
-  m_Settings: {fileID: 11400000, guid: f0c71593b8befe541ae75bf12d09f06d, type: 2}
+  m_Settings: {fileID: 11400000, guid: 84c68e63a27bcfa4d9591e20ba6ed16f, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: f4909b62ff572d04d8263cbf4fe06b9b, type: 2}
-    - {fileID: 11400000, guid: d705f5bd4c02d4e47ac2f45e97b04dbd, type: 2}
+    - {fileID: 11400000, guid: d1d362285209e0e44a213735e4cdd8ed, type: 2}
+    - {fileID: 11400000, guid: afb1c75201c78bf428272e92dfbabab1, type: 2}
