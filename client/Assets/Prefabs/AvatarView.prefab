@@ -229,7 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5960002115463911919}
   - component: {fileID: 6046801128001489971}
-  - component: {fileID: 186844440}
+  - component: {fileID: 8108222163253012647}
   m_Layer: 0
   m_Name: AvatarView
   m_TagString: Untagged
@@ -275,7 +275,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &186844440
+--- !u!114 &8108222163253012647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,10 +284,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5961624701748834721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce627edada899eb43a1dc37894266fc2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cbe153ddbf2b614b915ec1a828d7f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 6046801128001489971}
 --- !u!1 &5961743066450021051
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,15 +14,14 @@ namespace Beamable.Samples.TBF.Views
    {
       //  Properties -----------------------------------
       public TMP_Text StatusText { get { return _statusText; } }
-
-      public AvatarUIView AvatarUIView_01 { get { return _avatarUIView_01; } }
-      public AvatarUIView AvatarUIView_02 { get { return _avatarUIView_02; } }
-
+      public List<AvatarView> AvatarViews { get { return _avatarViews; } }
+      public List<AvatarUIView> AvatarUIViews { get { return _avatarUIViews; } }
+      //
       public Button BackButton { get { return _backButton; } }
       public Button MoveButton_01 { get { return _moveButton_01; } }
       public Button MoveButton_02 { get { return _moveButton_02; } }
       public Button MoveButton_03 { get { return _moveButton_03; } }
-
+      //
       public CanvasGroup MoveButtonsCanvasGroup { get { return _moveButtonsCanvasGroup; } }
 
       //  Fields ---------------------------------------
@@ -48,10 +47,10 @@ namespace Beamable.Samples.TBF.Views
       private CanvasGroup _moveButtonsCanvasGroup = null;
 
       [SerializeField]
-      private AvatarUIView _avatarUIView_01 = null;
+      private List<AvatarUIView> _avatarUIViews = null;
 
       [SerializeField]
-      private AvatarUIView _avatarUIView_02 = null;
+      private List<AvatarView> _avatarViews = null;
 
       [Header("Cosmetic Animation")]
       [SerializeField]

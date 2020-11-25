@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Beamable.Samples.BBB.Views
+namespace Beamable.Samples.TBF.Views
 {
    /// <summary>
    /// Handles the view concerns for UI elements related

@@ -5,8 +5,8 @@ using DisruptorBeam;
 using DisruptorBeam.Content;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Beamable.Samples.TBF
 {
@@ -27,6 +27,7 @@ namespace Beamable.Samples.TBF
       private LeaderboardContent _leaderboardContent;
       private IDisruptorEngine _disruptorEngine = null;
       private TBFMultiplayerSession _multiplayerSession;
+
 
       //  Unity Methods   ------------------------------
       protected void Start ()
@@ -131,7 +132,14 @@ namespace Beamable.Samples.TBF
       private void MultiplayerSession_OnConnect(long playerDbid)
       {
          if (_multiplayerSession.PlayerDbids.Count == _multiplayerSession.TargetPlayerCount)
+         {
+            Debug.Log("waiting");
+         }
+         else
+         {
             RestartGame();
+         }
+            
       }
 
       private void MultiplayerSession_OnDisconnect(long playerDbid)

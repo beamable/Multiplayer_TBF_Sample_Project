@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.RectTransform;
 
-namespace Beamable.Samples.BBB.Views
+namespace Beamable.Samples.TBF.Views
 {
    /// <summary>
    /// Handles the view concerns for UI elements related
