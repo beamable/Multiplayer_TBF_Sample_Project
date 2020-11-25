@@ -1,6 +1,5 @@
 ﻿using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Views;
-using DisruptorBeam;
 using System;
 using UnityEngine;
 
@@ -26,7 +25,7 @@ namespace Beamable.Samples.TBF
       [SerializeField]
       private Configuration _configuration = null;
 
-      private IDisruptorEngine _disruptorEngine = null;
+      private IBeamableAPI _beamableAPI = null;
       private bool _isConnected = false;
       private bool _isBeamableSDKInstalled = false;
       private string _isBeamableSDKInstalledErrorMessage = "";
@@ -42,9 +41,9 @@ namespace Beamable.Samples.TBF
 
       protected void OnDestroy()
       {
-         DisruptorEngine.Instance.Then(de =>
+         Beamable.API.Instance.Then(de =>
          {
-            _disruptorEngine = null;
+            _beamableAPI = null;
             de.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
          });
       }
@@ -58,21 +57,21 @@ namespace Beamable.Samples.TBF
       private void SetupBeamable()
       {
          // Attempt Connection to Beamable
-         DisruptorEngine.Instance.Then(de =>
+         Beamable.API.Instance.Then(de =>
          {
             try
             {
-               _disruptorEngine = de;
+               _beamableAPI = de;
                _isBeamableSDKInstalled = true;
 
                // Handle any changes to the internet connectivity
-               _disruptorEngine.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
-               ConnectivityService_OnConnectivityChanged(_disruptorEngine.ConnectivityService.HasConnectivity);
+               _beamableAPI.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
+               ConnectivityService_OnConnectivityChanged(_beamableAPI.ConnectivityService.HasConnectivity);
 
                if (IsDemoMode)
                {
                   //Set my player's name
-                  //MockDataCreator.SetCurrentUserAlias(_disruptorEngine.Stats, "This_is_you:)");
+                  //MockDataCreator.SetCurrentUserAlias(_beamableAPI.Stats, "This_is_you:)");
                }
             }
             catch (Exception e)
@@ -94,7 +93,7 @@ namespace Beamable.Samples.TBF
          long dbid = 0;
          if (_isConnected)
          {
-            dbid = _disruptorEngine.User.id;
+            dbid = _beamableAPI.User.id;
          }
 
          string aboutBodyText = TBFHelper.GetIntroAboutBodyText(

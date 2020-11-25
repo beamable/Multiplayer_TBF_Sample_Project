@@ -1,6 +1,6 @@
 ﻿using Beamable.Common;
-using Core.Platform.SDK;
-using Core.Platform.SDK.Matchmaking;
+using Beamable.Platform.SDK;
+using Beamable.Platform.SDK.Matchmaking;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,5 +1,4 @@
-﻿using Core.Platform.SDK.Sim;
-using DisruptorBeam;
+﻿using Beamable.Platform.SDK.Sim;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +32,7 @@ namespace Beamable.Examples.Features.Multiplayer
       protected void Start()
       {
          // Access Local Player Information
-         DisruptorEngine.Instance.Then(de =>
+         Beamable.API.Instance.Then(de =>
          {
             _localPlayerDbid = de.User.id;
          });

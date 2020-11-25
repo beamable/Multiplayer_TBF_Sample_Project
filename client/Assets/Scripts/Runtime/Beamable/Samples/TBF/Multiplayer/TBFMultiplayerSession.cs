@@ -1,8 +1,7 @@
-﻿using Core.Platform.SDK.Sim;
-using System;
+﻿using Beamable.Platform.SDK.Sim;
 using System.Collections.Generic;
 using UnityEngine;
-using static Core.Platform.SDK.Sim.SimClient;
+using static Beamable.Platform.SDK.Sim.SimClient;
 
 namespace Beamable.Samples.TBF.Multiplayer
 {

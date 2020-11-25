@@ -1,5 +1,4 @@
-﻿using DisruptorBeam;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Beamable.Examples.Features.Multiplayer
 {
@@ -14,7 +13,7 @@ namespace Beamable.Examples.Features.Multiplayer
 
       protected async void SetupBeamable()
       {
-         await DisruptorEngine.Instance.Then(async de =>
+         await Beamable.API.Instance.Then(async de =>
          {
             MyMatchmaking myMatchmaking = new MyMatchmaking(de.Matchmaking, TargetPlayerCount);
             myMatchmaking.OnProgress += MyMatchmaking_OnProgress;

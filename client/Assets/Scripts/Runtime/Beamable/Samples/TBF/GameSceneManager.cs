@@ -1,8 +1,7 @@
-﻿using Beamable.Samples.TBF.Data;
+﻿using Beamable.Content;
+using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;
-using DisruptorBeam;
-using DisruptorBeam.Content;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -24,7 +23,7 @@ namespace Beamable.Samples.TBF
       private Coroutine _runGameCoroutine;
       private float _gameTimeRemaining = 0;
       private LeaderboardContent _leaderboardContent;
-      private IDisruptorEngine _disruptorEngine = null;
+      private IBeamableAPI _beamableAPI = null;
       private TBFMultiplayerSession _multiplayerSession;
 
 
@@ -54,15 +53,15 @@ namespace Beamable.Samples.TBF
       private async void SetupBeamable()
       {
          SetStatusText(TBFConstants.StatusText_Beamable_Loading);
-         await DisruptorEngine.Instance.Then(de =>
+         await Beamable.API.Instance.Then(de =>
          {
             SetStatusText(TBFConstants.StatusText_Beamable_Loaded);
             try
             {
-               _disruptorEngine = de;
+               _beamableAPI = de;
 
                //TODO: Fetch the found matchmaking info from the previous scene
-               long localPlayerDbid = _disruptorEngine.User.id;
+               long localPlayerDbid = _beamableAPI.User.id;
                string roomId = TBFMatchmaking.RoomId;
                int targetPlayerCount = 1;
 
