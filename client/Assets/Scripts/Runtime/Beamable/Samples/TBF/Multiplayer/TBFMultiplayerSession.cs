@@ -1,5 +1,8 @@
 ﻿using Beamable.Platform.SDK.Sim;
+using Beamable.Samples.TBF.Multiplayer.Events;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using static Beamable.Platform.SDK.Sim.SimClient;
 
@@ -7,9 +10,22 @@ namespace Beamable.Samples.TBF.Multiplayer
 {
    public class TBFMultiplayerSession
    {
+      //  Fields ---------------------------------------
       public event EventCallback<long> OnInit;
       public event EventCallback<long> OnConnect;
       public event EventCallback<long> OnDisconnect;
+
+      /// <summary>
+      /// Determines if using Unity debug log statements.
+      /// </summary>
+      private static bool IsDebugLogging = true;
+
+      /// <summary>
+      /// Determines if events objects are transfered with fullly qualified event names.
+      /// True, is more correct.
+      /// False, is easier debug logging.
+      /// </summary>
+      private static bool IsNamespaceSensitive = false;
 
       private const long FramesPerSecond = 20;
       private const long TargetNetworkLead = 4;
@@ -28,6 +44,7 @@ namespace Beamable.Samples.TBF.Multiplayer
       private string _roomId;
       private int _targetPlayerCount;
 
+      //  Constructor   --------------------------------
       public TBFMultiplayerSession(long localPlayerDbid, int targetPlayerCount, string roomId)
       {
          _roomId = roomId;
@@ -35,6 +52,11 @@ namespace Beamable.Samples.TBF.Multiplayer
          _targetPlayerCount = targetPlayerCount;
       }
 
+      //  Other Methods   ------------------------------
+
+      /// <summary>
+      /// Initialize the <see cref="SimClient"/>.
+      /// </summary>
       public void Initialize()
       {
          // Create Multiplayer Session
@@ -48,7 +70,10 @@ namespace Beamable.Samples.TBF.Multiplayer
          _simClient.OnTick(SimClient_OnTick);
       }
 
-      public void Tick()
+      /// <summary>
+      /// Convenience. Wrap <see cref="SimClient"/> method.
+      /// </summary>
+      public void Update()
       {
          if (_simClient != null)
          {
@@ -64,46 +89,100 @@ namespace Beamable.Samples.TBF.Multiplayer
          {
             message += $"{dbid},";
          }
-         //Debug.Log($"message:{message}");
+         //DebugLog($"message:{message}");
       }
 
-      protected void OnDestroy()
+
+      /// <summary>
+      /// Convenience. Wrap <see cref="SimClient"/> method.
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="callback"></param>
+      /// <returns></returns>
+      public EventCallback<string> On<T>(string origin, EventCallback<T> callback) where T : TBFEvent
       {
-         if (_simClient != null)
+         string name = GetEventName<T>();
+         DebugLog($"SimClient_On(): {name}");
+         return _simClient.On<T>(GetEventName<T>(), origin, callback);
+         
+      }
+
+      /// <summary>
+      /// Convenience. Wrap <see cref="SimClient"/> method.
+      /// </summary>
+      /// <param name="callback"></param>
+      public void Remove(EventCallback<string> callback)
+      {
+         _simClient.Remove(callback);
+      }
+
+
+      /// <summary>
+      /// Convenience. Wrap <see cref="SimClient"/> method.
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="evt"></param>
+      public void SendEvent<T>(T evt) where T : TBFEvent
+      {
+         string name = GetEventName<T>();
+         DebugLog($"SimClient_SendEvent(): {name}");
+         _simClient.SendEvent(name, evt);
+      }
+
+      //  Private Methods  -----------------------------
+      private void DebugLog(string message)
+      {
+         if (IsDebugLogging)
          {
-            //TODO: Manually leave session. Needed?
+            Debug.Log(message);
          }
       }
 
+
+      /// <summary>
+      /// Convert <see cref="TBFEvent"/> name subclass
+      /// for server transfer.
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <returns></returns>
+      private string GetEventName<T>() where T : TBFEvent
+      {
+         if (IsNamespaceSensitive)
+         {
+            return typeof(T).FullName.ToString();
+         }
+         else
+         {
+            return typeof(T).Name.ToString();
+         }
+      }
+
+
+      //  Event Handlers  ------------------------------
       private void SimClient_OnInit(string sessionSeed)
       {
          _sessionSeed = long.Parse(sessionSeed);
+         DebugLog($"SimClient_OnInit(): {_roomId} {_sessionSeed}");
          OnInit?.Invoke(_sessionSeed);
-         Debug.Log($"SimClient_OnInit(): {_roomId} {_sessionSeed}");
       }
 
       private void SimClient_OnConnect(string dbid)
       {
          _playerDbids.Add(long.Parse(dbid));
+         DebugLog($"SimClient_OnConnect(): {long.Parse(dbid)}");
          OnConnect?.Invoke(long.Parse(dbid));
-         Debug.Log($"SimClient_OnConnect(): {dbid}");
       }
 
       private void SimClient_OnDisconnect(string dbid)
       {
          _playerDbids.Remove(long.Parse(dbid));
+         DebugLog($"SimClient_OnDisconnect(): {long.Parse(dbid)}");
          OnDisconnect?.Invoke(long.Parse(dbid));
-         Debug.Log($"SimClient_OnDisconnect(): {dbid}");
       }
 
       private void SimClient_OnTick(long currentFrame)
       {
          _currentFrame = currentFrame;
-      }
-
-      private void SimClient_OnMyPlayerMoveEvent(object myPlayerMoveEvent)
-      {
-         Debug.Log($"SimClient_OnMyPlayerMoveEvent(): {myPlayerMoveEvent}");
       }
    }
 }

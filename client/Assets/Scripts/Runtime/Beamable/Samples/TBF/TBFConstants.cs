@@ -26,7 +26,8 @@ namespace Beamable.Samples.TBF
       public const string StatusText_Multiplayer_Initializing = "Beamable Initializing...";
       public const string StatusText_Multiplayer_Initialized = "Beamable Initialized...";
       //
-      public const string StatusText_Multiplayer_OnConnect = "Joining Player {0}/{1}...";
+      public const string StatusText_Multiplayer_OnConnect = "Connecting. Players {0}/{1}...";
+      public const string StatusText_Multiplayer_OnDisconnect = "Disconnecting. Players {0}/{1}...";
       //
       public const string StatusText_Before_Move = "Prepare to move in {0} seconds...";
       public const string StatusText_During_Move = "Choose your move within {0} seconds...";
