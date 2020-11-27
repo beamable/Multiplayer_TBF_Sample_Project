@@ -20,14 +20,18 @@ namespace Beamable.Samples.TBF
       /// </summary>
       public const int PlayerIndexRemote = 1;
 
-      public const string StatusText_Beamable_Loading = "Beamable Loading...";
-      public const string StatusText_Beamable_Loaded = "Beamable Loaded...";
+      public const string StatusText_GameState_Loading = "Beamable Loading...";
+      public const string StatusText_GameState_Loaded = "Beamable Loaded...";
       //
-      public const string StatusText_Multiplayer_Initializing = "Beamable Initializing...";
-      public const string StatusText_Multiplayer_Initialized = "Beamable Initialized...";
+      public const string StatusText_GameState_Initializing = "Beamable Initializing...";
+      public const string StatusText_GameState_Initialized = "Beamable Initialized...";
       //
-      public const string StatusText_Multiplayer_OnConnect = "Connecting. Players {0}/{1}...";
+      public const string StatusText_GameState_Connecting = "Connecting. Players {0}/{1}...";
       public const string StatusText_Multiplayer_OnDisconnect = "Disconnecting. Players {0}/{1}...";
+      public const string StatusText_GameState_Moving = "Round '{0}'. Waiting for moves...";
+      public const string StatusText_GameState_Moved = "Round '{0}'. Moves complete...";
+      public const string StatusText_GameState_Evaluated = "Round '{0}' over. Round winner '{1}'...";
+      public const string StatusText_GameState_Ending = "Game' {0}' over. Game winner '{1}'...";
       //
       public const string StatusText_Before_Move = "Prepare to move in {0} seconds...";
       public const string StatusText_During_Move = "Choose your move within {0} seconds...";

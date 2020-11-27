@@ -31,6 +31,13 @@ namespace Beamable.Samples.TBF.Data
 
       public List<AvatarData> AvatarDatas { get { return _avatarDatas; } }
 
+      public int GameRoundsTotal { get { return _gameRoundsTotal; } }
+      public int TargetPlayerCount { get { return _targetPlayerCount; } }
+
+      /// <summary>
+      /// Duration in seconds
+      /// </summary>
+      public float StatusMessageMinDuration { get { return _statusMessageMinDuration; } }
 
       //  Fields ---------------------------------------
       [Header("Scene Names")]
@@ -44,6 +51,13 @@ namespace Beamable.Samples.TBF.Data
       private string _gameSceneName = "";
 
       [Header("Game Data")]
+      [Range (1,2)]
+      [SerializeField]
+      private int _targetPlayerCount = 2;
+
+      [SerializeField]
+      private int _gameRoundsTotal = 3;
+
       [SerializeField]
       private float _delayGameBeforeMove = 1;
 
@@ -64,11 +78,18 @@ namespace Beamable.Samples.TBF.Data
       [SerializeField]
       private float _delayBeforeLoadScene = 0;
 
+      [Range (0,3)]
+      [SerializeField]
+      public float _statusMessageMinDuration = 3000;
+
       [Header("Cosmetic Animation")]
       [SerializeField]
       private float _delayFadeInUI = 0.25f;
 
-
-
+      //  Unity Methods ---------------------------------------
+      protected void OnValidate()
+      {
+         _targetPlayerCount = Mathf.Clamp(_targetPlayerCount, 1, 2);
+      }
    }
 }

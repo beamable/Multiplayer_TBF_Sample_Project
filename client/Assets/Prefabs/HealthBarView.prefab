@@ -154,7 +154,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ' 78%'
+  m_text: '{Title} 78%'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 103b24d25ab014443a4035a9b8bf74b6, type: 2}
   m_sharedMaterial: {fileID: 415982472768544068, guid: 103b24d25ab014443a4035a9b8bf74b6,
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e35066472bfc744d904360fabf8c7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _title: 
+  _title: '{Title}'
   _backgroundColor: {r: 0, g: 0.16372012, b: 0.6132076, a: 1}
   _backgroundImage: {fileID: 4758882347202139135}
   _slider: {fileID: 124296960436022304}

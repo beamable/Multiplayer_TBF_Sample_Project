@@ -9,11 +9,10 @@ namespace Beamable.Samples.TBF.Multiplayer.Events
    [Serializable]
    public class TBFEvent
    {
-      /// <summary>
-      /// True, Determines if local must recieve from all players
-      /// before handling the event.
-      /// </summary>
-      public virtual bool IsConsensusRequired { get { return false;} }
+      //  Properties -----------------------------------
+      public long PlayerDbid { get { return _playerDbid; } }
 
+      //  Fields ---------------------------------------
+      private long _playerDbid;
    }
 }
