@@ -83,7 +83,6 @@ namespace Beamable.Samples.TBF.Views
       {
          // Every x seconds, show the next status message
          _statusMessageTimerElapsed += Time.deltaTime;
-         Debug.Log(_statusMessageTimerElapsed);
          if (_statusMessageTimerElapsed > _configuration.StatusMessageMinDuration)
          {
             _statusMessageTimerElapsed = 0f;
@@ -91,7 +90,6 @@ namespace Beamable.Samples.TBF.Views
             {
                string message = _statusMessageQueue.Dequeue();
                _statusText.text = message;
-               Debug.Log("_statusText.text: " + _statusText.text);
             }
          }
       }
@@ -103,10 +101,8 @@ namespace Beamable.Samples.TBF.Views
          switch (statusTextMode)
          {
             case StatusTextMode.Immediate:
-
                //set now
                _statusText.text = message;
-
                //and queue so it lives a minimum lifetime
                _statusMessageQueue.Clear();
                

@@ -36,11 +36,11 @@ namespace Beamable.Samples.TBF
       public const string StatusText_Before_Move = "Prepare to move in {0} seconds...";
       public const string StatusText_During_Move = "Choose your move within {0} seconds...";
 
-      public enum GameState
-      {
-         PreGame,
-         Game,
-         PostGame
-      }
+      //
+      public static string Avatar_Idle = "Idle";
+      public static string Avatar_Cover = "Cover";
+      public static string Avatar_Attack01 = "Attack01";
+      public static string Avatar_Attack02 = "Attack02";
+      public static string Avatar_Attack03 = "Attack01"; //Todo choose new animation
    }
 }

@@ -63,9 +63,18 @@ namespace Beamable.Samples.TBF
                case GameState.Null:
                   break;
                case GameState.Loading:
-                  SetStatusText("", StatusTextMode.Immediate);
+
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].DoIdle();
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].DoIdle();
+
                   _gameProgressData = new GameProgressData(_configuration);
+
+                  SetStatusText("", StatusTextMode.Immediate);
+
+                  _gameUIView.MoveButtonsCanvasGroup.interactable = false;
+
                   SetStatusText(TBFConstants.StatusText_GameState_Loading, StatusTextMode.Queue);
+
                   break;
                case GameState.Loaded:
                   SetStatusText(TBFConstants.StatusText_GameState_Loaded, StatusTextMode.Queue);
@@ -89,12 +98,20 @@ namespace Beamable.Samples.TBF
                case GameState.Started:
                   break;
                case GameState.Moving:
+
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].DoCover();
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].DoCover();
+
                   SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moving,
                       _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
                   _gameProgressData.GameMoveEventsThisRoundByPlayerDbid.Clear();
                   _gameUIView.MoveButtonsCanvasGroup.interactable = true;
                   break;
                case GameState.Moved:
+
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].Attack(GameMoveType.High);
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].Attack(GameMoveType.Low);
+
                   SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moved,
                      _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
                   _gameUIView.MoveButtonsCanvasGroup.interactable = false;
@@ -160,8 +177,6 @@ namespace Beamable.Samples.TBF
          _gameUIView.MoveButton_01.onClick.AddListener(MoveButton_01_OnClicked);
          _gameUIView.MoveButton_02.onClick.AddListener(MoveButton_02_OnClicked);
          _gameUIView.MoveButton_03.onClick.AddListener(MoveButton_03_OnClicked);
-         //
-         _gameUIView.MoveButtonsCanvasGroup.interactable = false;
          
          _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health = 100;
          _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health = 100;
@@ -206,7 +221,6 @@ namespace Beamable.Samples.TBF
                   targetPlayerCount, roomId);
 
                GameState = GameState.Initializing;
-               
 
                _tbfMultiplayerSession.OnInit += MultiplayerSession_OnInit;
                _tbfMultiplayerSession.OnConnect += MultiplayerSession_OnConnect;
