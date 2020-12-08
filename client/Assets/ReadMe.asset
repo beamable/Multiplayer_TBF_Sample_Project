@@ -25,7 +25,7 @@ MonoBehaviour:
       online product documentation.
     linkText: docs.beamable.com
     url: https://docs.beamable.com/
-  - heading: What is Beamable Multiplayer?
+  - heading: What is Beamable's Multiplayer feature?
     text: The purpose of this feature is to allow game makers to create real-time and turn-based multi-user game experiences.
     linkText: Multiplayer
     url: https://docs.beamable.com/docs/multiplayer

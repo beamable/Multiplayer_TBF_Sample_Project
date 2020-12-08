@@ -4,7 +4,7 @@ This sample project demonstrates specific [Beamable](https://beamable.com/) feat
 
 **Project Configuration**
 * `Unity Target` - Standalone MAC/PC
-* `Unity Version` - 2019.4.14f1 or above
+* `Unity Version` - 2019.4.16f1 or above
 * `Unity Rendering` - [Universal Render Pipeline (URP)](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.2/manual/index.html)
 
 **Project Structure**
@@ -20,11 +20,11 @@ This sample project demonstrates specific [Beamable](https://beamable.com/) feat
 * **Version**: The latest public release as of each GIT commit
 
 # Details: Multiplayer TBF Sample Project
-![Logo](client/Assets/Art/Textures/TBD.png)
+![Logo](client/Assets/Art/Textures/ReadMeIcon.png)
 
-### What is TBD?
-TBD.
-<br>[TBD](https://docs.beamable.com/docs/TBD)
+### What is "Turn-based Beamable Fighters"?
+Choose strategic attacks to win! Only the bravest knight survives. This sample project demonstrates Beamable's Multiplayer feature.
+<br>[Multiplayer - Sample Project](https://docs.beamable.com/docs/multiplayer-sample-project)
 
 ### What is Beamable?
 Beamable is the low-code option for rapidly adding social, 
@@ -32,7 +32,7 @@ commerce, and content management features to your live game.
 Learn how to do that with Beamable's online product documentation.
 <br>[docs.beamable.com](https://docs.beamable.com/)
 
-### What is Beamable Multiplayer?
+### What is Beamable's Multiplayer Feature?
 The purpose of this feature is to allow game makers to create real-time 
 and turn-based multi-user game experiences. 
 <br>[Beamable Multiplayer](https://docs.beamable.com/docs/multiplayer)
