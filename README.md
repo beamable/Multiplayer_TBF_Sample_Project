@@ -32,7 +32,7 @@ commerce, and content management features to your live game.
 Learn how to do that with Beamable's online product documentation.
 <br>[docs.beamable.com](https://docs.beamable.com/)
 
-### What is Beamable's Multiplayer Feature?
+### What is Beamable's "Multiplayer" Feature?
 The purpose of this feature is to allow game makers to create real-time 
 and turn-based multi-user game experiences. 
 <br>[Beamable Multiplayer](https://docs.beamable.com/docs/multiplayer)
