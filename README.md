@@ -1,4 +1,4 @@
-# Overview: Beamable Sample Project
+# Details: Beamable Sample Project
 
 This sample project demonstrates specific [Beamable](https://beamable.com/) features and services.
 
@@ -19,7 +19,7 @@ This sample project demonstrates specific [Beamable](https://beamable.com/) feat
 * **Included**: This project includes the Beamable SDK for Unity
 * **Version**: The latest public release as of each GIT commit
 
-# Details: Multiplayer TBF Sample Project
+# Overview: Multiplayer TBF Sample Project
 ![Logo](client/Assets/Art/Textures/ReadMeIcon.png)
 
 ### What is "Turn-based Beamable Fighters"?
@@ -32,7 +32,7 @@ commerce, and content management features to your live game.
 Learn how to do that with Beamable's online product documentation.
 <br>[docs.beamable.com](https://docs.beamable.com/)
 
-### What is Beamable's Multiplayer Feature?
+### What is Beamable's "Multiplayer" Feature?
 The purpose of this feature is to allow game makers to create real-time 
 and turn-based multi-user game experiences. 
 <br>[Beamable Multiplayer](https://docs.beamable.com/docs/multiplayer)
