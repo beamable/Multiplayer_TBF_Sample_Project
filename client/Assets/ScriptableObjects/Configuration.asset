@@ -28,10 +28,10 @@ MonoBehaviour:
   - _location: Remote
     _color: {r: 1, g: 0, b: 0.29803923, a: 1}
   _delayBeforeLoadScene: 0.1
-  _delayBeforeSoundAttack_01a: 0.2
-  _delayBeforeSoundAttack_01b: 1.5
+  _delayBeforeSoundAttack_01a: 0.1
+  _delayBeforeSoundAttack_01b: 1.3
   _delayBeforeSoundAttack_02a: 0.1
   _delayBeforeSoundAttack_02b: 0.6
-  _delayBeforeSoundAttack_03: 1
+  _delayBeforeSoundAttack_03: 1.2
   _statusMessageMinDuration: 1
   _delayFadeInUI: 0.25

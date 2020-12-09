@@ -320,6 +320,16 @@ namespace Beamable.Samples.TBF
          }
       }
 
+      private void SendGameMoveEventSave(GameMoveType gameMoveType)
+      {
+         if (_gameState == GameState.Moving)
+         {
+            SoundManager.Instance.PlayAudioClip(SoundConstants.Click02);
+
+            _tbfMultiplayerSession.SendEvent<GameMoveEvent>(
+               new GameMoveEvent(gameMoveType));
+         }
+      }
 
       //  Event Handlers -------------------------------
 
@@ -334,35 +344,24 @@ namespace Beamable.Samples.TBF
             _configuration.DelayBeforeLoadScene));
       }
 
+
       private void MoveButton_01_OnClicked()
       {
-         if (_gameState == GameState.Moving)
-         {
-            _tbfMultiplayerSession.SendEvent<GameMoveEvent>(
-               new GameMoveEvent(GameMoveType.High));
-         }
+         SendGameMoveEventSave(GameMoveType.High);
       }
 
 
       private void MoveButton_02_OnClicked()
       {
-         if (_gameState == GameState.Moving)
-         {
-            var x = new GameMoveEvent(GameMoveType.Medium);
-            Debug.Log("was: " + x.GameMoveType);
-            _tbfMultiplayerSession.SendEvent<GameMoveEvent>(x)
-               ;
-         }
+         SendGameMoveEventSave(GameMoveType.Medium);
       }
+
 
       private void MoveButton_03_OnClicked()
       {
-         if (_gameState == GameState.Moving)
-         {
-            _tbfMultiplayerSession.SendEvent<GameMoveEvent>(
-               new GameMoveEvent(GameMoveType.Low));
-         }
+         SendGameMoveEventSave(GameMoveType.Low);
       }
+
 
       private void MultiplayerSession_OnInit(long body)
       {
