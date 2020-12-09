@@ -19,8 +19,9 @@ namespace Beamable.Samples.TBF.Audio
       public const string Music01 = "Music01";
       public const string Music02 = "Music02";
       public const string Music02Exit = "Music02Exit";
-      public const string Swing01 = "Swing01";
-      public const string Swing02 = "Swing02";
+      public const string Attack_01 = "Swing01";
+      public const string Attack_02 = "Swing02";
+      public const string Attack_03 = "Swing01";
       public const string TakeDamage01 = "TakeDamage01";
       public const string TakeDamage02 = "TakeDamage02";
       public const string Unsheath01 = "Unsheath01";

@@ -17,15 +17,21 @@ MonoBehaviour:
   _gameSceneName: 3.Game
   _targetPlayerCount: 2
   _gameRoundsTotal: 3
+  _delayMatchmakingMax: 10
   _delayGameBeforeMove: 1
   _delayGameMaxDuringMove: 10
   _delayGameAfterMove: 1
-  _delayMatchmakingMax: 10
+  _delayGameBeforeGameOver: 3
   _avatarDatas:
   - _location: Local
     _color: {r: 0, g: 0.072282314, b: 1, a: 1}
   - _location: Remote
     _color: {r: 1, g: 0, b: 0.29803923, a: 1}
   _delayBeforeLoadScene: 0.1
+  _delayBeforeSoundAttack_01a: 0.2
+  _delayBeforeSoundAttack_01b: 1.5
+  _delayBeforeSoundAttack_02a: 0.1
+  _delayBeforeSoundAttack_02b: 0.6
+  _delayBeforeSoundAttack_03: 1
   _statusMessageMinDuration: 1
   _delayFadeInUI: 0.25

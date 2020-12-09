@@ -11,6 +11,9 @@ namespace Beamable.Samples.TBF.Audio
 	/// </summary>
 	public class SoundManager : SingletonMonobehavior<SoundManager>
 	{
+		private const float UnsetFloat = -1;
+		private const float PitchDefault = 1;
+
 		[SerializeField]
 		private List<AudioClip> _audioClips = new List<AudioClip>();
 
@@ -46,35 +49,42 @@ namespace Beamable.Samples.TBF.Audio
 			{
 				if (audioClip.name == audioClipName)
 				{
-					PlayAudioClip(audioClip, pitch);
+					PlayAudioClipInternal(audioClip, pitch);
 					return;
 				}
 			}
 		}
+
+		public void PlayAudioClipDelayed(string audioClipName, float delay, float pitch)
+		{
+			foreach (AudioClip audioClip in _audioClips)
+			{
+				if (audioClip.name == audioClipName)
+				{
+					PlayAudioClipInternal(audioClip, pitch, delay);
+					return;
+				}
+			}
+		}
+
+		public void PlayAudioClipDelayed(string audioClipName, float delay)
+		{
+			foreach (AudioClip audioClip in _audioClips)
+			{
+				if (audioClip.name == audioClipName)
+				{
+					PlayAudioClipInternal(audioClip, PitchDefault, delay);
+					return;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Play the AudioClip by name.
 		/// </summary>
 		public void PlayAudioClip(string audioClipName)
 		{
-			PlayAudioClip(audioClipName, 1);
-		}
-
-		/// <summary>
-		/// Play the AudioClip by reference.
-		/// If all sources are occupied, nothing will play.
-		/// </summary>
-		public void PlayAudioClip(AudioClip audioClip, float pitch)
-		{
-			foreach (AudioSource audioSource in _audioSources)
-			{
-				if (!audioSource.isPlaying)
-				{
-					audioSource.clip = audioClip;
-					audioSource.pitch = pitch;
-					audioSource.Play();
-					return;
-				}
-			}
+			PlayAudioClip(audioClipName, PitchDefault);
 		}
 
 		/// <summary>
@@ -83,7 +93,36 @@ namespace Beamable.Samples.TBF.Audio
 		/// </summary>
 		public void PlayAudioClip(AudioClip audioClip)
 		{
-			PlayAudioClip (audioClip, 1);
+			PlayAudioClipInternal(audioClip, 1);
 		}
+
+		/// <summary>
+		/// Play the AudioClip by reference.
+		/// If all sources are occupied, nothing will play.
+		/// </summary>
+		private void PlayAudioClipInternal(AudioClip audioClip, float pitch, float delay = UnsetFloat)
+		{
+			foreach (AudioSource audioSource in _audioSources)
+			{
+				if (!audioSource.isPlaying)
+				{
+					audioSource.clip = audioClip;
+					audioSource.pitch = pitch;
+					if (delay == UnsetFloat)
+               {
+						audioSource.Play();
+					}
+					else
+               {
+						//delay in seconds
+						audioSource.PlayDelayed(delay);
+					}
+					
+					return;
+				}
+			}
+		}
+
+
 	}
 }

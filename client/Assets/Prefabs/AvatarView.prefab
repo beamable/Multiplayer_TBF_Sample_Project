@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 6046801128001489971}
+  _configuration: {fileID: 11400000, guid: 28e7b012a002a51458322ba2fc05964d, type: 2}
 --- !u!1 &5961743066450021051
 GameObject:
   m_ObjectHideFlags: 0

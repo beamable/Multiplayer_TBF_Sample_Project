@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Beamable.Samples.TBF.Multiplayer.Events
 {
@@ -9,6 +10,7 @@ namespace Beamable.Samples.TBF.Multiplayer.Events
       public GameMoveType GameMoveType {  get { return _gameMoveType; } }
 
       //  Fields ---------------------------------------
+      [SerializeField]
       private GameMoveType _gameMoveType;
 
       //  Constructor   --------------------------------

@@ -31,16 +31,21 @@ namespace Beamable.Samples.TBF
       public const string StatusText_GameState_Moving = "Round '{0}'. Waiting for moves...";
       public const string StatusText_GameState_Moved = "Round '{0}'. Moves complete...";
       public const string StatusText_GameState_Evaluated = "Round '{0}' over. Round winner '{1}'...";
-      public const string StatusText_GameState_Ending = "Game' {0}' over. Game winner '{1}'...";
+      public const string StatusText_GameState_Ending = "Round '{0}' over. Game over. Game winner '{1}'...";
       //
       public const string StatusText_Before_Move = "Prepare to move in {0} seconds...";
       public const string StatusText_During_Move = "Choose your move within {0} seconds...";
 
       //
-      public static string Avatar_Idle = "Idle";
-      public static string Avatar_Cover = "Cover";
-      public static string Avatar_Attack01 = "Attack01";
-      public static string Avatar_Attack02 = "Attack02";
-      public static string Avatar_Attack03 = "Attack01"; //Todo choose new animation
+      public static string Avatar_Idle = "Idle"; //start here
+      public static string Avatar_Attack_01 = "Attack_01";
+      public static string Avatar_Attack_02 = "Attack_02";
+      public static string Avatar_Attack_03 = "Attack_03";
+      public static string Avatar_Death = "Death"; //end here
+
+      //
+      public static int TaskDelayMin = 100;
+      public static int MillisecondMultiplier = 1000;
+
    }
 }

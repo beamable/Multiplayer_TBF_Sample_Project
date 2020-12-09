@@ -28,6 +28,12 @@ namespace Beamable.Samples.TBF.Data
       public float DelayGameBeforeMove { get { return _delayGameBeforeMove; } }
       public float DelayGameMaxDuringMove { get { return _delayGameMaxDuringMove; } }
       public float DelayGameAfterMove { get { return _delayGameAfterMove; } }
+      public float DelayBeforeSoundAttack_01a { get { return _delayBeforeSoundAttack_01a; } }
+      public float DelayBeforeSoundAttack_01b { get { return _delayBeforeSoundAttack_01b; } }
+      public float DelayBeforeSoundAttack_02a { get { return _delayBeforeSoundAttack_02a; } }
+      public float DelayBeforeSoundAttack_02b { get { return _delayBeforeSoundAttack_02b; } }
+      public float DelayBeforeSoundAttack_03 { get { return _delayBeforeSoundAttack_03; } }
+      public float DelayGameBeforeGameOver { get { return _delayGameBeforeGameOver; } }
 
       public List<AvatarData> AvatarDatas { get { return _avatarDatas; } }
 
@@ -38,6 +44,9 @@ namespace Beamable.Samples.TBF.Data
       /// Duration in seconds
       /// </summary>
       public float StatusMessageMinDuration { get { return _statusMessageMinDuration; } }
+
+
+
 
       //  Fields ---------------------------------------
       [Header("Scene Names")]
@@ -59,6 +68,9 @@ namespace Beamable.Samples.TBF.Data
       private int _gameRoundsTotal = 3;
 
       [SerializeField]
+      private float _delayMatchmakingMax = 10f;
+
+      [SerializeField]
       private float _delayGameBeforeMove = 1;
 
       [SerializeField]
@@ -68,7 +80,11 @@ namespace Beamable.Samples.TBF.Data
       private float _delayGameAfterMove = 1;
 
       [SerializeField]
-      private float _delayMatchmakingMax = 10f;
+      private float _delayGameBeforeGameOver = 3;
+
+
+
+      
 
       [Header("Cosmetic Data")]
       [SerializeField]
@@ -77,6 +93,23 @@ namespace Beamable.Samples.TBF.Data
       [Header("Cosmetic Delays")]
       [SerializeField]
       private float _delayBeforeLoadScene = 0;
+
+      [SerializeField]
+      private float _delayBeforeSoundAttack_01a = 1;
+
+      [SerializeField]
+      private float _delayBeforeSoundAttack_01b = 1;
+
+      [SerializeField]
+      private float _delayBeforeSoundAttack_02a = 1;
+
+      [SerializeField]
+      private float _delayBeforeSoundAttack_02b = 1;
+
+      [SerializeField]
+      private float _delayBeforeSoundAttack_03 = 1;
+
+
 
       [Range (0,3)]
       [SerializeField]

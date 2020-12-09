@@ -21,24 +21,6 @@ namespace Beamable.Samples.TBF
          SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
       }
 
-
-      public static string GetAttackMissedText()
-      {
-         return "Miss";
-      }
-
-
-      public static string GetAttackButtonText(int heroWeaponIndex)
-      {
-         string text = "Attack!";
-
-         if (heroWeaponIndex >= 0)
-         {
-            text += $"<size=-19>\n(Weapon {++heroWeaponIndex:00})</size>";
-         }
-         return text;
-      }
-
       /// <summary>
       /// Return the intro menu text. This serves as a welcome to the game plot and game instructions.
       /// If error, help text is shown.

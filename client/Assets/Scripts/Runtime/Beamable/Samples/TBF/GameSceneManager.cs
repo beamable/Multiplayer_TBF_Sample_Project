@@ -1,4 +1,4 @@
-﻿using Beamable.Content;
+﻿using Beamable.Samples.TBF.Audio;
 using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Exceptions;
 using Beamable.Samples.TBF.Multiplayer;
@@ -6,6 +6,7 @@ using Beamable.Samples.TBF.Multiplayer.Events;
 using Beamable.Samples.TBF.Views;
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using static Beamable.Samples.TBF.Views.GameUIView;
 
@@ -13,9 +14,10 @@ namespace Beamable.Samples.TBF
 {
    public enum GameMoveType
    {
-      High,
-      Medium,
-      Low
+      Null = 0,
+      High = 10,
+      Medium = 20,
+      Low = 30
    }
    public enum GameState
    {
@@ -33,7 +35,7 @@ namespace Beamable.Samples.TBF
       Evaluating,
       Evaluated,
       Ending,
-      
+
    }
    /// <summary>
    /// Handles the main scene logic: Game
@@ -46,104 +48,127 @@ namespace Beamable.Samples.TBF
       /// For both organization and understandability, here a 
       /// very LIGHT State Pattern is used.
       /// </summary>
-      private GameState GameState
+      private async Task SetGameState(GameState gameState)
       {
-         get
-         { 
-            return _gameState; 
-         }
-         set
+         DebugLog($"GameState() from {_gameState} to {gameState}");
+
+         //Do not set "_gameState" directly anywhere, except here.
+         _gameState = gameState;
+
+         switch (_gameState)
          {
+            case GameState.Null:
+               break;
+            case GameState.Loading:
 
-            DebugLog($"GameState() from {_gameState} to {value}");
-            _gameState = value;
-            
-            switch (GameState)
-            {
-               case GameState.Null:
-                  break;
-               case GameState.Loading:
+               _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationIdle();
+               _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationIdle();
 
-                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].DoIdle();
-                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].DoIdle();
+               _gameProgressData = new GameProgressData(_configuration);
 
-                  _gameProgressData = new GameProgressData(_configuration);
+               SetStatusText("", StatusTextMode.Immediate);
 
-                  SetStatusText("", StatusTextMode.Immediate);
+               _gameUIView.MoveButtonsCanvasGroup.interactable = false;
 
-                  _gameUIView.MoveButtonsCanvasGroup.interactable = false;
+               SetStatusText(TBFConstants.StatusText_GameState_Loading, StatusTextMode.Queue);
 
-                  SetStatusText(TBFConstants.StatusText_GameState_Loading, StatusTextMode.Queue);
+               break;
+            case GameState.Loaded:
+               SetStatusText(TBFConstants.StatusText_GameState_Loaded, StatusTextMode.Queue);
+               break;
+            case GameState.Initializing:
+               SetStatusText(TBFConstants.StatusText_GameState_Initializing, StatusTextMode.Queue);
+               break;
+            case GameState.Initialized:
+               SetStatusText(TBFConstants.StatusText_GameState_Initialized, StatusTextMode.Queue);
+               break;
+            case GameState.Connecting:
+               SetStatusText(string.Format(TBFConstants.StatusText_GameState_Connecting,
+                  _tbfMultiplayerSession.PlayerDbids.Count.ToString(),
+                  _tbfMultiplayerSession.TargetPlayerCount), StatusTextMode.Queue);
+               break;
+            case GameState.Connected:
+               break;
+            case GameState.Starting:
+               _gameProgressData.GameRoundCurrent = 0;
+               break;
+            case GameState.Started:
+               break;
+            case GameState.Moving:
 
-                  break;
-               case GameState.Loaded:
-                  SetStatusText(TBFConstants.StatusText_GameState_Loaded, StatusTextMode.Queue);
-                  break;
-               case GameState.Initializing:
-                  SetStatusText(TBFConstants.StatusText_GameState_Initializing, StatusTextMode.Queue);
-                  break;
-               case GameState.Initialized:
-                  SetStatusText(TBFConstants.StatusText_GameState_Initialized, StatusTextMode.Queue);
-                  break;
-               case GameState.Connecting:
-                  SetStatusText(string.Format(TBFConstants.StatusText_GameState_Connecting,
-                     _tbfMultiplayerSession.PlayerDbids.Count.ToString(),
-                     _tbfMultiplayerSession.TargetPlayerCount), StatusTextMode.Queue);
-                  break;
-               case GameState.Connected:
-                  break;
-               case GameState.Starting:
-                  _gameProgressData.GameRoundCurrent = 0;
-                  break;
-               case GameState.Started:
-                  break;
-               case GameState.Moving:
+               SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moving,
+                   _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
 
-                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].DoCover();
-                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].DoCover();
+               _gameProgressData.GameMoveEventsThisRoundByPlayerDbid.Clear();
 
-                  SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moving,
-                      _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
-                  _gameProgressData.GameMoveEventsThisRoundByPlayerDbid.Clear();
-                  _gameUIView.MoveButtonsCanvasGroup.interactable = true;
-                  break;
-               case GameState.Moved:
+               //Wait for old messages to pass before allowing button clicks
+               while (_gameUIView.StatusMessageCount > 0)
+               {
+                  await Task.Delay(TBFConstants.TaskDelayMin);
+               }
+               _gameUIView.MoveButtonsCanvasGroup.interactable = true;
 
-                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].Attack(GameMoveType.High);
-                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].Attack(GameMoveType.Low);
+               break;
+            case GameState.Moved:
 
-                  SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moved,
-                     _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
-                  _gameUIView.MoveButtonsCanvasGroup.interactable = false;
-                  break;
-               case GameState.Evaluating:
-                  _gameProgressData.EvaluateGameMoveEventsThisRound();
-                  GameState = GameState.Evaluated;
-                  break;
-               case GameState.Evaluated:
-                  SetStatusText(string.Format(TBFConstants.StatusText_GameState_Evaluated,
-                     _gameProgressData.GameRoundCurrent,
-                     _gameProgressData.GetRoundWinnerPlayerDbid()), StatusTextMode.Queue);
+               SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moved,
+                  _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
 
-                  if (_gameProgressData.GameHasWinner())
-                  {
-                     GameState = GameState.Ending;
-                  }
-                  else
-                  {
-                     _gameProgressData.GameRoundCurrent++;
-                     GameState = GameState.Moving;
-                  }
-                  break;
-               case GameState.Ending:
-                  SetStatusText(string.Format(TBFConstants.StatusText_GameState_Ending,
-                     _gameProgressData.GameRoundCurrent,
-                     _gameProgressData.GetGameWinnerPlayerDbid()), StatusTextMode.Queue);
-                  break;
-               default:
-                  SwitchDefaultException.Throw(GameState);
-                  break;
-            }
+               _gameUIView.MoveButtonsCanvasGroup.interactable = false;
+
+               break;
+            case GameState.Evaluating:
+
+               _gameProgressData.EvaluateGameMoveEventsThisRound();
+               await SetGameState(GameState.Evaluated);
+
+               break;
+            case GameState.Evaluated:
+
+               SetStatusText(string.Format(TBFConstants.StatusText_GameState_Evaluated,
+                  _gameProgressData.GameRoundCurrent,
+                  _gameProgressData.GetRoundWinnerPlayerDbid()), StatusTextMode.Queue);
+               
+               //Wait for animations to finish
+               await Task.Delay((int)_configuration.DelayGameBeforeGameOver * 
+                  TBFConstants.MillisecondMultiplier); 
+
+               if (_gameProgressData.GameHasWinner())
+               {
+                  await SetGameState(GameState.Ending);
+               }
+               else
+               {
+                  _gameProgressData.GameRoundCurrent++;
+                  await SetGameState(GameState.Moving);
+               }
+               break;
+            case GameState.Ending:
+
+               SetStatusText(string.Format(TBFConstants.StatusText_GameState_Ending,
+                  _gameProgressData.GameRoundCurrent,
+                  _gameProgressData.GetGameWinnerPlayerDbid()), StatusTextMode.Queue);
+
+               if (_tbfMultiplayerSession.IsLocalPlayerDbid(_gameProgressData.GetGameWinnerPlayerDbid()))
+               {
+                  //Local winner
+                  SoundManager.Instance.PlayAudioClip(SoundConstants.GameOverWin);
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationWin();
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationIdle();
+               }
+               else
+               {
+                  //Remote winner
+                  SoundManager.Instance.PlayAudioClip(SoundConstants.GameOverLoss);
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationIdle();
+                  _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationWin();
+               }
+
+
+               break;
+            default:
+               SwitchDefaultException.Throw(_gameState);
+               break;
          }
       }
 
@@ -163,7 +188,6 @@ namespace Beamable.Samples.TBF
       private GameUIView _gameUIView = null;
 
       private Coroutine _runGameCoroutine;
-      private LeaderboardContent _leaderboardContent;
       private IBeamableAPI _beamableAPI = null;
       private TBFMultiplayerSession _tbfMultiplayerSession;
       private GameState _gameState = GameState.Null;
@@ -171,13 +195,13 @@ namespace Beamable.Samples.TBF
 
 
       //  Unity Methods   ------------------------------
-      protected void Start ()
+      protected void Start()
       {
          _gameUIView.BackButton.onClick.AddListener(BackButton_OnClicked);
          _gameUIView.MoveButton_01.onClick.AddListener(MoveButton_01_OnClicked);
          _gameUIView.MoveButton_02.onClick.AddListener(MoveButton_02_OnClicked);
          _gameUIView.MoveButton_03.onClick.AddListener(MoveButton_03_OnClicked);
-         
+
          _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health = 100;
          _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health = 100;
 
@@ -202,11 +226,11 @@ namespace Beamable.Samples.TBF
 
       private async void SetupBeamable()
       {
-         GameState = GameState.Loading;
+         SetGameState(GameState.Loading);
 
          await Beamable.API.Instance.Then(de =>
          {
-            GameState = GameState.Loaded;
+            SetGameState (GameState.Loaded);
 
             try
             {
@@ -220,7 +244,7 @@ namespace Beamable.Samples.TBF
                _tbfMultiplayerSession = new TBFMultiplayerSession(localPlayerDbid,
                   targetPlayerCount, roomId);
 
-               GameState = GameState.Initializing;
+               SetGameState(GameState.Initializing);
 
                _tbfMultiplayerSession.OnInit += MultiplayerSession_OnInit;
                _tbfMultiplayerSession.OnConnect += MultiplayerSession_OnConnect;
@@ -277,7 +301,7 @@ namespace Beamable.Samples.TBF
 
       private void SetStatusText(string message, GameUIView.StatusTextMode statusTextMode)
       {
-         _gameUIView.SetStatusText (message, statusTextMode);
+         _gameUIView.SetStatusText(message, statusTextMode);
       }
 
 
@@ -303,7 +327,7 @@ namespace Beamable.Samples.TBF
       {
          //TEMP - restart game
          //RestartGame();
-   
+
          //TODO: Disconnect the player?
 
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
@@ -312,7 +336,7 @@ namespace Beamable.Samples.TBF
 
       private void MoveButton_01_OnClicked()
       {
-         if (GameState == GameState.Moving)
+         if (_gameState == GameState.Moving)
          {
             _tbfMultiplayerSession.SendEvent<GameMoveEvent>(
                new GameMoveEvent(GameMoveType.High));
@@ -322,16 +346,18 @@ namespace Beamable.Samples.TBF
 
       private void MoveButton_02_OnClicked()
       {
-         if (GameState == GameState.Moving)
+         if (_gameState == GameState.Moving)
          {
-            _tbfMultiplayerSession.SendEvent<GameMoveEvent>(
-               new GameMoveEvent(GameMoveType.Medium));
+            var x = new GameMoveEvent(GameMoveType.Medium);
+            Debug.Log("was: " + x.GameMoveType);
+            _tbfMultiplayerSession.SendEvent<GameMoveEvent>(x)
+               ;
          }
       }
 
       private void MoveButton_03_OnClicked()
       {
-         if (GameState == GameState.Moving)
+         if (_gameState == GameState.Moving)
          {
             _tbfMultiplayerSession.SendEvent<GameMoveEvent>(
                new GameMoveEvent(GameMoveType.Low));
@@ -340,25 +366,24 @@ namespace Beamable.Samples.TBF
 
       private void MultiplayerSession_OnInit(long body)
       {
-         GameState = GameState.Initialized;
-         
+         SetGameState(GameState.Initialized);
       }
 
 
       private void MultiplayerSession_OnConnect(long playerDbid)
       {
-         
+
          BindPlayerDbidToEvents(playerDbid, true);
- 
+
          if (_tbfMultiplayerSession.PlayerDbids.Count < _tbfMultiplayerSession.TargetPlayerCount)
          {
-            GameState = GameState.Connecting;
+            SetGameState (GameState.Connecting);
 
          }
          else
          {
-            GameState = GameState.Connected;
-            
+            SetGameState (GameState.Connected);
+
             _tbfMultiplayerSession.SendEvent<GameStartEvent>(new GameStartEvent());
          }
       }
@@ -382,12 +407,12 @@ namespace Beamable.Samples.TBF
             //switch statement atop this class and...
             //1. toggle buttons off/on
             //2. show text to status
-            GameState = GameState.Started;
-            GameState = GameState.Moving;
+            SetGameState (GameState.Started);
+            SetGameState (GameState.Moving);
          }
          else
          {
-            GameState = GameState.Starting;
+            SetGameState (GameState.Starting);
          }
       }
 
@@ -396,11 +421,17 @@ namespace Beamable.Samples.TBF
          //Add each player event to a list
          _gameProgressData.GameMoveEventsThisRoundByPlayerDbid[gameMoveEvent.PlayerDbid] = gameMoveEvent;
 
+         Debug.Log($"gameMoveEvent.GameMoveType(): {gameMoveEvent.GameMoveType}");
+
+
+         _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationByGameMoveType(gameMoveEvent.GameMoveType);
+         _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationByGameMoveType(gameMoveEvent.GameMoveType);
+
          //Enough players did a move? Then advance game state
          if (_gameProgressData.GameMoveEventsThisRoundByPlayerDbid.Count == _tbfMultiplayerSession.TargetPlayerCount)
          {
-            GameState = GameState.Moved;
-            GameState = GameState.Evaluating;
+            SetGameState (GameState.Moved);
+            SetGameState (GameState.Evaluating);
          }
       }
    }

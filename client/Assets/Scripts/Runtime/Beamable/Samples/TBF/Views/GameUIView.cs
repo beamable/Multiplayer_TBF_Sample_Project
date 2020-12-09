@@ -32,6 +32,8 @@ namespace Beamable.Samples.TBF.Views
       //
       public CanvasGroup MoveButtonsCanvasGroup { get { return _moveButtonsCanvasGroup; } }
 
+      public int StatusMessageCount { get { return _statusMessageQueue.Count; } }
+
       //  Fields ---------------------------------------
       [SerializeField]
       private Configuration _configuration = null;

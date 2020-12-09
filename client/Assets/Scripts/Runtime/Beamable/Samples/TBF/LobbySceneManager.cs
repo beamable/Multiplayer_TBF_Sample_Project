@@ -23,6 +23,9 @@ namespace Beamable.Samples.TBF
          _lobbyUIView.BackButton.onClick.AddListener(BackButton_OnClicked);
 
          _lobbyUIView.StatusBodyText.text = "Waiting...";
+
+         //TODO: Remove
+         MatchmakingService_OnComplete();
       }
 
 
