@@ -47,5 +47,7 @@ namespace Beamable.Samples.TBF
       public static int TaskDelayMin = 100;
       public static int MillisecondMultiplier = 1000;
 
+      //Lobby
+      public static string StatusText_Waiting = "Waiting...";
    }
 }

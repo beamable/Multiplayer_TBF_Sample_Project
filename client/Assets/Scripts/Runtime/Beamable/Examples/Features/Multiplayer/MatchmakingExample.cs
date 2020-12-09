@@ -4,7 +4,9 @@ namespace Beamable.Examples.Features.Multiplayer
 {
    public class MatchmakingExample : MonoBehaviour
    {
-      private const int TargetPlayerCount = 2;
+      //Set as 1 for single player. This is helpful for demo.
+      //Set as 2+ for multi player. This requires you to spawn multiple game builds (e.g. Standalone vs Unity Editor)
+      private const int TargetPlayerCount = 1;
 
       protected void Start()
       {

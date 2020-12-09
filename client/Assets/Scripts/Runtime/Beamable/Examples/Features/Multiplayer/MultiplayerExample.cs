@@ -21,13 +21,14 @@ namespace Beamable.Examples.Features.Multiplayer
    {
       private const long FramesPerSecond = 20;
       private const long TargetNetworkLead = 4;
-      private const string RoomId = "MyCustomRoomId";
+      
 
       private SimClient _simClient;
       private string _sessionSeed;
       private long _currentFrame;
       private List<string> _sessionPlayerDbids = new List<string>();
       private long _localPlayerDbid;
+      private string roomId = "";
 
       protected void Start()
       {
@@ -37,8 +38,13 @@ namespace Beamable.Examples.Features.Multiplayer
             _localPlayerDbid = de.User.id;
          });
 
+         //Randomize the roomId so that every play-session
+         //The game connects to a new room with no previous event history.
+         //This is optional, and ideal for a 'clean' demo.
+         roomId = "MyCustomRoomId_" + UnityEngine.Random.Range(100, 200);
+
          // Create Multiplayer Session
-         _simClient = new SimClient(new SimNetworkEventStream(RoomId),
+         _simClient = new SimClient(new SimNetworkEventStream(roomId),
             FramesPerSecond, TargetNetworkLead);
 
          // Handle Common Events
@@ -58,12 +64,14 @@ namespace Beamable.Examples.Features.Multiplayer
          // Send Custom Events
          if (Input.GetMouseButtonDown(0))
          {
+            Debug.Log($"SendEvent() for {MyPlayerMoveEvent.Name}.");
             _simClient.SendEvent(MyPlayerMoveEvent.Name,
                new MyPlayerMoveEvent(_localPlayerDbid, new Vector3(0, 0, 0)));
          }
 
+         // More debug info. 
          string message = "";
-         message += $"Room: {RoomId}\n";
+         message += $"Room: {roomId}\n";
          message += $"Seed: {_sessionSeed}\n";
          message += $"Frame: {_currentFrame}\n";
          message += $"Dbids:";
@@ -86,7 +94,7 @@ namespace Beamable.Examples.Features.Multiplayer
       private void SimClient_OnInit(string sessionSeed)
       {
          _sessionSeed = sessionSeed;
-         Debug.Log($"SimClient_OnInit(): {RoomId} {sessionSeed}");
+         Debug.Log($"SimClient_OnInit(): {roomId} {sessionSeed}");
       }
 
       private void SimClient_OnConnect(string dbid)
@@ -98,6 +106,7 @@ namespace Beamable.Examples.Features.Multiplayer
             SimClient_OnMyPlayerMoveEvent);
 
          Debug.Log($"SimClient_OnConnect(): {dbid}");
+         Debug.Log($"Click/Tap onscreen to send example event.");
       }
 
       private void SimClient_OnDisconnect(string dbid)

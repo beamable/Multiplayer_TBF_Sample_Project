@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Beamable.Samples.TBF.Views.GameUIView;
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
 namespace Beamable.Samples.TBF
 {
    public enum GameMoveType
@@ -142,6 +144,7 @@ namespace Beamable.Samples.TBF
                   _gameProgressData.GameRoundCurrent++;
                   await SetGameState(GameState.Moving);
                }
+
                break;
             case GameState.Ending:
 
@@ -163,7 +166,6 @@ namespace Beamable.Samples.TBF
                   _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationIdle();
                   _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationWin();
                }
-
 
                break;
             default:
@@ -237,12 +239,20 @@ namespace Beamable.Samples.TBF
                _beamableAPI = de;
 
                //TODO: Fetch the found matchmaking info from the previous scene
-               long localPlayerDbid = _beamableAPI.User.id;
-               string roomId = TBFMatchmaking.GetRandomRoomId();
-               int targetPlayerCount = 1;
+               Debug.Log("Game, IsMatchmakingComplete: " + RuntimeDataStorage.Instance.IsMatchmakingComplete);
 
-               _tbfMultiplayerSession = new TBFMultiplayerSession(localPlayerDbid,
-                  targetPlayerCount, roomId);
+               if (!RuntimeDataStorage.Instance.IsMatchmakingComplete)
+               {
+                  RuntimeDataStorage.Instance.LocalPlayerDbid = _beamableAPI.User.id;
+                  RuntimeDataStorage.Instance.TargetPlayerCount = 1;
+                  RuntimeDataStorage.Instance.RoomId = TBFMatchmaking.GetRandomRoomId();
+               }
+  
+               
+               _tbfMultiplayerSession = new TBFMultiplayerSession(
+                  RuntimeDataStorage.Instance.LocalPlayerDbid,
+                  RuntimeDataStorage.Instance.TargetPlayerCount,
+                  RuntimeDataStorage.Instance.RoomId) ;
 
                SetGameState(GameState.Initializing);
 
