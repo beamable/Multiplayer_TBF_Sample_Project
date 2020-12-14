@@ -133,7 +133,10 @@ namespace Beamable.Samples.TBF
                
                //Wait for animations to finish
                await Task.Delay((int)_configuration.DelayGameBeforeGameOver * 
-                  TBFConstants.MillisecondMultiplier); 
+                  TBFConstants.MillisecondMultiplier);
+
+               _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health = 50;
+               _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health = 50;
 
                if (_gameProgressData.GameHasWinner())
                {
