@@ -2,10 +2,13 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Beamable.Common;
-using Beamable.Platform.SDK.Inventory;
+using Beamable.Common.Api;
+using Beamable.Api.Inventory;
+using Beamable.Common.Api.Inventory;
 using Beamable.Service;
+using CometClientData = Beamable.Platform.SDK.CometClientData;
 
-namespace Beamable.Platform.SDK.Payments
+namespace Beamable.Api.Payments
 {
    /// <summary>
    /// Payments service.

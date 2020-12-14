@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Beamable.Platform.SDK.Analytics {
+namespace Beamable.Api.Analytics {
 
 	public class BillerPurchaseFailedEvent : CoreEvent {
 		public BillerPurchaseFailedEvent(string sku, ErrorCode error)

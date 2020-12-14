@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Beamable.Platform.SDK.Analytics {
+namespace Beamable.Api.Analytics {
 
    public class LoginPanicEvent : CoreEvent {
 

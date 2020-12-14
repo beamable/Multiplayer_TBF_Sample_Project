@@ -1,6 +1,6 @@
 using System;
 
-namespace Beamable.Platform.SDK.Sim {
+namespace Beamable.Api.Sim {
    [Serializable]
    public class SimEvent {
       public long Frame;

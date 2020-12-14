@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Beamable.ConsoleCommands;
 using Beamable.Coroutines;
-using Beamable.Platform.SDK.Analytics;
-using Beamable.Platform.SDK.Entitlements;
-using Beamable.Platform.SDK.Groups;
-using Beamable.Platform.SDK.Mail;
+using Beamable.Api.Analytics;
+using Beamable.Api.Entitlements;
+using Beamable.Api.Groups;
+using Beamable.Api.Mail;
+using Beamable.Common.Api.Groups;
+using Beamable.Common.Api.Mail;
 using Beamable.Service;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.Scripting;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api
 {
     [DBeamConsoleCommandProvider]
     public class PlatformConsoleCommands

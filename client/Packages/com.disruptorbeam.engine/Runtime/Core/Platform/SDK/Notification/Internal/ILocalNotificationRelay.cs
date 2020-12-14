@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Beamable.Platform.SDK.Notification.Internal
+namespace Beamable.Api.Notification.Internal
 {
    /// <summary>
    /// Interface for local notification relay. See AppleLocalNotificationRelay

@@ -1,10 +1,11 @@
 using System;
 using System.Globalization;
 using Beamable.Common;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api
 {
-   public class AccessToken
+   public class AccessToken : IAccessToken
    {
       private AccessTokenStorage _storage;
       public string Token { get; private set; }

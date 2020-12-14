@@ -8,7 +8,8 @@ using Beamable.Content;
 using Beamable.UI.Scripts;
 using Beamable.Coroutines;
 using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Tournaments;
+using Beamable.Api.Tournaments;
+using Beamable.Common.Api.Tournaments;
 using Beamable.Modules.AccountManagement;
 using Beamable.Modules.Tournaments;
 using TMPro;
@@ -594,7 +595,7 @@ namespace Beamable.Modules.Tournaments
 
     public class TournamentBundle
     {
-        public ITournamentService Service;
+        public ITournamentApi Service;
         public TournamentInfo TournamentInfo;
         public TournamentContent Content;
         public TournamentPlayerStatus Status;

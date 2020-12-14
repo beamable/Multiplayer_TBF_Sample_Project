@@ -17,7 +17,6 @@ namespace Beamable.Content
    [Agnostic]
    public class CurrencyRef : ContentRef<CurrencyContent>
    {
-
    }
 
    [System.Serializable]

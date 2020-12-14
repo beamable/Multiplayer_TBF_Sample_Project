@@ -1,7 +1,8 @@
 using System;
 using Beamable.Common;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api
 {
    public class PubnubNotificationService
    {

@@ -144,13 +144,13 @@ namespace Beamable.Server.Editor
                var config = MicroserviceConfiguration.Instance.Microservices;
                var entries = allServices.Select(name =>
                {
-                  var configEntry = config.FirstOrDefault(s => s.ServiceName == name);
+                  var configEntry = MicroserviceConfiguration.Instance.GetEntry(name);//config.FirstOrDefault(s => s.ServiceName == name);
                   return new ManifestEntryModel
                   {
                      Comment = "",
+                     ServiceName = name,
                      Enabled = configEntry?.Enabled ?? true,
                      TemplateId = configEntry?.TemplateId ?? "small",
-                     ServiceName = name
                   };
                }).ToList();
 
@@ -244,7 +244,7 @@ namespace Beamable.Server.Editor
          {
             var entry = model.Services[descriptor.Name];
             Debug.Log($"Building service=[{descriptor.Name}]");
-            var buildCommand = new BuildImageCommand(descriptor);
+            var buildCommand = new BuildImageCommand(descriptor, false);
             await buildCommand.Start(context);
 
             var uploader = new ContainerUploadHarness(context);

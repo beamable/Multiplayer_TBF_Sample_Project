@@ -1,7 +1,8 @@
 using System;
 using Beamable.Common;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK.Notification
+namespace Beamable.Api.Notification
 {
    public class PushService
    {

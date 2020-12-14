@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using Beamable.Common;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK.Chat
+namespace Beamable.Api.Chat
 {
    public class ChatService
    {
       private readonly PlatformService _platform;
-      private PlatformRequester _requester;
+      private IBeamableRequester _requester;
       private const string BaseUri = "/object/chatV2";
 
-      public ChatService (PlatformService platform, PlatformRequester requester)
+      public ChatService (PlatformService platform, IBeamableRequester requester)
       {
          _platform = platform;
          _requester = requester;

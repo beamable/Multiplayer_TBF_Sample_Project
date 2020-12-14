@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Beamable.Coroutines;
 using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Announcements;
 using Beamable.Platform.SDK.Auth;
-using Beamable;
 using Beamable.Api;
+using Beamable.Common.Api.Announcements;
 using Beamable.Modules.AccountManagement;
 using Beamable.UI.Layouts;
 using Beamable.UI.Scripts;
@@ -15,73 +14,76 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class AnnouncementMainMenu : MenuBase
+namespace Beamable.Modules.Announcements
 {
-   public AnnouncementSummary SummaryPrefab;
-   public Transform AnnouncementList;
-   private PlatformSubscription<AnnouncementQueryResponse> Subscription;
-   private List<AnnouncementView> Announcements;
-
-   protected async void Start()
+   public class AnnouncementMainMenu : MenuBase
    {
-      var de = await API.Instance;
-      Subscription = de.AnnouncementService.Subscribe(announcements =>
+      public AnnouncementSummary SummaryPrefab;
+      public Transform AnnouncementList;
+      private PlatformSubscription<AnnouncementQueryResponse> Subscription;
+      private List<AnnouncementView> Announcements;
+
+      protected async void Start()
       {
-         Announcements = announcements.announcements;
-
-         // Clear all data
-         for (var i = 0; i < AnnouncementList.childCount; i++)
+         var de = await API.Instance;
+         Subscription = PlatformSubscribableExtensions.Subscribe(de.AnnouncementService, announcements =>
          {
-            Destroy(AnnouncementList.GetChild(i).gameObject);
-         }
+            Announcements = announcements.announcements;
 
-         // Populate summaries
+            // Clear all data
+            for (var i = 0; i < AnnouncementList.childCount; i++)
+            {
+               Destroy(AnnouncementList.GetChild(i).gameObject);
+            }
+
+            // Populate summaries
+            foreach (var announcement in Announcements)
+            {
+               var summary = Instantiate(SummaryPrefab, AnnouncementList);
+               summary.Apply(Manager, announcement);
+            }
+         });
+      }
+
+      private void OnDestroy()
+      {
+         Subscription.Unsubscribe();
+      }
+
+      public async void OnReadAll()
+      {
+         List<string> ids = new List<string>();
          foreach (var announcement in Announcements)
          {
-            var summary = Instantiate(SummaryPrefab, AnnouncementList);
-            summary.Apply(Manager, announcement);
+            ids.Add(announcement.id);
          }
-      });
-   }
 
-   private void OnDestroy()
-   {
-      Subscription.Unsubscribe();
-   }
-
-   public async void OnReadAll()
-   {
-      List<string> ids = new List<string>();
-      foreach (var announcement in Announcements)
-      {
-         ids.Add(announcement.id);
+         var de = await API.Instance;
+         await de.AnnouncementService.MarkRead(ids);
       }
 
-      var de = await API.Instance;
-      await de.AnnouncementService.MarkRead(ids);
-   }
-
-   public async void OnClaimAll()
-   {
-      List<string> ids = new List<string>();
-      foreach (var announcement in Announcements)
+      public async void OnClaimAll()
       {
-         ids.Add(announcement.id);
+         List<string> ids = new List<string>();
+         foreach (var announcement in Announcements)
+         {
+            ids.Add(announcement.id);
+         }
+
+         var de = await API.Instance;
+         await de.AnnouncementService.Claim(ids);
       }
 
-      var de = await API.Instance;
-      await de.AnnouncementService.Claim(ids);
-   }
-
-   public async void OnDeleteAll()
-   {
-      List<string> ids = new List<string>();
-      foreach (var announcement in Announcements)
+      public async void OnDeleteAll()
       {
-         ids.Add(announcement.id);
-      }
+         List<string> ids = new List<string>();
+         foreach (var announcement in Announcements)
+         {
+            ids.Add(announcement.id);
+         }
 
-      var de = await API.Instance;
-      await de.AnnouncementService.MarkDeleted(ids);
+         var de = await API.Instance;
+         await de.AnnouncementService.MarkDeleted(ids);
+      }
    }
 }

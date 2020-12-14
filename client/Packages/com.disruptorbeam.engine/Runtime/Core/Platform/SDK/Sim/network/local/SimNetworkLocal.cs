@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Beamable.Platform.SDK.Sim {
+namespace Beamable.Api.Sim {
    public class SimNetworkLocal : SimNetworkInterface {
       public string ClientId { get; private set; }
       public bool Ready { get; private set; }

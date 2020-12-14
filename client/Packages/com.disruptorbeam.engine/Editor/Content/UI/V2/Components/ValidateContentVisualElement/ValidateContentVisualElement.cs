@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Beamable.Common.Content.Validation;
 using Beamable.Content.Validation;
 using Beamable.Editor.Content.Models;
 using Beamable.Editor.UI.Components;
@@ -50,8 +51,8 @@ namespace Beamable.Editor.Content.Components
          _messageLbl = Root.Q<Label>("message");
          _messageLbl.text = ContentManagerContants.ValidateStartMessage;
 
-         _detailButton = Root.Q<Button>("detailBtn");
-         _detailButton.clickable.clicked += DetailButton_OnClicked;
+         // _detailButton = Root.Q<Button>("detailBtn");
+         // _detailButton.clickable.clicked += DetailButton_OnClicked;
 
          _errorObjectCountElement = Root.Q<CountVisualElement>("errorObjectCount");
          _errorCountElement = Root.Q<CountVisualElement>("errorCount");

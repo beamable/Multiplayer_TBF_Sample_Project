@@ -21,9 +21,9 @@ namespace Beamable.Server.Editor.DockerCommands
             foreach (var kvp in jsonDict)
             {
                var key = kvp.Key;
-               if (key.StartsWith("@"))
+               if (key.StartsWith("__"))
                {
-                  switch (key.Substring("@".Length))
+                  switch (key.Substring("__".Length))
                   {
                      case "l": // logLevel
                         logLevel = kvp.Value.ToString();

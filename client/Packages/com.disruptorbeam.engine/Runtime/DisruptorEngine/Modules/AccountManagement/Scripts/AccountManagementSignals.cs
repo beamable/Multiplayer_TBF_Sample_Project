@@ -2,18 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Authentication;
+using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api.Auth;
+//using Beamable.Common.Api.Auth;
 using Beamable.Signals;
 using Beamable.UI.Scripts;
 using Beamable.Coroutines;
-using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Auth;
-using Beamable.UI;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using Debug = UnityEngine.Debug;
 
 namespace Beamable.Modules.AccountManagement

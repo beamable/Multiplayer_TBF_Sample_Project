@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using Beamable.Common;
 using Beamable.Common.Content;
+using Beamable.Common.Content.Validation;
 using Beamable.Content.Validation;
 using UnityEngine;
 

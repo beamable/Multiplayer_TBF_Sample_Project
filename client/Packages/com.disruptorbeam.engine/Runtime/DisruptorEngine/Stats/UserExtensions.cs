@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Beamable.Common;
+using Beamable.Common.Api.Auth;
 using Beamable.Platform.SDK;
 using Beamable.Platform.SDK.Auth;
 

@@ -27,24 +27,6 @@ namespace Beamable.Common.Api.Announcements
             String.Format("/object/announcements/{0}/read", Ctx.UserId),
             new AnnouncementRequest(ids)
          );
-//            .Map(rsp =>
-//         {
-//            var data = GetLatest();
-//            if (data != null)
-//            {
-//               var announcements = data.announcements.FindAll((next) => ids.Contains(next.id));
-//               if (announcements != null)
-//               {
-//                  foreach (var announcement in announcements)
-//                  {
-//                     announcement.isRead = true;
-//                  }
-//               }
-//               Notify(data);
-//            }
-//
-//            return rsp;
-//         });
       }
 
       public Promise<EmptyResponse> MarkDeleted(string id)
@@ -59,17 +41,6 @@ namespace Beamable.Common.Api.Announcements
             String.Format("/object/announcements/{0}", Ctx.UserId),
             new AnnouncementRequest(ids)
          );
-//            .Map(rsp =>
-//         {
-//            var data = GetLatest();
-//            if (data != null)
-//            {
-//               data.announcements.RemoveAll((next) => ids.Contains(next.id));
-//               Notify(data);
-//            }
-//
-//            return rsp;
-//         });
       }
 
       public Promise<EmptyResponse> Claim(string id)
@@ -83,26 +54,7 @@ namespace Beamable.Common.Api.Announcements
             Method.POST,
             String.Format("/object/announcements/{0}/claim", Ctx.UserId),
             new AnnouncementRequest(ids)
-         );//.Then(rsp => HandleClaimed(ids));
-//            .Map(rsp =>
-//         {
-//            var data = GetLatest();
-//            if (data != null)
-//            {
-//               var announcements = data.announcements.FindAll((next) => ids.Contains(next.id));
-//               if (announcements != null)
-//               {
-//                  foreach (var announcement in announcements)
-//                  {
-//                     announcement.isRead = true;
-//                     announcement.isClaimed = true;
-//                  }
-//               }
-//               Notify(data);
-//            }
-//
-//            return rsp;
-//         });
+         );
       }
 
       public abstract Promise<AnnouncementQueryResponse> GetCurrent(string scope = "");

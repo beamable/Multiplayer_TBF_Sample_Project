@@ -1,19 +1,23 @@
-﻿using Beamable.Platform.SDK.Auth;
+﻿using Beamable.Common.Api.Auth;
+using Beamable.Platform.SDK.Auth;
 using Beamable.UI.Scripts;
 
-public class AccountThirdPartyWaitingMenu : MenuBase
+namespace Beamable.Modules.AccountManagement
 {
-
-    public TextReference ThirdPartyMessage;
-
-    public void GoBackToMainPage()
+    public class AccountThirdPartyWaitingMenu : MenuBase
     {
-        Manager.GoBackToPage<AccountMainMenu>();
-    }
 
-    public void SetFor(AuthThirdParty argThirdParty)
-    {
-        ThirdPartyMessage.Value = $"Signing into {argThirdParty}";
-    }
+        public TextReference ThirdPartyMessage;
 
-}
+        public void GoBackToMainPage()
+        {
+            Manager.GoBackToPage<AccountMainMenu>();
+        }
+
+        public void SetFor(AuthThirdParty argThirdParty)
+        {
+            ThirdPartyMessage.Value = $"Signing into {argThirdParty}";
+        }
+
+    }
+}

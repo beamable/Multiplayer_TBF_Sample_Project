@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Beamable.Common;
-using Beamable.Platform.SDK.Inventory;
-using Beamable.Platform.SDK.Matchmaking;
+using Beamable.Api.Inventory;
+using Beamable.Api.Matchmaking;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Inventory;
 using Beamable.Serialization;
 using Beamable.Serialization.SmallerJSON;
 using UnityEngine;
 
-namespace Beamable.Platform.SDK.Sim
+namespace Beamable.Api.Sim
 {
    public class GameRelayService
    {

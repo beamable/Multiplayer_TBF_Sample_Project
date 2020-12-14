@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Coroutines;
 using Beamable.Pooling;
 using Beamable.Serialization;
@@ -12,7 +13,7 @@ using Beamable.Service;
 using Beamable.Spew;
 using Debug = UnityEngine.Debug;
 
-namespace Beamable.Platform.SDK.Payments
+namespace Beamable.Api.Payments
 {
    public class TransactionManager
    {

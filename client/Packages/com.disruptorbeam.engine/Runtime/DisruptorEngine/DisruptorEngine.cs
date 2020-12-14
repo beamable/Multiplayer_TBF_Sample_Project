@@ -1,31 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Beamable.Api;
+using Beamable.Api.Announcements;
+using Beamable.Api.Auth;
+using Beamable.Api.Caches;
 using Beamable.Common;
 using Beamable.Content;
 using Beamable.Config;
 using Beamable.Coroutines;
-using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Announcements;
-using Beamable.Platform.SDK.Auth;
-using Beamable.Platform.SDK.Chat;
-using Beamable.Platform.SDK.Commerce;
-using Beamable.Platform.SDK.Inventory;
-using Beamable.Platform.SDK.Leaderboard;
-using Beamable.Platform.SDK.Matchmaking;
-using Beamable.Platform.SDK.Notification;
-using Beamable.Platform.SDK.Payments;
-using Beamable.Platform.SDK.Sim;
-using Beamable.Platform.SDK.Stats;
-using Beamable.Platform.SDK.CloudSaving;
+using Beamable.Api.Chat;
+using Beamable.Api.Commerce;
+using Beamable.Api.Inventory;
+using Beamable.Api.Leaderboard;
+using Beamable.Api.Matchmaking;
+using Beamable.Api.Notification;
+using Beamable.Api.Payments;
+using Beamable.Api.Sim;
+using Beamable.Api.Stats;
+using Beamable.Api.CloudSaving;
 using Beamable.Service;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
-using Beamable.Platform.SDK.Caches;
-using Beamable.Platform.SDK.Calendars;
-using Beamable.Platform.SDK.Tournaments;
-using Beamable.Modules.Tournaments;
+using Beamable.Api.Calendars;
+using Beamable.Api.Connectivity;
+using Beamable.Common.Api.Auth;
+using Beamable.Common.Api.Tournaments;
 
 namespace Beamable
 {
@@ -51,7 +52,7 @@ namespace Beamable
       MatchmakingService Matchmaking { get;  }
       Promise<PaymentDelegate> PaymentDelegate { get;  }
       ConnectivityService ConnectivityService { get;  }
-      ITournamentService Tournaments { get; }
+      ITournamentApi Tournaments { get; }
 
       void UpdateUserData(User user);
       Promise<ISet<UserBundle>> GetDeviceUsers();
@@ -96,7 +97,7 @@ namespace Beamable
       public CalendarsService CalendarsService => _platform.Calendars;
       public ChatService ChatService => _platform.Chat;
 
-      public ITournamentService Tournaments => _platform.Tournaments;
+      public ITournamentApi Tournaments => _platform.Tournaments;
 
       public CloudSavingService CloudSavingService => _platform.CloudSaving;
       public CommerceService Commerce => _platform.Commerce;

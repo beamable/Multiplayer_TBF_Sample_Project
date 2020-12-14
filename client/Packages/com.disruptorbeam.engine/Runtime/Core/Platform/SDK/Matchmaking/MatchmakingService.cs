@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Beamable.Common;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK.Matchmaking
+namespace Beamable.Api.Matchmaking
 {
     public class MatchmakingService
     {
@@ -12,10 +13,15 @@ namespace Beamable.Platform.SDK.Matchmaking
             _requester = requester;
         }
 
-        public Promise<MatchmakingResponse> Match () {
+        /// <summary>
+        /// Find this player a match for the given game type
+        /// </summary>
+        /// <param name="gameType">The string id of the game type we wish to be matched</param>
+        /// <returns></returns>
+        public Promise<MatchmakingResponse> Match(string gameType) {
             return _requester.Request<MatchmakingResponse>(
                 Method.POST,
-                $"/object/matchmaking/global/match"
+                $"/object/matchmaking/{gameType}/match"
             );
         }
     }

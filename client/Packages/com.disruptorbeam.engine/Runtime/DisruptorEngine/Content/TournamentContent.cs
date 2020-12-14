@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Beamable.Common;
 using Beamable.Common.Content;
+using Beamable.Common.Content.Validation;
 using Beamable.Content.Validation;
 using Beamable.Modules.Tournaments;
 using UnityEngine;

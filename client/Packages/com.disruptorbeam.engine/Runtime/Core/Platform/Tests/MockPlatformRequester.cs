@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using Beamable.Common;
-using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Auth;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Auth;
+using Beamable.Api;
+using Beamable.Api.Auth;
 using Beamable.Serialization;
 using UnityEngine;
-
 namespace Beamable.Platform.Tests
 {
-   public class MockPlatformRequester : IPlatformRequester
+   public class MockPlatformRequester : IBeamableRequester
    {
-      public AuthService AuthService { get; set; }
-      public AccessToken Token { get; set; }
+      public AuthApi AuthService { get; set; }
+      public IAccessToken AccessToken { get; set; }
 
       public delegate Promise<T> RequestJsonFunction<T>(Method method, string uri, JsonSerializable.ISerializable body,
          bool includeAuthHeader = true);
@@ -61,7 +62,12 @@ namespace Beamable.Platform.Tests
          throw new NotImplementedException();
       }
 
-      public IPlatformRequester WithAccessToken(TokenResponse token)
+      public IBeamableRequester WithAccessToken(TokenResponse token)
+      {
+         throw new NotImplementedException();
+      }
+
+      public string EscapeURL(string url)
       {
          throw new NotImplementedException();
       }

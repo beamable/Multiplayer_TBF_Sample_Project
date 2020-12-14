@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Beamable.Serialization;
 
-namespace Beamable.Platform.SDK.Analytics
+namespace Beamable.Api.Analytics
 {
 	/// <summary>
 	/// Core event class

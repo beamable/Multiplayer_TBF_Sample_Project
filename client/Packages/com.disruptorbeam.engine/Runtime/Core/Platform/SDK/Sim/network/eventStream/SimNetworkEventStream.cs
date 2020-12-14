@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Beamable.Service;
 
-namespace Beamable.Platform.SDK.Sim {
+namespace Beamable.Api.Sim {
    public class SimNetworkEventStream : SimNetworkInterface {
       private static long REQ_FREQ_MS = 1000;
 

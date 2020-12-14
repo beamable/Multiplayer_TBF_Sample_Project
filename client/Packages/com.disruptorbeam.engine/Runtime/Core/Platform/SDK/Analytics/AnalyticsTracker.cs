@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using Beamable.Api.Analytics.Batch;
 using Beamable.Coroutines;
-using Beamable.Platform.SDK.Analytics.Batch;
 using Beamable.Serialization;
 using Beamable.Spew;
 
-namespace Beamable.Platform.SDK.Analytics
+namespace Beamable.Api.Analytics
 {
    public interface IAnalyticsTracker
    {

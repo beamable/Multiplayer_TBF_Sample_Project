@@ -1,5 +1,5 @@
 ﻿using Beamable.UI.Scripts;
-using Beamable.Platform.SDK.Inventory;
+using Beamable.Api.Inventory;
 using UnityEngine;
 
 namespace Beamable.Modules.Inventory.Scripts

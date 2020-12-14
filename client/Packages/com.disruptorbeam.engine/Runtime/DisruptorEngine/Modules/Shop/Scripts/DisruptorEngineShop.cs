@@ -8,7 +8,7 @@ using Beamable.Modules.Shop.Defaults;
 using Beamable.UI.Layouts;
 using Beamable.UI.Scripts;
 using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Payments;
+using Beamable.Api.Payments;
 using Beamable.Modules.AccountManagement;
 using Beamable.Signals;
 using TMPro;

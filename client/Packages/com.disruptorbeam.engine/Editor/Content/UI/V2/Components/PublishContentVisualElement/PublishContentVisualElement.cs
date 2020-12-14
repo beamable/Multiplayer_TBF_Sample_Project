@@ -43,8 +43,8 @@ namespace Beamable.Editor.Content.Components
 
             _messageLabel = Root.Q<Label>("message");
             _messageLabel.text = ContentManagerContants.PublishMessageLoading;
-            _detailButton = Root.Q<Button>("detailBtn");
-            _detailButton.clickable.clicked += DetailButton_OnClicked;
+            // _detailButton = Root.Q<Button>("detailBtn");
+            // _detailButton.clickable.clicked += DetailButton_OnClicked;
             loadingIndicator.SetPromise(PublishSet, mainContent);
 
             var overrideCountElem = Root.Q<CountVisualElement>("overrideCount");

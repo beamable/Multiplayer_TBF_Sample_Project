@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Platform.SDK;
+using Beamable.Serialization;
 
 namespace Beamable.Server.Editor.ManagerClient
 {
@@ -30,6 +33,15 @@ namespace Beamable.Server.Editor.ManagerClient
             });
       }
 
+      public Promise<GetLogsResponse> GetLogs(MicroserviceDescriptor service, string filter=null)
+      {
+         return Requester.RequestJson<GetLogsResponse>(Method.POST, $"{SERVICE}/logs", new GetLogsRequest
+         {
+            serviceName = service.Name,
+            filter = filter
+         });
+      }
+
       public Promise<ServiceManifest> GetManifest(long id)
       {
          return Requester.Request<GetManifestResponse>(Method.GET, $"{SERVICE}/manifest?id={id}")
@@ -46,6 +58,7 @@ namespace Beamable.Server.Editor.ManagerClient
       {
          return Requester.Request<EmptyResponse>(Method.POST, $"{SERVICE}/manifest", new PostManifestRequest
          {
+            comments = manifest.comments,
             manifest = manifest.manifest
          }).ToUnit();
       }
@@ -70,6 +83,7 @@ namespace Beamable.Server.Editor.ManagerClient
    [System.Serializable]
    public class PostManifestRequest
    {
+      public string comments;
       public List<ServiceReference> manifest;
    }
 
@@ -108,6 +122,36 @@ namespace Beamable.Server.Editor.ManagerClient
       public string imageId;
       public bool running;
       public bool isCurrent;
+   }
+
+   [System.Serializable]
+   public class GetLogsRequest : JsonSerializable.ISerializable
+   {
+      public string serviceName;
+      public string filter;
+      public void Serialize(JsonSerializable.IStreamSerializer s)
+      {
+         s.Serialize(nameof(serviceName), ref serviceName);
+         if (!string.IsNullOrEmpty(filter))
+         {
+            s.Serialize(nameof(filter), ref filter);
+         }
+      }
+   }
+
+   [System.Serializable]
+   public class GetLogsResponse
+   {
+      public string serviceName;
+      public List<LogMessage> logs;
+   }
+
+   [System.Serializable]
+   public class LogMessage
+   {
+      public string level;
+      public long timestamp;
+      public string message;
    }
 
 //   case class GetStatusResponse(

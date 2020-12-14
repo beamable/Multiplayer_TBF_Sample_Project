@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Beamable.Platform.SDK;
 using Beamable;
 using Beamable.Common;
+using Beamable.Common.Api;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -22,6 +23,8 @@ namespace Beamable.Server
       {
          public string payload;
       }
+
+      private string _prefix;
 
       protected string SerializeArgument<T>(T arg)
       {
@@ -89,15 +92,19 @@ namespace Beamable.Server
          return JsonUtility.FromJson<T>(json);
       }
 
-      protected Promise<T> Request<T>(string endpoint, string[] serializedFields)
+      protected Promise<T> Request<T>(string serviceName, string endpoint, string[] serializedFields)
       {
+         var prefix = _prefix ?? (_prefix = MicroserviceIndividualization.GetServicePrefix(serviceName));
+         var fullPath = $"{prefix}micro_{serviceName}/{endpoint}";
+
+
          Debug.Log($"Client called {endpoint} with {serializedFields.Length} arguments");
          var argArray = "[ " + string.Join(",", serializedFields) + " ]";
          Debug.Log(argArray);
 
          return API.Instance.Map(de => de.Requester).FlatMap(requester =>
             {
-               var url = $"/basic/{requester.Cid}.{requester.Pid}.{endpoint}";
+               var url = $"/basic/{requester.Cid}.{requester.Pid}.{fullPath}";
 
                var req = new RequestObject
                {
@@ -115,5 +122,15 @@ namespace Beamable.Server
                return result;
             });
       }
+
+      protected static string CreateEndpointPrefix(string serviceName)
+      {
+         #if UNITY_EDITOR
+
+         #endif
+
+         return serviceName;
+      }
+
    }
 }

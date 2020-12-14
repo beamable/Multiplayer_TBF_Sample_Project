@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Beamable.Coroutines;
 
-namespace Beamable.Platform.SDK.Sessions
+namespace Beamable.Api.Sessions
 {
    public class Heartbeat
    {

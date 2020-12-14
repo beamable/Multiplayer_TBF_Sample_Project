@@ -1,8 +1,8 @@
-using Beamable.Api;
 using Beamable.Common;
-using Beamable.Platform.SDK.Payments;
+using Beamable.Api.Payments;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK.Commerce
+namespace Beamable.Api.Commerce
 {
    public class CommerceService : PlatformSubscribable<GetOffersResponse, PlayerStoreView>
    {

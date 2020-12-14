@@ -1,5 +1,5 @@
 using Beamable.Content;
-using Beamable.Platform.SDK.Payments;
+using Beamable.Api.Payments;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

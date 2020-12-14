@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Beamable.Common;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK.QA
+namespace Beamable.Api.QA
 {
    public class QAService
    {

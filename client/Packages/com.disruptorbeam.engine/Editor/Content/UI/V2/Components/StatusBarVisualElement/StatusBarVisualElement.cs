@@ -39,14 +39,15 @@ namespace Beamable.Editor.Content.Components
 //      private VisualElement _testVisualElement04;
 //      private VisualElement _testVisualElement05;
 //      private VisualElement _testVisualElement06;
-      private VisualElement _statusIcon;
-      private VisualElement _statusColorBar;
-      private Label _statusDescriptionLabel;
-      private Label _statusDespLabel2, _statusDespLabel3, _statusDespLabel4;
-      private CountVisualElement _countElement1, _countElement2, _countElement3;
-      private Button _viewButton;
+      private Button _validationSwitchBtn, _modificationSwitchBtn;
 
-      private string _statusClassName = "current"; // current, modified,
+      private VisualElement _statusIcon;
+      private Label _statusDespLabel;
+      private Button _statusDespBtn1, _statusDespBtn2, _statusDespBtn3, _statusDespBtn4;
+      private CountVisualElement _countElement1, _countElement2, _countElement3, _countElement4;
+
+      private string _statusClassName = "modified"; // current, modified
+      private const string CSS_HIDE_ELEMENT = "hide";
 
       public string Text { set; get; }
 
@@ -62,16 +63,20 @@ namespace Beamable.Editor.Content.Components
          base.Refresh();
 
          _statusIcon = Root.Q<VisualElement>("status-icon");
-         _statusColorBar = Root.Q<VisualElement>("status-color-bar");
-         _statusDescriptionLabel = Root.Q<Label>("description");
-         _statusDespLabel2 = Root.Q<Label>("description2");
-         _statusDespLabel3 = Root.Q<Label>("description3");
-         _statusDespLabel4 = Root.Q<Label>("description4");
+         _statusDespLabel = Root.Q<Label>("Description");
+         
+         _statusDespBtn1 = Root.Q<Button>("description1");
+         _statusDespBtn1.clickable.clicked += HandleInvalidOnClick;
+         _statusDespBtn2 = Root.Q<Button>("description2");
+         _statusDespBtn2.clickable.clicked += HandleCreatedOnClick;
+         _statusDespBtn3 = Root.Q<Button>("description3");
+         _statusDespBtn3.clickable.clicked += HandleModifiedOnClick;
+         _statusDespBtn4 = Root.Q<Button>("description4");
+         _statusDespBtn4.clickable.clicked += HandleDeletedOnClick;
          _countElement1 = Root.Q<CountVisualElement>("count1");
          _countElement2 = Root.Q<CountVisualElement>("count2");
          _countElement3 = Root.Q<CountVisualElement>("count3");
-         _viewButton = Root.Q<Button>("view-btn");
-         _viewButton.clickable.clicked += HandleViewOnClick;
+         _countElement4 = Root.Q<CountVisualElement>("count4");
 
 
          Model.OnItemEnriched += Model_OnItemEnriched;
@@ -106,75 +111,122 @@ namespace Beamable.Editor.Content.Components
 
       private void RefreshStatus()
       {
-         // Set status
+         _statusIcon.RemoveFromClassList(_statusClassName);
+         
+         // check any difference
+         var anyInvalid = Model.CountInValid() > 0;
          var anyDeleted = Model.CountDeleted() > 0;
          var anyCreated = Model.CountCreated() > 0;
          var anyModified = Model.CountModified() > 0;
 
-         // TODO: Validation error to be added
-         if (anyCreated || anyModified || anyDeleted)
-            _statusClassName = "modified";
-         else
-            _statusClassName = "current";
-
-         switch (_statusClassName)
+         if (anyInvalid || anyCreated || anyModified || anyDeleted)
          {
-            case "current":
-               _statusDescriptionLabel.text = "All update was upload to the cloud. ";
-               _countElement1.visible = false;
-               _statusDespLabel2.text = "";
-               _countElement2.visible = false;
-               _statusDespLabel3.text = "";
-               _countElement3.visible = false;
-               _statusDespLabel4.text = "";
-               break;
-            case "modified":
-               _statusDescriptionLabel.text = "";
-               _countElement1.visible = true;
-               _countElement1.SetValue(Model.CountCreated());
-               _statusDespLabel2.text = "created,";
-               _countElement1.visible = true;
-               _countElement2.SetValue(Model.CountModified());
-               _statusDespLabel3.text = "modified,";
-               _countElement3.visible = true;
-               _countElement3.SetValue(Model.CountDeleted());
-               _statusDespLabel4.text = "deleted";
-               break;
-            case "error":
-               _statusDescriptionLabel.text = "";
-               _countElement1.visible = true;
-               _countElement1.SetValue(10);
-               _statusDespLabel2.text = "validation error, please check before publishing.";
-               _countElement2.visible = false;
-               _statusDespLabel3.text = "";
-               _countElement3.visible = false;
-               _statusDespLabel4.text = "";
-               break;
+            _statusDespLabel.text = "";
+            if (anyInvalid)
+            {
+               _countElement1.RemoveFromClassList(CSS_HIDE_ELEMENT);
+               _countElement1.SetValue(Model.CountInValid());
+               _statusDespBtn1.RemoveFromClassList(CSS_HIDE_ELEMENT);
+            }
+            else
+            {
+               _countElement1.AddToClassList(CSS_HIDE_ELEMENT);
+               _statusDespBtn1.AddToClassList(CSS_HIDE_ELEMENT);
+            }
+            
+            if (anyCreated)
+            {
+               _countElement2.RemoveFromClassList(CSS_HIDE_ELEMENT);
+               _countElement2.SetValue(Model.CountCreated());
+               _statusDespBtn2.RemoveFromClassList(CSS_HIDE_ELEMENT);
+            }
+            else
+            {
+               _countElement2.AddToClassList(CSS_HIDE_ELEMENT);
+               _statusDespBtn2.AddToClassList(CSS_HIDE_ELEMENT);
+            }
+            
+            if (anyModified)
+            {
+               _countElement3.RemoveFromClassList(CSS_HIDE_ELEMENT);
+               _countElement3.SetValue(Model.CountModified());
+               _statusDespBtn3.RemoveFromClassList(CSS_HIDE_ELEMENT);
+            }
+            else
+            {
+               _countElement3.AddToClassList(CSS_HIDE_ELEMENT);
+               _statusDespBtn3.AddToClassList(CSS_HIDE_ELEMENT);
+            }
+            
+            if (anyDeleted)
+            {
+               _countElement4.RemoveFromClassList(CSS_HIDE_ELEMENT);
+               _countElement4.SetValue(Model.CountDeleted());
+               _statusDespBtn4.RemoveFromClassList(CSS_HIDE_ELEMENT);
+            }
+            else
+            {
+               _countElement4.AddToClassList(CSS_HIDE_ELEMENT);
+               _statusDespBtn4.AddToClassList(CSS_HIDE_ELEMENT);
+            }
+            _statusClassName = "modified";
          }
-         //_statusIcon.RemoveFromClassList(_statusClassName);
+         else
+         {
+            _statusDespLabel.text = "All data has synced with server";
+            _countElement1.AddToClassList(CSS_HIDE_ELEMENT);
+            _statusDespBtn1.AddToClassList(CSS_HIDE_ELEMENT);
+            _countElement2.AddToClassList(CSS_HIDE_ELEMENT);
+            _statusDespBtn2.AddToClassList(CSS_HIDE_ELEMENT);
+            _countElement3.AddToClassList(CSS_HIDE_ELEMENT);
+            _statusDespBtn3.AddToClassList(CSS_HIDE_ELEMENT);
+            _countElement4.AddToClassList(CSS_HIDE_ELEMENT);
+            _statusDespBtn4.AddToClassList(CSS_HIDE_ELEMENT);
+            _statusClassName = "current";
+         }
+         
          _statusIcon.AddToClassList(_statusClassName);
-         //_statusColorBar.RemoveFromClassList(_statusClassName);
-         _statusColorBar.AddToClassList(_statusClassName);
-         //_viewButton.RemoveFromClassList(_statusClassName);
-         _viewButton.AddToClassList(_statusClassName);
       }
 
-      private void HandleViewOnClick()
+      private void HandleInvalidOnClick()
       {
-         switch (_statusClassName)
-         {
-            case "modified":
-               // not_modified ie. sync as false
-               Model.ToggleStatusFilter(ContentModificationStatus.LOCAL_ONLY, true);
-               Model.ToggleStatusFilter(ContentModificationStatus.MODIFIED, true);
-               Model.ToggleStatusFilter(ContentModificationStatus.SERVER_ONLY, true);
-               Model.ToggleStatusFilter(ContentModificationStatus.NOT_AVAILABLE_ANYWHERE, false);
-               Model.ToggleStatusFilter(ContentModificationStatus.NOT_MODIFIED, false);
-               break;
-            case "error":
-               // TODO: set later
-               break;
-         }
+         // Show invalid
+         Model.ToggleValidationFilter(ContentValidationStatus.VALID, false);
+         Model.ToggleValidationFilter(ContentValidationStatus.INVALID, true);
+         
+         Model.ToggleStatusFilter(ContentModificationStatus.LOCAL_ONLY, true);
+         Model.ToggleStatusFilter(ContentModificationStatus.MODIFIED, true);
+         Model.ToggleStatusFilter(ContentModificationStatus.SERVER_ONLY, true);
+      }
+      
+      private void HandleCreatedOnClick()
+      {
+         Model.ToggleValidationFilter(ContentValidationStatus.VALID, false);
+         Model.ToggleValidationFilter(ContentValidationStatus.INVALID, false);
+         // Show Created
+         Model.ToggleStatusFilter(ContentModificationStatus.LOCAL_ONLY, true);
+         Model.ToggleStatusFilter(ContentModificationStatus.MODIFIED, false);
+         Model.ToggleStatusFilter(ContentModificationStatus.SERVER_ONLY, false);
+      }
+      
+      private void HandleModifiedOnClick()
+      {
+         Model.ToggleValidationFilter(ContentValidationStatus.VALID, false);
+         Model.ToggleValidationFilter(ContentValidationStatus.INVALID, false);
+         // Show Modified
+         Model.ToggleStatusFilter(ContentModificationStatus.LOCAL_ONLY, false);
+         Model.ToggleStatusFilter(ContentModificationStatus.MODIFIED, true);
+         Model.ToggleStatusFilter(ContentModificationStatus.SERVER_ONLY, false);
+      }
+      
+      private void HandleDeletedOnClick()
+      {
+         Model.ToggleValidationFilter(ContentValidationStatus.VALID, false);
+         Model.ToggleValidationFilter(ContentValidationStatus.INVALID, false);
+         // Show Deleted
+         Model.ToggleStatusFilter(ContentModificationStatus.LOCAL_ONLY, false);
+         Model.ToggleStatusFilter(ContentModificationStatus.MODIFIED, false);
+         Model.ToggleStatusFilter(ContentModificationStatus.SERVER_ONLY, true);
       }
    }
 }

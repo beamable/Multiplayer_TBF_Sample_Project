@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Beamable.UI.Scripts;
 using UnityEngine;
 
-public class CalendarFlowMainPage : MenuBase
+namespace Beamable.Modules.Calendars
 {
+   public class CalendarFlowMainPage : MenuBase
+   {
+   }
 }

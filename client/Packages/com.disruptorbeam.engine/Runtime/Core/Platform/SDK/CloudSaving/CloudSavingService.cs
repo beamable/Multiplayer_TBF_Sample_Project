@@ -7,12 +7,13 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 using System.Collections.Concurrent;
-using Beamable.Api;
+using Beamable.Api.Connectivity;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Coroutines;
 using Beamable.Spew;
 
-namespace Beamable.Platform.SDK.CloudSaving
+namespace Beamable.Api.CloudSaving
 {
    public class CloudSavingService : PlatformSubscribable<ManifestResponse, ManifestResponse>
    {
@@ -529,7 +530,7 @@ namespace Beamable.Platform.SDK.CloudSaving
              .FlatMap(SyncRemoteContent);
       }
 
-      protected override Promise<ManifestResponse> ExecuteRequest(PlatformRequester requester, string url)
+      protected override Promise<ManifestResponse> ExecuteRequest(IBeamableRequester requester, string url)
       {
          return base.ExecuteRequest(requester, url).RecoverWith(err =>
          {

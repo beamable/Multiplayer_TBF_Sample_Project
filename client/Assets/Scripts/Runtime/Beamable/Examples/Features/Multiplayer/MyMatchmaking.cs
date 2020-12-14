@@ -1,6 +1,7 @@
-﻿using Beamable.Common;
-using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Matchmaking;
+﻿using Beamable.Api;
+using Beamable.Api.Matchmaking;
+using Beamable.Common;
+using Beamable.Content;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,6 +19,14 @@ namespace Beamable.Examples.Features.Multiplayer
       public bool IsInProgress = false;
       public bool IsError = false;
       public string Error = "";
+
+      public override string ToString()
+      {
+         return $"[MyMatchmakingResult (" +
+            $"RoomId={RoomId}, " +
+            $"TargetPlayerCount={TargetPlayerCount}, " +
+            $"players.Count={players.Count})]";
+      }
    }
 
    public class MyMatchmaking
@@ -32,10 +41,13 @@ namespace Beamable.Examples.Features.Multiplayer
 
       private MyMatchmakingResult _myMatchmakingResult;
       private MatchmakingService _matchmakingService;
+      private SimGameType _simGameType;
 
-      public MyMatchmaking(MatchmakingService matchmakingService, int targetPlayerCount)
+      public MyMatchmaking(MatchmakingService matchmakingService, 
+         SimGameType simGameType, int targetPlayerCount)
       {
          _matchmakingService = matchmakingService;
+         _simGameType = simGameType;
 
          _myMatchmakingResult = new MyMatchmakingResult();
          _myMatchmakingResult.TargetPlayerCount = targetPlayerCount;
@@ -51,13 +63,14 @@ namespace Beamable.Examples.Features.Multiplayer
 
          Debug.Log("0");
 
-         while (_myMatchmakingResult.IsInProgress == true &&
-            !_myMatchmakingResult.IsComplete)
+         while (_myMatchmakingResult.IsInProgress)
          {
             try
             {
                Debug.Log("aaa");
-               matchmakingResponse = await _matchmakingService.Match();
+
+               //ASKJUSTIN: parameter API says "SimGameType". I would assume that is the "ContentName", but instead its "Id". Thoughts?
+               matchmakingResponse = await _matchmakingService.Match(_simGameType.Id);
                Debug.Log("bbbb");
             }
             catch (PlatformRequesterException e)
@@ -91,19 +104,25 @@ namespace Beamable.Examples.Features.Multiplayer
             Debug.Log("3");
             _myMatchmakingResult.TicksRemaining = matchmakingResponse.ticksRemaining;
 
+            //ASKJUSTIN: Why does a happen before b in some of these loops? I'd assume I only need to check for a OR b.
             // When target is reached, mark as complete
-            if (matchmakingResponse.players.Count >= _myMatchmakingResult.TargetPlayerCount)
+
+            //a
+            if (matchmakingResponse.players.Count >= _myMatchmakingResult.TargetPlayerCount &&
+
+               //b
+               !string.IsNullOrEmpty(matchmakingResponse.game))
             {
                _myMatchmakingResult.RoomId = matchmakingResponse.game;
                _myMatchmakingResult.IsInProgress = false;
             }
          }
+
          Debug.Log("4");
          // Invoke Progress #2
          OnProgress?.Invoke(_myMatchmakingResult); 
 
          // Invoke Complete
-         _myMatchmakingResult.IsInProgress = false;
          OnComplete?.Invoke(_myMatchmakingResult);
          return _myMatchmakingResult;
       }

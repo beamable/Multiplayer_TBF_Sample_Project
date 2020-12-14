@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Beamable.Platform.SDK.Notification.Internal;
+using Beamable.Api.Notification.Internal;
 using Beamable.Serialization.SmallerJSON;
 using Beamable.Spew;
 using PubNubMessaging.Core;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Beamable.Platform.SDK.Notification
+namespace Beamable.Api.Notification
 {
    /**
     * Manage the connection and subscriptions to PubNub

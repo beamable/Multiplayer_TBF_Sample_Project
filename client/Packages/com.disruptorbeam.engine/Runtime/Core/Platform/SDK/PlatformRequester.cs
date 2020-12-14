@@ -1,35 +1,21 @@
 using System;
 using System.Text;
+using Beamable.Api.Caches;
 using Beamable.Common;
-using Beamable.Platform.SDK.Auth;
-using Beamable.Platform.SDK.Caches;
-using Beamable.Pooling;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Auth;
+using Beamable.Api.Auth;
+using Beamable.Api.Connectivity;
+using Beamable.Common.Pooling;
 using Beamable.Serialization;
 using Beamable.Spew;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api
 {
-   public interface IPlatformRequester
-   {
-      AuthService AuthService { set; }
-      AccessToken Token { get; set; }
 
-      Promise<T> RequestJson<T>(Method method, string uri, JsonSerializable.ISerializable body,
-         bool includeAuthHeader = true);
-
-      Promise<T> Request<T>(Method method, string uri, object body = null, bool includeAuthHeader = true,
-         Func<string, T> parser = null, bool useCache=false);
-
-      Promise<T> RequestForm<T>(string uri, WWWForm form, bool includeAuthHeader = true);
-
-      Promise<T> RequestForm<T>(string uri, WWWForm form, Method method, bool includeAuthHeader = true);
-
-      IPlatformRequester WithAccessToken(TokenResponse token);
-   }
-
-   public class PlatformRequester : IPlatformRequester
+   public class PlatformRequester : IBeamableRequester
    {
       private const string ACCEPT_HEADER = "application/json";
       private AccessTokenStorage _accessTokenStorage;
@@ -39,11 +25,13 @@ namespace Beamable.Platform.SDK
       public string Host { get; set; }
       public string Cid { get; set; }
       public string Pid { get; set; }
+
+      public IAccessToken AccessToken => Token;
       public AccessToken Token { get; set; }
       public string Shard { get; set; }
       public string Language { get; set; }
       public string TimeOverride { get; set; }
-      public AuthService AuthService { private get; set; }
+      public IAuthApi AuthService { private get; set; }
 
       public PlatformRequester(string host, AccessTokenStorage accessTokenStorage, ConnectivityService connectivityService)
       {
@@ -52,7 +40,7 @@ namespace Beamable.Platform.SDK
          _connectivityService = connectivityService;
       }
 
-      public IPlatformRequester WithAccessToken(TokenResponse token)
+      public IBeamableRequester WithAccessToken(TokenResponse token)
       {
          var requester = new PlatformRequester(Host, _accessTokenStorage, _connectivityService);
          requester.Cid = Cid;
@@ -63,6 +51,11 @@ namespace Beamable.Platform.SDK
          requester.AuthService = AuthService;
          requester.Token = new AccessToken(_accessTokenStorage, Cid, Pid, token.access_token, token.refresh_token, token.expires_in);
          return requester;
+      }
+
+      public string EscapeURL(string url)
+      {
+         return UnityWebRequest.EscapeURL(url);
       }
 
       public void DeleteToken()
@@ -309,11 +302,6 @@ namespace Beamable.Platform.SDK
    }
 
    [Serializable]
-   public class EmptyResponse
-   {
-   }
-
-   [Serializable]
    public class PlatformError
    {
       public long status;
@@ -322,7 +310,7 @@ namespace Beamable.Platform.SDK
       public string message;
    }
 
-   public class PlatformRequesterException : Exception
+   public class PlatformRequesterException : Exception, IRequestErrorWithStatus
    {
       public PlatformError Error { get; }
       public UnityWebRequest Request { get; }

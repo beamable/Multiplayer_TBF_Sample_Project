@@ -1,8 +1,9 @@
 using System;
+using Beamable.Common.Api;
 
 namespace Beamable.Server
 {
-   public class RequestContext
+   public class RequestContext : IUserContext
    {
       public string Cid { get; }
       public string Pid { get; }

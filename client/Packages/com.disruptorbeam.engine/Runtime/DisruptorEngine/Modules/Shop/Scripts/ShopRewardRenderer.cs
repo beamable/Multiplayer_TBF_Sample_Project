@@ -1,5 +1,5 @@
 using Beamable.UI.Scripts;
-using Beamable.Platform.SDK.Payments;
+using Beamable.Api.Payments;
 using Beamable.Signals;
 using UnityEngine;
 

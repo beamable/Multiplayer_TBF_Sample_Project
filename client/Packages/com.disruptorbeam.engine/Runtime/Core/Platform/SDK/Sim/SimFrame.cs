@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace Beamable.Platform.SDK.Sim {
+namespace Beamable.Api.Sim {
    public class SimFrame {
       [Serializable]
       public class FramePacket {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Beamable.Common.Content;
+using Beamable.Common.Content.Validation;
 using Beamable.Content.Serialization;
 using Beamable.Content.Validation;
 using Beamable.Serialization.SmallerJSON;

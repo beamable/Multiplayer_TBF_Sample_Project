@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Beamable.Coroutines;
 
-namespace Beamable.Platform.SDK.Analytics.Batch {
+namespace Beamable.Api.Analytics.Batch {
 
 	/// <summary>
 	/// Batch manager.

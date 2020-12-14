@@ -1,5 +1,8 @@
 using System;
+using Beamable.Api.Auth;
 using Beamable.Common;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Auth;
 using Beamable.Platform.SDK;
 using Beamable.Platform.SDK.Auth;
 
@@ -47,6 +50,11 @@ namespace Packages.DisruptorEngine.Runtime.Tests.DisruptorEngine
       public Promise<TokenResponse> LoginRefreshToken(string refreshToken)
       {
          throw new System.NotImplementedException();
+      }
+
+      public Promise<TokenResponse> Login(string username, string password, bool mergeGamerTagToAccount = true)
+      {
+         return LoginDelegate(username, password, mergeGamerTagToAccount);
       }
 
       public Promise<TokenResponse> Login(
@@ -98,5 +106,7 @@ namespace Packages.DisruptorEngine.Runtime.Tests.DisruptorEngine
       {
          throw new System.NotImplementedException();
       }
+
+      public IBeamableRequester Requester { get; }
    }
 }

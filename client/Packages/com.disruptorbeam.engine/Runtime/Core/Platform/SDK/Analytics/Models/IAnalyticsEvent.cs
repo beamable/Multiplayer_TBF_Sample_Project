@@ -1,6 +1,6 @@
 using Beamable.Serialization;
 
-namespace Beamable.Platform.SDK.Analytics {
+namespace Beamable.Api.Analytics {
 
 	/// <summary>
 	/// Analytics Event interface

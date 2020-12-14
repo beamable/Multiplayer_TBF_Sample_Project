@@ -1,7 +1,7 @@
 using System;
 using Beamable.Modules.AccountManagement;
 using Beamable.Signals;
-using Beamable.Platform.SDK.Payments;
+using Beamable.Api.Payments;
 
 namespace Beamable.Modules.Shop
 {

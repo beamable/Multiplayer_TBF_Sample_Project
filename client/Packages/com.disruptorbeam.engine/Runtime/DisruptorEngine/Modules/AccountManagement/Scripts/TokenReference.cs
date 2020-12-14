@@ -1,4 +1,4 @@
-using Beamable.Platform.SDK.Auth;
+using Beamable.Common.Api.Auth;
 using UnityEngine;
 
 namespace Beamable.Modules.AccountManagement

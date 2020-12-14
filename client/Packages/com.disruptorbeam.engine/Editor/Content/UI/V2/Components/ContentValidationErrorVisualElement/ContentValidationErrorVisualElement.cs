@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Beamable.Common.Content.Validation;
 using Beamable.Content.Validation;
 #if UNITY_2018
 using UnityEngine.Experimental.UIElements;

@@ -36,7 +36,7 @@ namespace Beamable.Server.Editor.CodeGen
             <PropertyGroup>
                <DefineConstants>DB_MICROSERVICE</DefineConstants>
                <OutputType>Exe</OutputType>
-               <TargetFramework>netcoreapp3.0</TargetFramework>
+               <TargetFramework>net5.0</TargetFramework>
             </PropertyGroup>
 
             <ItemGroup>

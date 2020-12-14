@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Beamable.Platform.SDK.Sim {
+namespace Beamable.Api.Sim {
    /**
    *	A SimNetworkInterface guarantees that a given frame will only be sent to peers a maximum of 1 time and that a given frame will be surfaced to the SimClient a maximum of 1 time
    */

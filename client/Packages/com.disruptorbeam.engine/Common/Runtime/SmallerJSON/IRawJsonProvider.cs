@@ -4,4 +4,14 @@ namespace Beamable.Serialization.SmallerJSON
    {
       string ToJson();
    }
+
+   public class RawJsonProvider : IRawJsonProvider
+   {
+      public string Json;
+
+      public string ToJson()
+      {
+         return Json;
+      }
+   }
 }

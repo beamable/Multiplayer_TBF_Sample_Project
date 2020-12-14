@@ -1,5 +1,5 @@
 
-namespace Beamable.Platform.SDK.Payments
+namespace Beamable.Api.Payments
 {
    public static class PaymentErrorCodes
    {

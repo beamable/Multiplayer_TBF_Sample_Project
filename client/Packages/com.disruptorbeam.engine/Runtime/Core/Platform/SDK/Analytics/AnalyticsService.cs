@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Beamable.Common.Api;
 using Beamable.Pooling;
 using Beamable.Serialization;
 using Beamable.Spew;
 
-namespace Beamable.Platform.SDK.Analytics
+namespace Beamable.Api.Analytics
 {
 	/// <summary>
 	/// Analytics service.

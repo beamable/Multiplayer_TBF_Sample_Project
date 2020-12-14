@@ -7,18 +7,19 @@
         xsi:schemaLocation="UnityEngine.Experimental.UIElements ../UIElementsSchema/UnityEngine.Experimental.UIElements.xsd">
 
   <engine:VisualElement name="mainVisualElement">
-    <engine:Button text="View" name="view-btn"/>
-    <engine:VisualElement name="status-icon">
-        </engine:VisualElement>
-    <engine:VisualElement name="status-color-bar"/>
+
+    <engine:VisualElement name="status-icon"/>
+    <engine:Label name="Description"/>
     
-    <engine:Label name="description"/>
     <contentManager:CountVisualElement name="count1"/>
-    <engine:Label name="description2"/>
+    <engine:Button name="description1" text="invalid" class="statusShowBtn"/>
     <contentManager:CountVisualElement name="count2"/>
-    <engine:Label name="description3"/>
+    <engine:Button name="description2" text="created" class="statusShowBtn"/>
     <contentManager:CountVisualElement name="count3"/>
-    <engine:Label name="description4"/>
+    <engine:Button name="description3" text="modified" class="statusShowBtn"/>
+    <contentManager:CountVisualElement name="count4"/>
+    <engine:Button name="description4" text="deleted" class="statusShowBtn"/>
+      
   </engine:VisualElement>
 
 </engine:UXML>

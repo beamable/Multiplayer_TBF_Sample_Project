@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Common.Content;
 using Beamable.Content.Serialization;
-using Beamable.Platform.SDK;
+using Beamable.Api;
 using Beamable.Spew;
 using UnityEngine;
 
@@ -18,10 +19,10 @@ namespace Beamable.Content
    public class ContentCache<TContent> : ContentCache where TContent : ContentObject, new()
    {
       private readonly Dictionary<string, ContentCacheEntry<TContent>> cache = new Dictionary<string, ContentCacheEntry<TContent>>();
-      private IPlatformRequester _requester;
+      private IBeamableRequester _requester;
       private static ClientContentSerializer _serializer = new ClientContentSerializer();
 
-      public ContentCache(IPlatformRequester requester)
+      public ContentCache(IBeamableRequester requester)
       {
          _requester = requester;
       }

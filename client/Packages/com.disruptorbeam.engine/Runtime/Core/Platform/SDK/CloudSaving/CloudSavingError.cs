@@ -1,6 +1,6 @@
 using System;
 
-namespace Beamable.Platform.SDK.CloudSaving
+namespace Beamable.Api.CloudSaving
 {
    public class CloudSavingError : Exception
    {

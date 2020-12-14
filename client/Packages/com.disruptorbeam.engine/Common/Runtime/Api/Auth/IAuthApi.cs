@@ -8,7 +8,7 @@ namespace Beamable.Common.Api.Auth
       Promise<bool> IsThirdPartyAvailable(AuthThirdParty thirdParty, string token);
       Promise<TokenResponse> CreateUser();
       Promise<TokenResponse> LoginRefreshToken(string refreshToken);
-      Promise<TokenResponse> Login(string username, string password, bool mergeGamerTagToAccount = true);
+      Promise<TokenResponse> Login(string username, string password, bool mergeGamerTagToAccount = true, bool customerScoped=false);
       Promise<TokenResponse> LoginThirdParty(AuthThirdParty thirdParty, string thirdPartyToken, bool includeAuthHeader = true);
       Promise<User> RegisterDBCredentials(string email, string password);
       Promise<User> RegisterThirdPartyCredentials(AuthThirdParty thirdParty, string accessToken);

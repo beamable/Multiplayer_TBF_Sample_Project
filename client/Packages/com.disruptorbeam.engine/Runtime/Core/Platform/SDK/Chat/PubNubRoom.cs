@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Beamable.Common;
-using Beamable.Platform.SDK.Notification;
+using Beamable.Api.Notification;
 using Beamable.Serialization;
 using Beamable.Service;
 using Beamable.Spew;
 using Debug = UnityEngine.Debug;
 
-namespace Beamable.Platform.SDK.Chat
+namespace Beamable.Api.Chat
 {
    using Promise = Promise<Unit>;
 

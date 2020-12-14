@@ -1,34 +1,38 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Beamable.Platform.SDK.Calendars;
+using Beamable.Api.Calendars;
+using Beamable.Common.Api.Calendars;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CalendarRewardsDay : MonoBehaviour
+namespace Beamable.Modules.Calendars
 {
-   public Image RewardImage;
-   public TextMeshProUGUI Name;
-   private Image Background;
-
-   public void Awake()
+   public class CalendarRewardsDay : MonoBehaviour
    {
-      Background = gameObject.GetComponent<Image>();
-   }
+      public Image RewardImage;
+      public TextMeshProUGUI Name;
+      private Image Background;
 
-   public void setRewardForDay(RewardCalendarDay day, ClaimStatus claimStatus)
-   {
-      // TODO: At some point this whole thing should be replaced with something much better
-      var obtain = day.obtain[0];
-      Name.text = obtain.specialization;
-      if (claimStatus == ClaimStatus.CLAIMED)
+      public void Awake()
       {
-         Background.color = Color.red;
+         Background = gameObject.GetComponent<Image>();
       }
-      else if (claimStatus == ClaimStatus.CLAIMABLE)
+
+      public void setRewardForDay(RewardCalendarDay day, ClaimStatus claimStatus)
       {
-         Background.color = Color.green;
+         // TODO: At some point this whole thing should be replaced with something much better
+         var obtain = day.obtain[0];
+         Name.text = obtain.specialization;
+         if (claimStatus == ClaimStatus.CLAIMED)
+         {
+            Background.color = Color.red;
+         }
+         else if (claimStatus == ClaimStatus.CLAIMABLE)
+         {
+            Background.color = Color.green;
+         }
       }
    }
 }

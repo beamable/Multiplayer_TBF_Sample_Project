@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Beamable.Serialization;
 
-namespace Beamable.Platform.SDK.Payments {
+namespace Beamable.Api.Payments {
 
 	public class NonceTransactionPair : JsonSerializable.ISerializable {
 

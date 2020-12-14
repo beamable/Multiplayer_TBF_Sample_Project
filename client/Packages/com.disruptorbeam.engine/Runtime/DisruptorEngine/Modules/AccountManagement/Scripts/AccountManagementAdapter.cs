@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Beamable.Common;
+using Beamable.Common.Api.Auth;
 using Beamable.Modules.Avatars;
 using Beamable.UI.Scripts;
 using Beamable.Platform.SDK;

@@ -82,8 +82,12 @@ namespace Beamable.Server.Editor.Uploader
                imageId = await GetImageId(descriptor);
             }
             await SaveImage(descriptor, filename, imageId);
-            var tar = TarArchive.CreateInputTarArchive(File.OpenRead(filename), Encoding.Default);
-            tar.ExtractContents(folder);
+            using (var file = File.OpenRead(filename))
+            {
+               var tar = TarArchive.CreateInputTarArchive(file, Encoding.Default);
+               tar.ExtractContents(folder);
+            }
+
             var disruptorEngine = await EditorAPI.Instance;
             var uploader = new ContainerUploader(disruptorEngine, this, descriptor, imageId);
             await uploader.Upload(folder);

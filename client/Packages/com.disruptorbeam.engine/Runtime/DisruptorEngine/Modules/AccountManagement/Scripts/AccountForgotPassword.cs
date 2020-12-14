@@ -1,53 +1,55 @@
 ﻿using System.Collections.Generic;
-using Beamable.Modules.AccountManagement;
 using Beamable.UI.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AccountForgotPassword : MenuBase
+namespace Beamable.Modules.AccountManagement
 {
-    public ForgotPasswordArguments Arguments;
-
-    public GameObject SendEmailContainer, ConfirmContainer;
-
-    public TextReferenceBase ErrorText;
-
-    public Button ContinueButton;
-    public List<InputValidationBehaviour> ValidationBehaviours;
-
-    // Start is called before the first frame update
-    void Start()
+    public class AccountForgotPassword : MenuBase
     {
-        ErrorText.Value = "";
-        SetForSendEmail();
-    }
+        public ForgotPasswordArguments Arguments;
 
-    // Update is called once per frame
-    void Update()
-    {
-        ContinueButton.interactable = ValidationBehaviours.TrueForAll(v => v.IsValid || !v.isActiveAndEnabled);
-    }
+        public GameObject SendEmailContainer, ConfirmContainer;
 
-    public override void OnOpened()
-    {
-        Arguments.Password.Value = "";
-        Arguments.Code.Value = "";
-    }
+        public TextReferenceBase ErrorText;
 
-    public void SetEmail(string email)
-    {
-        Arguments.Email.Value = email;
-    }
+        public Button ContinueButton;
+        public List<InputValidationBehaviour> ValidationBehaviours;
 
-    public void SetForConfirm()
-    {
-        SendEmailContainer.SetActive(false);
-        ConfirmContainer.SetActive(true);
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            ErrorText.Value = "";
+            SetForSendEmail();
+        }
 
-    public void SetForSendEmail()
-    {
-        SendEmailContainer.SetActive(true);
-        ConfirmContainer.SetActive(false);
+        // Update is called once per frame
+        void Update()
+        {
+            ContinueButton.interactable = ValidationBehaviours.TrueForAll(v => v.IsValid || !v.isActiveAndEnabled);
+        }
+
+        public override void OnOpened()
+        {
+            Arguments.Password.Value = "";
+            Arguments.Code.Value = "";
+        }
+
+        public void SetEmail(string email)
+        {
+            Arguments.Email.Value = email;
+        }
+
+        public void SetForConfirm()
+        {
+            SendEmailContainer.SetActive(false);
+            ConfirmContainer.SetActive(true);
+        }
+
+        public void SetForSendEmail()
+        {
+            SendEmailContainer.SetActive(true);
+            ConfirmContainer.SetActive(false);
+        }
     }
-}
+}

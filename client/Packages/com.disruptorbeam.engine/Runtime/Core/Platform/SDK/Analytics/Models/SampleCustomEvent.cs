@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Beamable.Platform.SDK.Analytics {
+namespace Beamable.Api.Analytics {
 
 	/// <summary>
 	/// Sample custom event.

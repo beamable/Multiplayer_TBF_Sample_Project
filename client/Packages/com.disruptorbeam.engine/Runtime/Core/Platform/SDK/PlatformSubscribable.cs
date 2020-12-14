@@ -3,17 +3,23 @@
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using Beamable.Api;
 using Beamable.Common;
 using Beamable.Common.Api;
+using Beamable.Common.Api.Inventory;
 using Beamable.Coroutines;
-using Beamable.Platform.SDK;
 using Beamable.Service;
 using Beamable.Spew;
 using UnityEngine;
-using Method = Beamable.Platform.SDK.Method;
 
 namespace Beamable.Api
 {
+   // put constants in a separate class so that they are shared across generic params
+   internal static class SubscribableConsts
+   {
+      internal static readonly int[] RETRY_DELAYS = new int[] {1, 2, 5, 10, 20};
+   }
+
    public interface IHasPlatformSubscriber<TPlatformSubscriber, ScopedRsp, Data>
       where TPlatformSubscriber : PlatformSubscribable<ScopedRsp, Data>
    {
@@ -22,8 +28,10 @@ namespace Beamable.Api
 
    public abstract class PlatformSubscribable<ScopedRsp, Data> : ISupportsGet<Data>, ISupportGetLatest<Data>
    {
+
       protected PlatformService platform;
-      protected PlatformRequester requester;
+      protected IBeamableRequester requester;
+      protected BeamableGetApiResource<ScopedRsp> getter;
       private string service;
       private Dictionary<string, Data> scopedData = new Dictionary<string, Data>();
 
@@ -36,8 +44,14 @@ namespace Beamable.Api
 
       private int retry = 0;
 
-      protected PlatformSubscribable(PlatformService platform, PlatformRequester requester, string service)
+      protected PlatformSubscribable(PlatformService platform, IBeamableRequester requester, string service, BeamableGetApiResource<ScopedRsp> getter=null)
       {
+         if (getter == null)
+         {
+            getter = new BeamableGetApiResource<ScopedRsp>();
+         }
+
+         this.getter = getter;
          this.platform = platform;
          this.requester = requester;
          this.service = service;
@@ -167,20 +181,26 @@ namespace Beamable.Api
          });
       }
 
-      protected virtual Promise<ScopedRsp> ExecuteRequest(PlatformRequester requester, string url)
+      protected virtual Promise<ScopedRsp> ExecuteRequest(IBeamableRequester requester, string url)
       {
-         return requester.Request<ScopedRsp>(Method.GET, url);
+         return getter.RequestData(requester, url);
       }
 
       protected virtual string CreateRefreshUrl(string scope)
       {
-         var queryArgs = "";
-         if (!string.IsNullOrEmpty(scope))
-         {
-            queryArgs = $"?scope={scope}";
-         }
+         return getter.CreateRefreshUrl(platform, service, scope);
+      }
 
-         return $"/object/{service}/{platform.User.id}{queryArgs}";
+      public Data GetLatest()
+      {
+         return GetLatest("");
+      }
+
+      public Data GetLatest(string scope)
+      {
+         Data data;
+         scopedData.TryGetValue(scope, out data);
+         return data;
       }
 
       public Promise<Data> GetCurrent(string scope = "")
@@ -202,25 +222,12 @@ namespace Beamable.Api
          }
       }
 
-
-      public Data GetLatest()
-      {
-         return GetLatest("");
-      }
-
-      public Data GetLatest(string scope)
-      {
-         Data data;
-         scopedData.TryGetValue(scope, out data);
-         return data;
-      }
-
-      protected void Notify(Data data)
+      public void Notify(Data data)
       {
          Notify("", data);
       }
 
-      protected void Notify(string scope, Data data)
+      public void Notify(string scope, Data data)
       {
          List<PlatformSubscription<Data>> subscriptions;
          if (scopedSubscriptions.TryGetValue(scope, out subscriptions))
@@ -339,11 +346,7 @@ namespace Beamable.Api
       }
    }
 
-   internal static class SubscribableConsts
-   {
-      internal static readonly int[] RETRY_DELAYS = new int[] {1, 2, 5, 10, 20};
-   }
-
+   // A class instead of a struct to reduce code-size bloat from the generic dictionary instantiation
    class ScheduledRefresh
    {
       public Coroutine coroutine;
@@ -380,6 +383,40 @@ namespace Beamable.Api
       public void Unsubscribe()
       {
          onUnsubscribe.Invoke(scope, this);
+      }
+   }
+}
+
+namespace Beamable
+{
+   public static class PlatformSubscribableExtensions
+   {
+      public static PlatformSubscription<TData> Subscribe<TPlatformSubscribable, TScopedRsp, TData>(
+         this IHasPlatformSubscriber<TPlatformSubscribable, TScopedRsp, TData> subscribable,
+         Action<TData> callback)
+
+         where TPlatformSubscribable : PlatformSubscribable<TScopedRsp, TData>
+      {
+         return subscribable.Subscribable.Subscribe(callback);
+      }
+
+      public static PlatformSubscription<TData> Subscribe<TPlatformSubscribable, TScopedRsp, TData>(
+         this IHasPlatformSubscriber<TPlatformSubscribable, TScopedRsp, TData> subscribable,
+         string scopes,
+         Action<TData> callback)
+
+         where TPlatformSubscribable : PlatformSubscribable<TScopedRsp, TData>
+      {
+         return subscribable.Subscribable.Subscribe(scopes, callback);
+      }
+
+      public static TData GetLatest<TPlatformSubscribable, TScopedRsp, TData>(
+         this IHasPlatformSubscriber<TPlatformSubscribable, TScopedRsp, TData> subscribable,
+         string scopes="")
+
+         where TPlatformSubscribable : PlatformSubscribable<TScopedRsp, TData>
+      {
+         return subscribable.Subscribable.GetLatest(scopes);
       }
    }
 }

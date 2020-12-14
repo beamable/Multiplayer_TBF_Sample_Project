@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Beamable.Common;
 using Beamable.Common.Content;
+using Beamable.Common.Content.Validation;
 using Beamable.Editor.Content.Models;
 using Beamable.Platform.SDK;
 using Beamable.Content;
@@ -12,6 +13,7 @@ using Beamable.Editor.Content;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using Debug = Beamable.Common.Debug;
+using UnityEditor;
 
 namespace Beamable.Editor.Content
 {
@@ -111,26 +113,26 @@ namespace Beamable.Editor.Content
          });
       }
 
-//      public void DownloadSingle(params ContentItemDescriptor[] items)
-//      {
-//         EditorDisruptorEngine.Instance.Then(de =>
-//         {
-//            var localManifest = de.ContentIO.BuildLocalManifest();
-//            de.ContentIO.OnManifest.Then(serverManifest =>
-//            {
-//               var summary = new DownloadSummary(Model.lo)
-//               var downloader = new ContentDownloader(de.Requester, de.ContentIO);
-//               downloader.Download()
-//            });
-//         });
-//      }
 
       public Promise<Unit> DownloadContent(DownloadSummary summary, HandleContentProgress progressHandler, HandleDownloadFinished finishedHandler)
       {
+         //Resumes UI updates and other import behaviors
+         void StopAssetEditing()
+         {
+            AssetDatabase.StopAssetEditing();
+            AssetDatabase.SaveAssets();
+         }
+
          return EditorAPI.Instance.FlatMap(de =>
          {
             var contentDownloader = new ContentDownloader(de.Requester, de.ContentIO);
-            var downloadPromise = contentDownloader.Download(summary, progressHandler);
+            //Disallow updating anything while importing / refreshing
+            AssetDatabase.StartAssetEditing();
+            var downloadPromise = contentDownloader.Download(summary, progressHandler).Then(_ =>
+               StopAssetEditing()
+            ).Error(_ =>
+               StopAssetEditing()
+            );
             finishedHandler?.Invoke(downloadPromise);
             return downloadPromise;
          });
@@ -201,7 +203,7 @@ namespace Beamable.Editor.Content
 
       public Promise<ContentPublishSet> CreatePublishSet()
       {
-         return EditorAPI.Instance.FlatMap(de =>  de.ContentPublisher.CreatePublishSet() );
+         return EditorAPI.Instance.FlatMap(de => de.ContentPublisher.CreatePublishSet());
       }
    }
 }

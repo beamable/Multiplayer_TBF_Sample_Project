@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 namespace Beamable.Common.Api.Auth
 {
-
-
    public class AuthApi : IAuthApi
    {
       private const string TOKEN_URL = "/basic/auth/token";
-      private const string ACCOUNT_URL = "/basic/accounts";
+      protected const string ACCOUNT_URL = "/basic/accounts";
 
       private IBeamableRequester _requester;
 
@@ -75,15 +73,23 @@ namespace Beamable.Common.Api.Auth
          public string refresh_token;
       }
 
-      public Promise<TokenResponse> Login(string username, string password, bool mergeGamerTagToAccount = true)
+
+      public Promise<TokenResponse> Login(
+         string username,
+         string password,
+         bool mergeGamerTagToAccount = true,
+         bool customerScoped = false
+      )
       {
-         var req = new LoginRequest
+         var body = new LoginRequest
          {
-            grant_type = "password",
             username = username,
-            password = password
+            grant_type = "password",
+            password = password,
+            customerScoped = customerScoped
          };
-         return _requester.Request<TokenResponse>(Method.POST, TOKEN_URL, req, includeAuthHeader: mergeGamerTagToAccount);
+
+         return _requester.Request<TokenResponse>(Method.POST, TOKEN_URL, body, includeAuthHeader: mergeGamerTagToAccount);
       }
 
       [Serializable]
@@ -92,6 +98,7 @@ namespace Beamable.Common.Api.Auth
          public string grant_type;
          public string username;
          public string password;
+         public bool customerScoped;
       }
 
       public Promise<TokenResponse> LoginThirdParty(AuthThirdParty thirdParty, string thirdPartyToken, bool includeAuthHeader = true)

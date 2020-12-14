@@ -15,7 +15,7 @@ namespace Beamable.Server.Editor
          // TODO: make this work for multiple config types
          //       but for now, there is just the one...
 
-         return "Packages/com.beamable.server/Editor/Resources/microserviceConfiguration.asset";
+         return "Packages/com.beamable.server/Editor/microserviceConfiguration.asset";
 
       }
    }
@@ -35,7 +35,13 @@ namespace Beamable.Server.Editor
             {
                ServiceName = serviceName,
                TemplateId = "small",
-               Enabled = true
+               Enabled = true,
+               DebugData = new MicroserviceConfigurationDebugEntry
+               {
+                  Password = "Password!",
+                  Username = "root",
+                  SshPort = 11100 + Microservices.Count
+               }
             };
             Microservices.Add(existing);
          }
@@ -50,5 +56,14 @@ namespace Beamable.Server.Editor
       public bool Enabled;
       public string TemplateId;
 
+      public MicroserviceConfigurationDebugEntry DebugData;
+   }
+
+   [System.Serializable]
+   public class MicroserviceConfigurationDebugEntry
+   {
+      public string Username = "beamable";
+      public string Password = "beamable";
+      public int SshPort = -1;
    }
 }

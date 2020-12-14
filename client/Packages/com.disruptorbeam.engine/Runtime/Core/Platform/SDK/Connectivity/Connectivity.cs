@@ -3,7 +3,7 @@ using System.Collections;
 using Beamable.Coroutines;
 using UnityEngine;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api.Connectivity
 {
 	public class ConnectivityService
 	{

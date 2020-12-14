@@ -1,6 +1,8 @@
 using Beamable.Common;
 using Beamable.Common.Content;
 
+
+
 namespace Beamable.Content
 {
     [ContentType("leaderboards")]
@@ -9,13 +11,6 @@ namespace Beamable.Content
     public class LeaderboardContent : ContentObject
     {
         public ClientPermissions permissions;
-    }
-
-    [System.Serializable]
-    [Agnostic]
-    public class ClientPermissions
-    {
-        public bool write_self;
     }
 
     [System.Serializable]

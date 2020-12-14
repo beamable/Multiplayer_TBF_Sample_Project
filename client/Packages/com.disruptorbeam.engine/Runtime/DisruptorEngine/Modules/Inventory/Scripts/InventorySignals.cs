@@ -5,7 +5,8 @@ using System.Linq;
 using Beamable.Modules.AccountManagement;
 using Beamable.Signals;
 using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Inventory;
+using Beamable.Api.Inventory;
+using Beamable.Common.Api.Inventory;
 // TODO, we can share one toggle event
 using UnityEngine;
 using UnityEngine.UI;

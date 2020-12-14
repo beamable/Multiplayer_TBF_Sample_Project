@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Content.Serialization;
 using Beamable.Editor.NoUser;
 using Debug = UnityEngine.Debug;

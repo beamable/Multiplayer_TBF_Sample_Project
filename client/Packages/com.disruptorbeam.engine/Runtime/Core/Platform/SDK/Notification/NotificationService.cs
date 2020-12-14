@@ -2,7 +2,7 @@ using UnityEngine;
 
 using System;
 using System.Collections.Generic;
-using Beamable.Platform.SDK.Notification.Internal;
+using Beamable.Api.Notification.Internal;
 using Beamable.Spew;
 
 #if UNITY_IOS
@@ -17,7 +17,7 @@ using Firebase.Messaging;
 using System.Text;
 #endif
 
-namespace Beamable.Platform.SDK.Notification
+namespace Beamable.Api.Notification
 {
     /*
      * Service to handle scheduling in-game and Operating System level notifications to the player.
@@ -62,9 +62,7 @@ namespace Beamable.Platform.SDK.Notification
          switch (Application.platform)
          {
             case RuntimePlatform.Android:
-#if UNITY_ANDROID
                LocalRelay = new GoogleLocalNotificationRelay();
-#endif
                NotificationLogger.Log("Local notifications using Google provider.");
                break;
 #if UNITY_IOS

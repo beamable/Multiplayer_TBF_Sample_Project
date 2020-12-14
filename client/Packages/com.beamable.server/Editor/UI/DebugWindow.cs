@@ -32,6 +32,8 @@
 
       //private List<MicroserviceDescriptor> _descriptors = new List<MicroserviceDescriptor>();
 
+      private Dictionary<MicroserviceDescriptor, bool> _debuggerInfoOpen = new Dictionary<MicroserviceDescriptor, bool>();
+
       private void OnGUI()
       {
 
@@ -121,6 +123,7 @@
             }
 
             GUI.enabled = machine.CurrentState == MicroserviceState.IDLE;
+            machine.IncludeDebugTools = GUILayout.Toggle(machine.IncludeDebugTools, "Include Debugging Tools");
             if (GUILayout.Button("Build"))
             {
                machine.MoveNext(MicroserviceCommand.BUILD);
@@ -131,10 +134,90 @@
             if (GUILayout.Button("Start"))
             {
                machine.MoveNext(MicroserviceCommand.START);
+            }
+            GUI.enabled = machine.CurrentState == MicroserviceState.RUNNING;
 
+            bool foldoutOpen;
+            _debuggerInfoOpen.TryGetValue(service, out foldoutOpen);
+            var debuggerFoldout = EditorGUILayout.Foldout(foldoutOpen, "Debugger Connection Details");
+            _debuggerInfoOpen[service] = debuggerFoldout;
+            if (debuggerFoldout)
+            {
+               var config = MicroserviceConfiguration.Instance.GetEntry(service.Name);
+               EditorGUI.indentLevel++;
+               EditorGUILayout.LabelField("Use SSH to connect a debugger to the container.");
+               EditorGUILayout.BeginHorizontal();
+               EditorGUILayout.PrefixLabel("host");
+               
+               EditorGUILayout.SelectableLabel("0.0.0.0", GUILayout.Height(EditorGUIUtility.singleLineHeight));
+               EditorGUILayout.EndHorizontal();
+               EditorGUILayout.BeginHorizontal();
+               EditorGUILayout.PrefixLabel("user");
+
+               EditorGUILayout.SelectableLabel(config.DebugData.Username,
+                  GUILayout.Height(EditorGUIUtility.singleLineHeight));
+               EditorGUILayout.EndHorizontal();
+               EditorGUILayout.BeginHorizontal();
+               EditorGUILayout.PrefixLabel("password");
+
+               EditorGUILayout.SelectableLabel(config.DebugData.Password,
+                  GUILayout.Height(EditorGUIUtility.singleLineHeight));
+               EditorGUILayout.EndHorizontal();
+               EditorGUILayout.BeginHorizontal();
+               EditorGUILayout.PrefixLabel("port");
+
+               EditorGUILayout.SelectableLabel("" + config.DebugData.SshPort,
+                  GUILayout.Height(EditorGUIUtility.singleLineHeight));
+               EditorGUILayout.EndHorizontal();
+
+               EditorGUILayout.Space();
+               EditorGUILayout.LabelField(
+                  "Open a VSCode window to the microservice root, and add this debug configuration.");
+               GUILayout.BeginHorizontal();
+               GUILayout.FlexibleSpace();
+               if (GUILayout.Button("Copy VSCode Configuration", GUILayout.Width(200)))
+               {
+                  EditorGUIUtility.systemCopyBuffer = $@"{{
+                     ""name"": ""Attach {service.Name}"",
+                     ""type"": ""coreclr"",
+                     ""request"": ""attach"",
+                     ""processId"": ""${{command:pickRemoteProcess}}"",
+                     ""pipeTransport"": {{
+                        ""pipeProgram"": ""docker"",
+                        ""pipeArgs"": [ ""exec"", ""-i"", ""{service.ContainerName}"" ],
+                        ""debuggerPath"": ""/vsdbg/vsdbg"",
+                        ""pipeCwd"": ""${{workspaceRoot}}"",
+                        ""quoteArgs"": false
+                     }},
+                     ""sourceFileMap"": {{
+                        ""/subsrc/"": ""${{workspaceRoot}}/""
+                     }}
+                  }}";
+               }
+               GUILayout.EndHorizontal();
+
+               /*
+                *         {
+            "name": "Attach DeploymentTest",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickRemoteProcess}",
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": [ "exec", "-i", "DeploymentTest_container" ],
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceRoot}",
+                "quoteArgs": false
+            },
+            "sourceFileMap": {
+                "/subsrc/": "${workspaceRoot}/"
+            }
+        }
+                */
+               EditorGUI.indentLevel--;
             }
 
-            GUI.enabled = machine.CurrentState == MicroserviceState.RUNNING;
+
             if (GUILayout.Button("Stop"))
             {
                machine.MoveNext(MicroserviceCommand.STOP);

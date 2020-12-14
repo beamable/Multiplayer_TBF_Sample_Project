@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Beamable.UI.Layouts;
 using Beamable.UI.Scripts;
-using Beamable.Platform.SDK.Payments;
+using Beamable.Api.Payments;
 using Beamable.Modules.Theme.Palettes;
 using TMPro;
 using UnityEngine;

@@ -1,123 +1,125 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Beamable.Modules.AccountManagement;
 using Beamable.Modules.Theme;
 using Beamable.Modules.Theme.Palettes;
 using Beamable.UI.Scripts;
 using TMPro;
 
-public class AccountEmailLogin : MenuBase
+namespace Beamable.Modules.AccountManagement
 {
-   public const string MatchEmailPattern = "^(?(\")(\".+?(?<!\\\\)\"@)|(([0-9a-z]((\\.(?!\\.))|[-!#\\$%&'\\*\\+/=\\?\\^`{}|~\\w])*)(?<=[0-9a-z])@))(?([)([(\\d{1,3}.){3}\\d{1,3}])|(([0-9a-z][-0-9a-z]*[0-9a-z]*.)+[a-z0-9][-a-z0-9]{0,22}[a-z0-9]))$";
-
-   public TMP_InputField _emailInput;
-   public TMP_InputField _passwordInput;
-   public TextMeshProUGUI _messageTxt;
-   public Button _forgotButton;
-   public Button ContinueButton;
-   public List<InputValidationBehaviour> ValidationBehaviours;
-
-   public StyleBehaviour _styledText;
-   public ColorBinding ErrorColor;
-   public ColorBinding RegularColor;
-
-   public StringBinding CreatePasswordStringBinding;
-   public StringBinding EnterEmailStringBinding;
-   public StringBinding EnterExistingPasswordStringBinding;
-
-   public LoadingIndicator LoadingIndicator;
-   public AccountManagementSignals Signaler;
-
-   public override void OnOpened()
+   public class AccountEmailLogin : MenuBase
    {
-      _emailInput.text = "";
-      _passwordInput.text = "";
-      _messageTxt.text = "";
+      public const string MatchEmailPattern = "^(?(\")(\".+?(?<!\\\\)\"@)|(([0-9a-z]((\\.(?!\\.))|[-!#\\$%&'\\*\\+/=\\?\\^`{}|~\\w])*)(?<=[0-9a-z])@))(?([)([(\\d{1,3}.){3}\\d{1,3}])|(([0-9a-z][-0-9a-z]*[0-9a-z]*.)+[a-z0-9][-a-z0-9]{0,22}[a-z0-9]))$";
 
-      _passwordInput.gameObject.SetActive(false);
-      _forgotButton.gameObject.SetActive(false);
-      _messageTxt.gameObject.SetActive(false);
-      SetMessageColor(false);
+      public TMP_InputField _emailInput;
+      public TMP_InputField _passwordInput;
+      public TextMeshProUGUI _messageTxt;
+      public Button _forgotButton;
+      public Button ContinueButton;
+      public List<InputValidationBehaviour> ValidationBehaviours;
 
-   }
+      public StyleBehaviour _styledText;
+      public ColorBinding ErrorColor;
+      public ColorBinding RegularColor;
 
-   private void Update()
-   {
-      SetContinueButtonClickable();
-   }
+      public StringBinding CreatePasswordStringBinding;
+      public StringBinding EnterEmailStringBinding;
+      public StringBinding EnterExistingPasswordStringBinding;
 
-   void SetContinueButtonClickable() {
-      var allValid = true;
+      public LoadingIndicator LoadingIndicator;
+      public AccountManagementSignals Signaler;
 
-      for (var i = 0; i < ValidationBehaviours.Count; i++)
+      public override void OnOpened()
       {
-         var behaviourValid = !ValidationBehaviours[i].isActiveAndEnabled || ValidationBehaviours[i].IsValid;
-         allValid &= behaviourValid;
-      }
-      ContinueButton.interactable = allValid;
-   }
+         _emailInput.text = "";
+         _passwordInput.text = "";
+         _messageTxt.text = "";
 
-   public void EmailChanged(InputReference emailText)
-   {
-      if (emailText.Value.Length > 0)
+         _passwordInput.gameObject.SetActive(false);
+         _forgotButton.gameObject.SetActive(false);
+         _messageTxt.gameObject.SetActive(false);
+         SetMessageColor(false);
+
+      }
+
+      private void Update()
       {
-         Signaler.UpdateLoginEmail(emailText.Value);
+         SetContinueButtonClickable();
       }
-   }
 
-   public void OnForgotPassword()
-   {
-      var menu = Manager.Show<AccountForgotPassword>();
-      menu.SetEmail(_emailInput.text.Replace("\u200B", ""));
-   }
+      void SetContinueButtonClickable() {
+         var allValid = true;
 
-   public void EmailIsRegistered(string email)
-   {
-      _forgotButton.gameObject.SetActive(true);
-      _passwordInput.gameObject.SetActive(true);
-      _messageTxt.gameObject.SetActive(true);
-      _messageTxt.text = EnterExistingPasswordStringBinding.Localize();
+         for (var i = 0; i < ValidationBehaviours.Count; i++)
+         {
+            var behaviourValid = !ValidationBehaviours[i].isActiveAndEnabled || ValidationBehaviours[i].IsValid;
+            allValid &= behaviourValid;
+         }
+         ContinueButton.interactable = allValid;
+      }
 
-      _forgotButton.gameObject.SetActive(true);
-      SetMessageColor(false);
-   }
+      public void EmailChanged(InputReference emailText)
+      {
+         if (emailText.Value.Length > 0)
+         {
+            Signaler.UpdateLoginEmail(emailText.Value);
+         }
+      }
 
-   public void EmailIsAvailable(string email)
-   {
-      _forgotButton.gameObject.SetActive(false);
-      _passwordInput.gameObject.SetActive(true);
+      public void OnForgotPassword()
+      {
+         var menu = Manager.Show<AccountForgotPassword>();
+         menu.SetEmail(_emailInput.text.Replace("\u200B", ""));
+      }
 
-      _messageTxt.gameObject.SetActive(true);
-      _messageTxt.text = CreatePasswordStringBinding.Localize();
-      _forgotButton.gameObject.SetActive(false);
-      SetMessageColor(false);
-   }
+      public void EmailIsRegistered(string email)
+      {
+         _forgotButton.gameObject.SetActive(true);
+         _passwordInput.gameObject.SetActive(true);
+         _messageTxt.gameObject.SetActive(true);
+         _messageTxt.text = EnterExistingPasswordStringBinding.Localize();
 
-   public void EmailIsInvalid(string email)
-   {
+         _forgotButton.gameObject.SetActive(true);
+         SetMessageColor(false);
+      }
 
-      _forgotButton.gameObject.SetActive(false);
-      _messageTxt.gameObject.SetActive(true);
+      public void EmailIsAvailable(string email)
+      {
+         _forgotButton.gameObject.SetActive(false);
+         _passwordInput.gameObject.SetActive(true);
 
-      _messageTxt.text = EnterEmailStringBinding.Localize();
-      SetMessageColor(true);
+         _messageTxt.gameObject.SetActive(true);
+         _messageTxt.text = CreatePasswordStringBinding.Localize();
+         _forgotButton.gameObject.SetActive(false);
+         SetMessageColor(false);
+      }
 
-   }
+      public void EmailIsInvalid(string email)
+      {
 
-   public void HandleError(string errorMessage)
-   {
-      _messageTxt.gameObject.SetActive(true);
-      _messageTxt.text = errorMessage;
-      SetMessageColor(true);
-   }
+         _forgotButton.gameObject.SetActive(false);
+         _messageTxt.gameObject.SetActive(true);
 
-   private void SetMessageColor(bool error)
-   {
-      _styledText.StyledTexts.ColorBinding = error ? ErrorColor : RegularColor;
-      _styledText.Refresh();
+         _messageTxt.text = EnterEmailStringBinding.Localize();
+         SetMessageColor(true);
 
-      _messageTxt.ForceMeshUpdate();
-      _messageTxt.SetAllDirty();
-      _messageTxt.UpdateMeshPadding();
+      }
+
+      public void HandleError(string errorMessage)
+      {
+         _messageTxt.gameObject.SetActive(true);
+         _messageTxt.text = errorMessage;
+         SetMessageColor(true);
+      }
+
+      private void SetMessageColor(bool error)
+      {
+         _styledText.StyledTexts.ColorBinding = error ? ErrorColor : RegularColor;
+         _styledText.Refresh();
+
+         _messageTxt.ForceMeshUpdate();
+         _messageTxt.SetAllDirty();
+         _messageTxt.UpdateMeshPadding();
+      }
    }
 }

@@ -5,6 +5,7 @@ using Beamable.Editor.UI.Buss;
 using System;
 using System.Linq;
 using Beamable.Common;
+using Beamable.Common.Content.Validation;
 using Beamable.Content;
 using Beamable.Content.Validation;
 using UnityEngine;

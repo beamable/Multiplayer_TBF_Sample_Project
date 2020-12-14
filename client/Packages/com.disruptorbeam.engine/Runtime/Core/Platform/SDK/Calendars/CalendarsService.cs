@@ -1,22 +1,21 @@
 using System;
 using System.Collections.Generic;
-using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Calendars;
 
-namespace Beamable.Platform.SDK.Calendars
+namespace Beamable.Api.Calendars
 {
-   public class CalendarsService : PlatformSubscribable<CalendarQueryResponse, CalendarView>
+
+   public class CalendarsSubscription : PlatformSubscribable<CalendarQueryResponse, CalendarView>
    {
-      public CalendarsService (PlatformService platform, PlatformRequester requester) : base(platform, requester, "calendars")
+      public CalendarsSubscription(PlatformService platform, IBeamableRequester requester, string service) : base(platform, requester, service)
       {
       }
 
-      public Promise<EmptyResponse> Claim(string calendarId)
+      public void ForceRefresh(string scope)
       {
-         return requester.Request<EmptyResponse>(
-            Method.POST,
-            $"/object/calendars/{platform.User.id}/claim?id={calendarId}"
-         ).Then(claimRsp => { Refresh(calendarId); });
+         Refresh(scope);
       }
 
       protected override void OnRefresh(CalendarQueryResponse data)
@@ -47,51 +46,57 @@ namespace Beamable.Platform.SDK.Calendars
       }
    }
 
-   [Serializable]
-   public class CalendarQueryResponse
+   public class CalendarsService : AbsCalendarApi, IHasPlatformSubscriber<CalendarsSubscription, CalendarQueryResponse, CalendarView>
    {
-      public List<CalendarView> calendars;
 
-      internal void Init()
+      public CalendarsSubscription Subscribable { get; }
+
+      public CalendarsService (PlatformService platform, IBeamableRequester requester) : base(requester, platform)
       {
-         // Set the absolute timestamps for when state changes
-         foreach (var calendar in calendars)
-         {
-            calendar.Init();
-         }
+         Subscribable = new CalendarsSubscription(platform, requester, SERVICE_NAME);
       }
-   }
 
-   [Serializable]
-   public class CalendarView
-   {
-      public string id;
-      public List<RewardCalendarDay> days;
-      public int nextIndex;
-      public long remainingSeconds;
-      public long nextClaimSeconds;
-      public DateTime nextClaimTime;
-      public DateTime endTime;
-
-      internal void Init()
+      public override Promise<EmptyResponse> Claim(string calendarId)
       {
-         nextClaimTime = DateTime.UtcNow.AddSeconds(nextClaimSeconds);
-         endTime = DateTime.UtcNow.AddSeconds(remainingSeconds);
+         return base.Claim(calendarId).Then(claimRsp => { Subscribable.ForceRefresh(calendarId); });
       }
+
+      public override Promise<CalendarView> GetCurrent(string scope = "") => Subscribable.GetCurrent(scope);
+
+//      public Promise<EmptyResponse> Claim(string calendarId)
+//      {
+//         return requester.Request<EmptyResponse>(
+//            Method.POST,
+//            $"/object/calendars/{platform.User.id}/claim?id={calendarId}"
+//         ).Then(claimRsp => { Refresh(calendarId); });
+//      }
+
+//      protected override void OnRefresh(CalendarQueryResponse data)
+//      {
+//         data.Init();
+//
+//         foreach (var calendar in data.calendars)
+//         {
+//            // Schedule the next callback
+//            var seconds = long.MaxValue;
+//            if (calendar.nextClaimSeconds != 0 && calendar.nextClaimSeconds < seconds)
+//            {
+//               seconds = calendar.nextClaimSeconds;
+//            }
+//
+//            if (calendar.remainingSeconds != 0 && calendar.remainingSeconds < seconds)
+//            {
+//               seconds = calendar.remainingSeconds;
+//            }
+//
+//            if (seconds > 0)
+//            {
+//               ScheduleRefresh(seconds, calendar.id);
+//            }
+//
+//            Notify(calendar.id, calendar);
+//         }
+//      }
    }
 
-   [Serializable]
-   public class RewardCalendarDay
-   {
-      public List<RewardCalendarObtain> obtain;
-   }
-
-   [Serializable]
-   public class RewardCalendarObtain
-   {
-      public string symbol;
-      public string specialization;
-      public string action;
-      public int quantity;
-   }
 }

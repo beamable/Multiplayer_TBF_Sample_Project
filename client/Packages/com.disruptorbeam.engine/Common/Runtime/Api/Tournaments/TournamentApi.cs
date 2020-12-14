@@ -5,7 +5,7 @@ using Beamable.Common;
 using Beamable.Common.Api;
 using Beamable.Common.Api.Stats;
 
-namespace Beamable.Api.Tournaments
+namespace Beamable.Common.Api.Tournaments
 {
    public class TournamentApi : ITournamentApi
    {

@@ -51,6 +51,7 @@ namespace Beamable.Server.Editor
       private DockerCommand _process, _logProcess;
 
       public bool UseDebug { get; set; }
+      public bool IncludeDebugTools { get; set; }
 
       public MicroserviceStateMachine(MicroserviceDescriptor descriptor, MicroserviceState initialState = MicroserviceState.IDLE)
       {
@@ -78,7 +79,7 @@ namespace Beamable.Server.Editor
 
       Promise<MicroserviceState> StartBuilding()
       {
-         StartProcess(new BuildImageCommand(ServiceDescriptor));
+         StartProcess(new BuildImageCommand(ServiceDescriptor, IncludeDebugTools));
          return Promise<MicroserviceState>.Successful(MicroserviceState.BUILDING);
       }
 
@@ -89,7 +90,7 @@ namespace Beamable.Server.Editor
          switch (CurrentState)
          {
             case MicroserviceState.BUILDING:
-               StartProcess(new BuildImageCommand(ServiceDescriptor));
+               StartProcess(new BuildImageCommand(ServiceDescriptor, IncludeDebugTools));
                break;
             case MicroserviceState.RUNNING:
                return EditorAPI.Instance.FlatMap(de => de.GetRealmSecret()).Map(secret =>

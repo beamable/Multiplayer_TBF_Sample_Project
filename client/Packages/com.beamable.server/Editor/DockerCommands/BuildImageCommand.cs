@@ -12,11 +12,13 @@ namespace Beamable.Server.Editor.DockerCommands
 {
    public class BuildImageCommand : DockerCommandReturnable<Unit>
    {
+      public bool IncludeDebugTools { get; }
       public string ImageName { get; set; }
       public string BuildPath { get; set; }
 
-      public BuildImageCommand(MicroserviceDescriptor descriptor)
+      public BuildImageCommand(MicroserviceDescriptor descriptor, bool includeDebugTools)
       {
+         IncludeDebugTools = includeDebugTools;
          ImageName = descriptor.ImageName;
          BuildPath = descriptor.BuildPath;
          UnityLogLabel = $"Docker Build {descriptor.Name}";
@@ -69,7 +71,7 @@ namespace Beamable.Server.Editor.DockerCommands
          var csProjFilePath = Path.Combine(descriptor.BuildPath, $"{descriptor.ImageName}.csproj");
          var dockerfilePath = Path.Combine(descriptor.BuildPath, "Dockerfile");
          (new ProgramCodeGenerator(descriptor)).GenerateCSharpCode(programFilePath);
-         (new DockerfileGenerator(descriptor)).Generate(dockerfilePath);
+         (new DockerfileGenerator(descriptor, IncludeDebugTools)).Generate(dockerfilePath);
          (new ProjectGenerator(descriptor)).Generate(csProjFilePath);
 
          var deps = DependencyResolver.GetDependencies(descriptor);

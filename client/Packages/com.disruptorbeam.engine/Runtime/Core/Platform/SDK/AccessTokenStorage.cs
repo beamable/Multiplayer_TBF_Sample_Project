@@ -1,10 +1,10 @@
 using System;
 using System.Globalization;
 using Beamable.Common;
-using Beamable.Platform.SDK.Auth;
+using Beamable.Common.Api.Auth;
 using UnityEngine;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api
 {
    public class AccessTokenStorage
    {

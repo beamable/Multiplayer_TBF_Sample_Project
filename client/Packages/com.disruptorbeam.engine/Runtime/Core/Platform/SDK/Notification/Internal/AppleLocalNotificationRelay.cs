@@ -5,7 +5,7 @@ using UnityEngine.iOS;
 using System.Runtime.InteropServices;
 using Beamable.Spew;
 
-namespace Beamable.Platform.SDK.Notification.Internal
+namespace Beamable.Api.Notification.Internal
 {
    /// <summary>
    /// Apple local notification relay, for scheduling or cancelling

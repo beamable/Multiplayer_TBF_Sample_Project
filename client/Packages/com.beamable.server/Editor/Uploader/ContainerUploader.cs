@@ -73,16 +73,29 @@ public class ContainerUploader
             {"mediaType", MediaManifest},
             {"config", new Dictionary<string, object> {{"mediaType", MediaConfig}}},
             {"layers", new List<object>()},
-            {"tag", _imageId}
+//            {"tag", _imageId}
          };
          var config = (Dictionary<string, object>) uploadManifest["config"];
          var layers = (List<object>) uploadManifest["layers"];
 
          // Upload the config JSON as a blob.
-         config["digest"] = await UploadFileBlob($"{folder}/{manifest.config}");
+         var configResult = (await UploadFileBlob($"{folder}/{manifest.config}"));
+         config["digest"] = configResult.Digest;
+         config["size"] = configResult.Size;
 
          // Upload all layer blobs.
-         await Task.WhenAll(manifest.layers.Select(layer => UploadLayer($"{folder}/{layer}", layers)));
+         var uploadIndexToJob = new SortedDictionary<int, Task<Dictionary<string, object>>>();
+         for (var i = 0; i < manifest.layers.Length; i++)
+         {
+            var layer = manifest.layers[i];
+            uploadIndexToJob.Add(i, UploadLayer($"{folder}/{layer}"));
+         }
+
+         await Task.WhenAll(uploadIndexToJob.Values);
+         foreach (var kvp in uploadIndexToJob)
+         {
+            layers.Add(kvp.Value.Result);
+         }
 
          // Upload manifest JSON.
          await UploadManifestJson(uploadManifest, _imageId);
@@ -107,11 +120,15 @@ public class ContainerUploader
       /// manifest when complete.
       /// </summary>
       /// <param name="layerPath">Filesystem path to the layer archive.</param>
-      /// <param name="layers">Manifest data structure for pushed layers.</param>
-      private async Task UploadLayer(string layerPath, ICollection<object> layers)
+      private async Task<Dictionary<string, object>> UploadLayer(string layerPath)
       {
          var layerDigest = await UploadFileBlob(layerPath);
-         layers.Add(new Dictionary<string, object> {{"digest", layerDigest}, {"mediaType", MediaLayer}});
+         return new Dictionary<string, object>
+         {
+            {"digest", layerDigest.Digest},
+            {"size", layerDigest.Size},
+            {"mediaType", MediaLayer}
+         };
       }
 
       /// <summary>
@@ -119,7 +136,7 @@ public class ContainerUploader
       /// </summary>
       /// <param name="filename">File to upload.</param>
       /// <returns>Hash digest of the blob.</returns>
-      private async Task<string> UploadFileBlob(string filename)
+      private async Task<FileBlobResult> UploadFileBlob(string filename)
       {
          using (var fileStream = File.OpenRead(filename))
          {
@@ -127,7 +144,11 @@ public class ContainerUploader
             if (await CheckBlobExistence(digest))
             {
                _harness.ReportUploadProgress(digest, fileStream.Length, fileStream.Length);
-               return digest;
+               return new FileBlobResult
+               {
+                  Digest = digest,
+                  Size = fileStream.Length
+               };
             }
             fileStream.Position = 0;
             var location = NormalizeWithDigest(await PrepareUploadLocation(), digest);
@@ -139,8 +160,18 @@ public class ContainerUploader
                _harness.ReportUploadProgress(digest, chunk.End, chunk.FullLength);
                location = NormalizeWithDigest(response.Headers.Location, digest);
             }
-            return digest;
+            return new FileBlobResult
+            {
+               Digest = digest,
+               Size = fileStream.Length
+            };
          }
+      }
+
+      struct FileBlobResult
+      {
+         public string Digest;
+         public long Size;
       }
 
       /// <summary>

@@ -1,4 +1,5 @@
-﻿using Beamable.Content;
+﻿using Beamable.Common.Content.Validation;
+using Beamable.Content;
 using Beamable.Content.Validation;
 using NUnit.Framework;
 

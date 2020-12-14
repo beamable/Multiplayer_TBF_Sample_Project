@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api
 {
     /**
      * Creates an Error code of the form Code:SystemID:ModuleID:LineNumber. This should let us expose a number to

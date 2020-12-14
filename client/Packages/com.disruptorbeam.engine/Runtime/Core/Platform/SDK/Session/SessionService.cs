@@ -2,14 +2,15 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Beamable.Common;
+using Beamable.Common.Api;
 
-namespace Beamable.Platform.SDK.Sessions
+namespace Beamable.Api.Sessions
 {
    public class SessionService
    {
       private static long TTL_MS = 60 * 1000;
 
-      private UserDataCache<Session> cache;
+      private UnityUserDataCache<Session> cache;
       private PlatformService _platform;
       private PlatformRequester _requester;
 
@@ -17,7 +18,8 @@ namespace Beamable.Platform.SDK.Sessions
       {
          _platform = platform;
          _requester = requester;
-         cache = new UserDataCache<Session>("Session", TTL_MS, resolve);
+         cache = new UnityUserDataCache<Session>("Session", TTL_MS, resolve);
+
       }
 
       private Promise<Dictionary<long, Session>> resolve(List<long> gamerTags)

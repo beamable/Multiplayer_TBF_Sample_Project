@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Beamable.Spew;
 
-namespace Beamable.Platform.SDK.Notification.Internal
+namespace Beamable.Api.Notification.Internal
 {
    /// <summary>
    /// Dummy local notification handler, for use as a stand-in within

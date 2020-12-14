@@ -6,7 +6,7 @@ using Beamable.Pooling;
 using Beamable.Serialization;
 using Beamable.Serialization.SmallerJSON;
 
-namespace Beamable.Platform.SDK.Analytics.Batch {
+namespace Beamable.Api.Analytics.Batch {
 
 	/// <summary>
 	/// Persistent Batch Manager.

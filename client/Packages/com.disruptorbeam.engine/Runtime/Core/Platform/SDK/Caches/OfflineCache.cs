@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Debug = UnityEngine.Debug;
 
-namespace Beamable.Platform.SDK.Caches
+namespace Beamable.Api.Caches
 {
     public class OfflineCache
     {
@@ -28,23 +29,23 @@ namespace Beamable.Platform.SDK.Caches
         private readonly static string _offlineCacheRootDir = Path.Combine(Application.persistentDataPath, _offlineCacheRoot, _offlineCacheDir, _cid, _pid, Application.version);
         private readonly MD5 _md5 = MD5.Create();
 
-        public static Promise<T> Get<T>(string key, AccessToken token)
+        public static Promise<T> Get<T>(string key, IAccessToken token)
         {
             return _instance.Read<T>(_instance.GetHash(key + token.RefreshToken));
         }
 
-        public static void Set<T>(string key, object data, AccessToken token)
+        public static void Set<T>(string key, object data, IAccessToken token)
         {
             _instance.Update(_instance.GetHash(key + token.RefreshToken), data);
         }
 
-        public static void Merge<TKey, TValue>(string key, AccessToken token, Dictionary<long, Dictionary<TKey, TValue>> data)
+        public static void Merge<TKey, TValue>(string key, IAccessToken token, Dictionary<long, Dictionary<TKey, TValue>> data)
         {
             _instance.Merge(key + token.RefreshToken, data);
         }
 
         public static Promise<Dictionary<long, TDict>> RecoverDictionary<TDict>(Exception ex, string key,
-            AccessToken token,
+            IAccessToken token,
             List<long> gamerTags)
         {
             return _instance.HandleDictionaryCase<TDict>(ex, key + token.RefreshToken, gamerTags);

@@ -20,7 +20,7 @@
                 <engine:Label name="errorCountLbl" text="Error "/>
             </engine:VisualElement>
             <engine:VisualElement class="summaryAlignRight">
-                <engine:Button name="detailBtn" text="Detail"/>
+<!--                <engine:Button name="detailBtn" text="Detail"/>-->
             </engine:VisualElement>
         </engine:VisualElement>
 

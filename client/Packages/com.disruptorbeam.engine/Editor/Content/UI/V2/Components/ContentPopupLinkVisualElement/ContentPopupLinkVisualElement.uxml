@@ -12,7 +12,7 @@
             <engine:Label name="title"/>
         </engine:VisualElement>
         <engine:VisualElement class="alignRight">
-            <engine:Button name="detailBtnList" text="Detail"/>
+<!--            <engine:Button name="detailBtnList" text="Detail"/>-->
         </engine:VisualElement>
     </engine:VisualElement>
 

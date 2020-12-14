@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Beamable.Platform.SDK.Sim {
+namespace Beamable.Api.Sim {
    public class SimBehavior : MonoBehaviour {
       public const int FRAME_RATE = 20;
       protected string SimId { get; private set; }

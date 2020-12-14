@@ -4,7 +4,7 @@ using Beamable.Spew;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace Beamable.Platform.SDK.Chat
+namespace Beamable.Api.Chat
 {
 
    public abstract class ChatProvider : MonoBehaviour

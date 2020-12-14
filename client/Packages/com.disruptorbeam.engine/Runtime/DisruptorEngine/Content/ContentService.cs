@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Common.Content;
 using Beamable.Editor.Content;
 using Beamable.Platform.SDK;
@@ -56,7 +57,7 @@ namespace Beamable.Content
          if (!_contentCaches.TryGetValue(contentType, out rawCache))
          {
             var cacheType = typeof(ContentCache<>).MakeGenericType(contentType);
-            var constructor = cacheType.GetConstructor(new[] { typeof(IPlatformRequester) });
+            var constructor = cacheType.GetConstructor(new[] { typeof(IBeamableRequester) });
             rawCache = (ContentCache)constructor.Invoke(new[] {requester});
 
             _contentCaches.Add(contentType, rawCache);
@@ -123,7 +124,7 @@ namespace Beamable.Content
          return "/basic/content/manifest/public";
       }
 
-      protected override Promise<ClientManifest> ExecuteRequest(PlatformRequester requester, string url)
+      protected override Promise<ClientManifest> ExecuteRequest(IBeamableRequester requester, string url)
       {
          return requester.Request(Method.GET, url, null, true, ClientManifest.ParseCSV, useCache:true);
       }

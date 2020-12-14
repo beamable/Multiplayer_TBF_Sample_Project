@@ -1,5 +1,7 @@
 using System;
+using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Content.Validation;
 using Beamable.Content;
 using Beamable.Content.Validation;
 using Beamable.Platform.SDK;

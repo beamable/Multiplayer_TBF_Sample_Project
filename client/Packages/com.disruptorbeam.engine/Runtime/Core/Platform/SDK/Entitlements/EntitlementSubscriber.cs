@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
 
-namespace Beamable.Platform.SDK.Entitlements
+namespace Beamable.Api.Entitlements
 {
    public class EntitlementSubscriber
    {

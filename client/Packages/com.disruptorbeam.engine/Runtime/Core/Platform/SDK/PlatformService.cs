@@ -5,46 +5,45 @@ using System.Text.RegularExpressions;
 using Beamable.Common;
 using Beamable.Config;
 using Beamable.Coroutines;
-using Beamable.Platform.SDK.Analytics;
-using Beamable.Platform.SDK.Announcements;
-using Beamable.Platform.SDK.Auth;
-using Beamable.Platform.SDK.Calendars;
-using Beamable.Platform.SDK.Chat;
-using Beamable.Platform.SDK.CloudSaving;
-using Beamable.Platform.SDK.Commerce;
-using Beamable.Platform.SDK.Entitlements;
-using Beamable.Platform.SDK.Events;
-using Beamable.Platform.SDK.Groups;
-using Beamable.Platform.SDK.Inventory;
-using Beamable.Platform.SDK.Leaderboard;
-using Beamable.Platform.SDK.Mail;
-using Beamable.Platform.SDK.Matchmaking;
-using Beamable.Platform.SDK.Notification;
-using Beamable.Platform.SDK.Payments;
-using Beamable.Platform.SDK.QA;
-using Beamable.Platform.SDK.Sessions;
-using Beamable.Platform.SDK.Sim;
-using Beamable.Platform.SDK.Social;
-using Beamable.Platform.SDK.Stats;
-using Beamable.Platform.SDK.Tag;
-using Beamable.Platform.SDK.Tournaments;
+using Beamable.Api.Analytics;
+using Beamable.Api.Announcements;
+using Beamable.Api.Auth;
+using Beamable.Api.Connectivity;
+using Beamable.Api.Calendars;
+using Beamable.Api.Chat;
+using Beamable.Api.CloudSaving;
+using Beamable.Api.Commerce;
+using Beamable.Api.Entitlements;
+using Beamable.Api.Events;
+using Beamable.Api.Groups;
+using Beamable.Api.Inventory;
+using Beamable.Api.Leaderboard;
+using Beamable.Api.Mail;
+using Beamable.Api.Matchmaking;
+using Beamable.Api.Notification;
+using Beamable.Api.Payments;
+using Beamable.Api.QA;
+using Beamable.Api.Sessions;
+using Beamable.Api.Sim;
+using Beamable.Api.Social;
+using Beamable.Api.Stats;
+using Beamable.Api.Tag;
+using Beamable.Api.Tournaments;
+
+using Beamable.Common;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Auth;
+using Beamable.Common.Api.Leaderboards;
+using Beamable.Api.AdvertisingIdentifier;
 using Beamable.Service;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
-namespace Beamable.Platform.SDK
+namespace Beamable.Api
 {
-   public enum Method
-   {
-      GET = 1,
-      POST = 2,
-      PUT = 3,
-      DELETE = 4
-   }
-
    [EditorServiceResolver(typeof(PlatformEditorServiceResolver))]
-   public class PlatformService : IDisposable
+   public class PlatformService : IDisposable, IUserContext
    {
       private const string acceptHeader = "application/json";
       private const int HeartbeatInterval = 30;
@@ -198,7 +197,7 @@ namespace Beamable.Platform.SDK
          GameRelay = new GameRelayService(this, _requester);
          Groups = new GroupsService(this, _requester);
          Inventory = new InventoryService(this, _requester);
-         Leaderboard = new LeaderboardService(this, _requester);
+         Leaderboard = new LeaderboardService(this, _requester,  UnityUserDataCache<RankEntry>.CreateInstance);
          Mail = new MailService(this, _requester);
          Matchmaking = new MatchmakingService(_requester);
          Payments = new PaymentService(this, _requester);
@@ -212,8 +211,8 @@ namespace Beamable.Platform.SDK
          QA = new QAService(_requester);
          Session = new SessionService(this, _requester);
          Social = new SocialListService(this, _requester);
-         Stats = new StatsService(this, _requester);
-         Tournaments = new TournamentService(Stats, _requester);
+         Stats = new StatsService(this, _requester, UnityUserDataCache<Dictionary<string, string>>.CreateInstance);
+         Tournaments = new TournamentService(Stats, _requester, this);
          Tag = new TagService(this, _requester);
 
       }
@@ -435,6 +434,8 @@ namespace Beamable.Platform.SDK
       {
          _accessTokenStorage.ClearDeviceRefreshTokens();
       }
+
+      public long UserId => _user.id;
    }
 
    public class PlatformEditorServiceResolver : IServiceResolver<PlatformService>

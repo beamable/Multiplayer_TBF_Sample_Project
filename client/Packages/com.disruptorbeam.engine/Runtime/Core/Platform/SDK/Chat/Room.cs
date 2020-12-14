@@ -5,7 +5,7 @@ using Beamable.Serialization;
 using Beamable.Service;
 using Beamable.Spew;
 
-namespace Beamable.Platform.SDK.Chat
+namespace Beamable.Api.Chat
 {
    using Promise = Promise<Unit>;
 

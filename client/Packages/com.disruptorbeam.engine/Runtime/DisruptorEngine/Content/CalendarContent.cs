@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Beamable.Common.Content;
-using Beamable.Platform.SDK.Calendars;
+using Beamable.Api.Calendars;
+using Beamable.Common.Api.Calendars;
 
 namespace Beamable.Content
 {

@@ -1,7 +1,7 @@
 using System;
 using Beamable.Spew;
 
-namespace Beamable.Platform.SDK.Notification.Internal
+namespace Beamable.Api.Notification.Internal
 {
    internal class InGameNotification
    {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Beamable.Platform.SDK.Sim {
+namespace Beamable.Api.Sim {
    public class SimLog {
       public long Frame { get; private set; }
       private List<SimEvent> _events = new List<SimEvent>();

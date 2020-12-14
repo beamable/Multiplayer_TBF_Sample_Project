@@ -1,7 +1,7 @@
 ﻿using Beamable.Common;
 using UnityEngine;
 
-namespace Beamable.Platform.SDK.AdvertisingIdentifier
+namespace Beamable.Api.AdvertisingIdentifier
 {
    public static class AdvertisingIdentifier
    {

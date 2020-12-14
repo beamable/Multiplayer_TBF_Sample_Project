@@ -1,6 +1,7 @@
 StatusBarVisualElement #mainVisualElement {
 	flex-direction:row;
 	flex-grow:1;
+	height: 30px;
 }
 
 StatusBarVisualElement Label {
@@ -19,48 +20,22 @@ StatusBarVisualElement Label {
 #status-icon.modified {
 	background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Warning.png");
 }
-#status-icon.error {
-	background-image: resource("Packages/com.disruptorbeam.engine/Editor/Content/UI/V2/icons/Warning.png");
+
+.statusShowBtn {
+    background-image: none;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
 }
 
-#status-color-bar {
-	margin-left: 5px;
-	margin-right: 5px;
-	width: 3px;
-	top: 5px;
-}
-#status-color-bar.current {
+.hide {
 	visibility: hidden;
-}
-#status-color-bar.modified {
-	background-color: #4F80F8;
-}
-#status-color-bar.error {
-	background-color: #FF0000;
-}
-
-#description {
-	
-}
-
-#view-btn{
-	width: 80px;
-	height: 25px;
-	right: 10px;
-	top:0px;
 	position: absolute;
-	font-size: 10px;
-	-unity-font: url("project:///Packages/com.disruptorbeam.engine/Editor/Font/Lato-Semibold.ttf");
+	top: 190090px;
 }
-#view-btn.current {
-	visibility: hidden;
-}
-#view-btn.modified {
-	visibility: visible;
-}
-#view-btn.error {
-	visibility: visible;
-}
+
+
 
 
 

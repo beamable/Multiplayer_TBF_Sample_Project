@@ -1,4 +1,4 @@
-namespace Beamable.Platform.SDK.Notification
+namespace Beamable.Api.Notification
 {
    public class PubNubOp
    {

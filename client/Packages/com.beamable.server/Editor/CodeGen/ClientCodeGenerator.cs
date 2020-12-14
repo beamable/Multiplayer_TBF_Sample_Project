@@ -149,12 +149,14 @@ namespace Beamable.Server.Editor.CodeGen
           var returnStatement = new CodeMethodReturnStatement();
 
           var servicePath = info.ClientCallable.PathName;
+          var serviceName = Descriptor.Name;
           if (string.IsNullOrEmpty(servicePath))
           {
               servicePath = info.MethodInfo.Name;
           }
 
-          servicePath = $"micro_{Descriptor.Name}/{servicePath}"; // micro is the feature name, so we don't accidently stop out an existing service.
+         // servicePath = $"micro_{Descriptor.Name}/{servicePath}"; // micro is the feature name, so we don't accidently stop out an existing service.
+
 
           var serializedFieldVariableName = "serializedFields";
           var fieldDeclare = new CodeParameterDeclarationExpression(typeof(string[]), serializedFieldVariableName);
@@ -173,10 +175,13 @@ namespace Beamable.Server.Editor.CodeGen
                   }),
               new CodeExpression[]
               {
-                  // first argument is the path.
+                  // first argument is the service name
+                  new CodePrimitiveExpression(serviceName),
+
+                  // second argument is the path.
                   new CodePrimitiveExpression(servicePath),
 
-                  // second argument is an array of pre-serialized json structures
+                  // third argument is an array of pre-serialized json structures
                   new CodeVariableReferenceExpression(serializedFieldVariableName),
               });
 

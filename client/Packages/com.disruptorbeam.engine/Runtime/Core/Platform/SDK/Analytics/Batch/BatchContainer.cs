@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Beamable.Platform.SDK.Analytics.Batch {
+namespace Beamable.Api.Analytics.Batch {
 
 	/// <summary>
 	/// Batch container.

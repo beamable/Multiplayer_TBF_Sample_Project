@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Beamable.Common.Content.Validation;
 using Beamable.Content;
 using Beamable.Content.Validation;
 

@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Common.Content;
 using Beamable.Content.Serialization;
-using Beamable.Editor.Content.Models;
-using Beamable.Platform.SDK;
-using Method = Beamable.Platform.SDK.Method;
 
 namespace Beamable.Editor.Content
 {
@@ -16,10 +14,10 @@ namespace Beamable.Editor.Content
 
    public class ContentDownloader
    {
-      private readonly IPlatformRequester _requester;
+      private readonly IBeamableRequester _requester;
       private readonly ContentIO _io;
 
-      public ContentDownloader(IPlatformRequester requester, ContentIO io)
+      public ContentDownloader(IBeamableRequester requester, ContentIO io)
       {
          _requester = requester;
          _io = io;

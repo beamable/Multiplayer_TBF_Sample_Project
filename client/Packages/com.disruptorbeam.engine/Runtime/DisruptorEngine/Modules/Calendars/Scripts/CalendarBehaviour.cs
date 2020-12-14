@@ -1,7 +1,7 @@
 ﻿using Beamable.Content;
 using Beamable.Modules.Tournaments;
 using Beamable.UI.Scripts;
-using Beamable.Platform.SDK.Calendars;
+using Beamable.Common.Api.Calendars;
 using UnityEngine;
 using UnityEngine.UI;
 

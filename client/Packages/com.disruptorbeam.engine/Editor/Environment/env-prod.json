@@ -1,5 +1,6 @@
 ﻿{
     "environment": "prod",
     "apiUrl": "https://api.beamable.com",
-    "portalUrl": "https://portal.beamable.com"
+    "portalUrl": "https://portal.beamable.com",
+    "sdkVersion": "BUILD__SDK__VERSION__STRING"
 }

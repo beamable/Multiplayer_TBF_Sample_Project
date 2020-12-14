@@ -52,13 +52,6 @@ DownloadContentVisualElement > TemplateContainer
     border-radius: 4px;
     height: 23px;
 }
-#detailBtn{
-    height: 20px;
-    width: 35px;
-    font-size: 8px;
-    -unity-text-align: middle-center;
-    align-self: flex-end;
-}
 
 DownloadContentVisualElement ScrollView  #ContentView {
     left: 1px;

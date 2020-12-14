@@ -1,21 +1,24 @@
-using Beamable.Platform.SDK.Announcements;
 using Beamable;
+using Beamable.Common.Api.Announcements;
 using Beamable.UI.Scripts;
 using TMPro;
 using UnityEngine;
 
-public class AnnouncementSummary : MonoBehaviour
+namespace Beamable.Modules.Announcements
 {
-   private MenuManagementBehaviour MenuManager;
-   private AnnouncementView Announcement;
-   public TextMeshProUGUI TxtTitle;
-   public TextMeshProUGUI TxtBody;
-
-   public void Apply(MenuManagementBehaviour menu, AnnouncementView view)
+   public class AnnouncementSummary : MonoBehaviour
    {
-      MenuManager = menu;
-      Announcement = view;
-      TxtTitle.text = view.title;
-      TxtBody.text = view.body;
+      private MenuManagementBehaviour MenuManager;
+      private AnnouncementView Announcement;
+      public TextMeshProUGUI TxtTitle;
+      public TextMeshProUGUI TxtBody;
+
+      public void Apply(MenuManagementBehaviour menu, AnnouncementView view)
+      {
+         MenuManager = menu;
+         Announcement = view;
+         TxtTitle.text = view.title;
+         TxtBody.text = view.body;
+      }
    }
 }

@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Beamable.Common;
-using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Auth;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Auth;
+using Beamable.Api;
+using Beamable.Api.Auth;
 using Beamable.Serialization;
 using UnityEngine;
-using AccessToken = Beamable.Platform.SDK.AccessToken;
+using AccessToken = Beamable.Api.AccessToken;
+
 
 namespace Beamable.Platform.Tests
 {
@@ -22,7 +25,7 @@ namespace Beamable.Platform.Tests
       public int CallCount { get; protected set; }
       public bool Called => CallCount > 0;
 
-      public abstract Promise<T> Invoke<T>(object body, bool includeAuth, SDK.AccessToken token);
+      public abstract Promise<T> Invoke<T>(object body, bool includeAuth, IAccessToken token);
       public abstract bool MatchesRequest<T>(Method method, string uri, string token, object body, bool includeAuthHeader);
 
    }
@@ -66,7 +69,7 @@ namespace Beamable.Platform.Tests
          return this;
       }
 
-      public override Promise<T1> Invoke<T1>(object body, bool includeAuth, SDK.AccessToken token)
+      public override Promise<T1> Invoke<T1>(object body, bool includeAuth, IAccessToken token)
       {
          CallCount ++ ;
          return Promise<T1>.Successful((T1)_response);
@@ -93,7 +96,7 @@ namespace Beamable.Platform.Tests
 
    }
 
-   public class MockPlatformAPI : IPlatformRequester
+   public class MockPlatformAPI : IBeamableRequester
    {
 
       //private Dictionary<string, MockPlatformRouteBase> _routes = new Dictionary<string, MockPlatformRouteBase>();
@@ -101,7 +104,7 @@ namespace Beamable.Platform.Tests
       private List<MockPlatformRouteBase> _routes = new List<MockPlatformRouteBase>();
 
       public AuthService AuthService { get; set; }
-      public SDK.AccessToken Token { get; set; }
+      public IAccessToken AccessToken { get; set; }
 
       public MockPlatformAPI()
       {
@@ -135,12 +138,12 @@ namespace Beamable.Platform.Tests
 
       public Promise<T> Request<T>(Method method, string uri, object body = null, bool includeAuthHeader = true, Func<string, T> parser = null, bool useCache=false)
       {
-         var route = _routes.FirstOrDefault(r => r.MatchesRequest<T>(method, uri, Token?.Token, body, includeAuthHeader));
+         var route = _routes.FirstOrDefault(r => r.MatchesRequest<T>(method, uri, AccessToken?.Token, body, includeAuthHeader));
 
 
          if (route != null)
          {
-            return route.Invoke<T>(body, includeAuthHeader, Token);
+            return route.Invoke<T>(body, includeAuthHeader, AccessToken);
          }
          else
          {
@@ -158,11 +161,16 @@ namespace Beamable.Platform.Tests
          throw new NotImplementedException();
       }
 
-      public IPlatformRequester WithAccessToken(TokenResponse token)
+      public IBeamableRequester WithAccessToken(TokenResponse token)
       {
          var clone = new MockPlatformAPI(this);
-         clone.Token = new SDK.AccessToken(null, null, null, token.access_token, token.refresh_token, token.expires_in);
+         clone.AccessToken = new AccessToken(null, null, null, token.access_token, token.refresh_token, token.expires_in);
          return clone;
+      }
+
+      public string EscapeURL(string url)
+      {
+         throw new NotImplementedException();
       }
    }
 }

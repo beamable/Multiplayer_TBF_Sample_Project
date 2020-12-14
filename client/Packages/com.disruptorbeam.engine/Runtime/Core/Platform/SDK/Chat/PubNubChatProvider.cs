@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Beamable.Common;
 
-namespace Beamable.Platform.SDK.Chat
+namespace Beamable.Api.Chat
 {
    using Promise = Promise<Unit>;
 

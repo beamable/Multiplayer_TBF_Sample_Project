@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Beamable.Config;
+using Beamable.Editor.Environment;
 using Beamable.Serialization.SmallerJSON;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Beamable.Server.Editor.DockerCommands
 
    public class RunImageCommand : DockerCommand
    {
+      public int DebugPort { get; }
       public string ImageName { get; set; }
       public string ContainerName { get; set; }
 
@@ -24,6 +26,7 @@ namespace Beamable.Server.Editor.DockerCommands
          ContainerName = descriptor.ContainerName;
          Secret = secret;
          LogLevel = logLevel;
+         DebugPort = MicroserviceConfiguration.Instance.GetEntry(descriptor.Name).DebugData.SshPort;
 
          UnityLogLabel = $"Docker Run {descriptor.Name}";
       }
@@ -38,30 +41,26 @@ namespace Beamable.Server.Editor.DockerCommands
 
       public override string GetCommandString()
       {
-         string host = ConfigDatabase.GetString("socket");
+//         string host = ConfigDatabase.GetString("socket");
          string cid = ConfigDatabase.GetString("cid");
          string pid = ConfigDatabase.GetString("pid");
 
-         var port = FreeTcpPort();
+         string namePrefix = MicroserviceIndividualization.Prefix;
          string command = $"{DOCKER_LOCATION} run --rm " +
-                          $"-p {port}:80 " +
+                          $"-P " +
+                          $"-p {DebugPort}:2222  " +
                           $"--env CID={cid} " +
                           $"--env PID={pid} " +
                           $"--env SECRET=\"{Secret}\" " +
-                          $"--env HOST=\"{host}\" " +
+                          $"--env HOST=\"wss://thorium-dev.disruptorbeam.com/socket\" " +
                           $"--env LOG_LEVEL=\"{LogLevel}\" " +
+                          $"--env NAME_PREFIX=\"{namePrefix}\" " +
+
                           $"--name {ContainerName} {ImageName}";
+
 
          return command;
       }
 
-      static int FreeTcpPort()
-      {
-         TcpListener l = new TcpListener(IPAddress.Loopback, 0);
-         l.Start();
-         int port = ((IPEndPoint)l.LocalEndpoint).Port;
-         l.Stop();
-         return port;
-      }
    }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Beamable.Common;
 
-namespace Beamable.Api.Tournaments
+namespace Beamable.Common.Api.Tournaments
 {
    public interface ITournamentApi
    {

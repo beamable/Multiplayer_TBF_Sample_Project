@@ -5,8 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Common.Content;
+using Beamable.Common.Content.Validation;
 using Beamable.Content;
 using Beamable.Content.Serialization;
 using Beamable.Content.Validation;
@@ -106,7 +109,7 @@ namespace Beamable.Editor.Content
    /// </summary>
    public class ContentIO : IContentIO
    {
-      private readonly IPlatformRequester _requester;
+      private readonly IBeamableRequester _requester;
       private Promise<Manifest> _manifestPromise;
       private ContentObject _lastSelected;
       private static readonly Dictionary<Type, IContentIOEventGroup<ContentObject>> ContentEventGroups = new Dictionary<Type, IContentIOEventGroup<ContentObject>>();
@@ -120,7 +123,7 @@ namespace Beamable.Editor.Content
 
       private ValidationContext ValidationContext { get; } = new ValidationContext { AllContentIds = new HashSet<string>()};
 
-      public ContentIO(IPlatformRequester requester)
+      public ContentIO(IBeamableRequester requester)
       {
          _requester = requester;
          Selection.selectionChanged += SelectionChanged;

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api;
+using Beamable.Common.Api.Announcements;
 
-namespace Beamable.Platform.SDK.Announcements
+namespace Beamable.Api.Announcements
 {
-   public class AnnouncementsService : PlatformSubscribable<AnnouncementQueryResponse, AnnouncementQueryResponse>
+   public class AnnouncementsSubscription : PlatformSubscribable<AnnouncementQueryResponse, AnnouncementQueryResponse>
    {
-      public AnnouncementsService(PlatformService platform, PlatformRequester requester) : base(platform, requester, "announcements")
+      public AnnouncementsSubscription(PlatformService platform, IBeamableRequester requester, string service) : base(platform, requester, service)
       {
       }
 
@@ -15,80 +16,59 @@ namespace Beamable.Platform.SDK.Announcements
       {
          foreach (var announcement in data.announcements)
          {
-            announcement.Init();
+            announcement.endDateTime = DateTime.UtcNow.AddSeconds(announcement.secondsRemaining);
          }
          Notify(data);
       }
+   }
 
-      public Promise<EmptyResponse> MarkRead(string id)
+   public class AnnouncementsService : AbsAnnouncementsApi , IHasPlatformSubscriber<AnnouncementsSubscription, AnnouncementQueryResponse, AnnouncementQueryResponse>
+   {
+      public AnnouncementsSubscription Subscribable { get; }
+
+      public AnnouncementsService(PlatformService platform, IBeamableRequester requester) : base(requester, platform)
       {
-         return MarkRead(new List<string> {id});
+         Subscribable = new AnnouncementsSubscription(platform, requester, "announcements");
       }
 
-      public Promise<EmptyResponse> MarkRead(List<string> ids)
+      public override Promise<EmptyResponse> Claim(List<string> ids)
       {
-         return requester.Request<EmptyResponse>(
-            Method.PUT,
-            String.Format("/object/announcements/{0}/read", platform.User.id),
-            new AnnouncementRequest(ids)
-         ).Map(rsp =>
+         return base.Claim(ids).Then(_ =>
          {
-            var data = GetLatest();
-            if (data != null)
-            {
-               var announcements = data.announcements.FindAll((next) => ids.Contains(next.id));
-               if (announcements != null)
-               {
-                  foreach (var announcement in announcements)
-                  {
-                     announcement.isRead = true;
-                  }
-               }
-               Notify(data);
-            }
+            var data = Subscribable.GetLatest();
+            if (data == null) return;
 
-            return rsp;
+            var announcements = data.announcements.FindAll((next) => ids.Contains(next.id));
+            if (announcements != null)
+            {
+               foreach (var announcement in announcements)
+               {
+                  announcement.isRead = true;
+                  announcement.isClaimed = true;
+               }
+            }
+            Subscribable.Notify(data);
          });
       }
 
-      public Promise<EmptyResponse> MarkDeleted(string id)
+      public override Promise<EmptyResponse> MarkDeleted(List<string> ids)
       {
-         return MarkDeleted(new List<string> {id});
-      }
-
-      public Promise<EmptyResponse> MarkDeleted(List<string> ids)
-      {
-         return requester.Request<EmptyResponse>(
-            Method.DELETE,
-            String.Format("/object/announcements/{0}", platform.User.id),
-            new AnnouncementRequest(ids)
-         ).Map(rsp =>
+         return base.MarkDeleted(ids).Then(_ =>
          {
-            var data = GetLatest();
+            var data = Subscribable.GetLatest();
             if (data != null)
             {
                data.announcements.RemoveAll((next) => ids.Contains(next.id));
-               Notify(data);
+               Subscribable.Notify(data);
             }
-
-            return rsp;
          });
       }
 
-      public Promise<EmptyResponse> Claim(string id)
+      public override Promise<EmptyResponse> MarkRead(List<string> ids)
       {
-         return Claim(new List<string> {id});
-      }
-
-      public Promise<EmptyResponse> Claim(List<string> ids)
-      {
-         return requester.Request<EmptyResponse>(
-            Method.POST,
-            String.Format("/object/announcements/{0}/claim", platform.User.id),
-            new AnnouncementRequest(ids)
-         ).Map(rsp =>
+         return base.MarkRead(ids).Then(_ =>
          {
-            var data = GetLatest();
+            var data = Subscribable.GetLatest();
             if (data != null)
             {
                var announcements = data.announcements.FindAll((next) => ids.Contains(next.id));
@@ -97,67 +77,16 @@ namespace Beamable.Platform.SDK.Announcements
                   foreach (var announcement in announcements)
                   {
                      announcement.isRead = true;
-                     announcement.isClaimed = true;
                   }
                }
-               Notify(data);
+               Subscribable.Notify(data);
             }
-
-            return rsp;
          });
       }
+
+      public override Promise<AnnouncementQueryResponse> GetCurrent(string scope = "") =>
+         Subscribable.GetCurrent(scope);
+
    }
 
-
-
-   [Serializable]
-   public class AnnouncementQueryResponse
-   {
-      public List<AnnouncementView> announcements;
-   }
-
-   [Serializable]
-   public class AnnouncementView : CometClientData
-   {
-      public string id;
-      public string channel;
-      public string startDate;
-      public string endDate;
-      public long secondsRemaining;
-      public DateTime endDateTime;
-      public string title;
-      public string summary;
-      public string body;
-      public List<AnnouncementAttachment> attachments;
-      public bool isRead;
-      public bool isClaimed;
-
-      public bool HasClaimsAvailable()
-      {
-         return !isClaimed && attachments.Count > 0;
-      }
-
-      internal void Init()
-      {
-         endDateTime = DateTime.UtcNow.AddSeconds(secondsRemaining);
-      }
-   }
-
-   [Serializable]
-   public class AnnouncementAttachment
-   {
-      public string symbol;
-      public int count;
-   }
-
-   [Serializable]
-   public class AnnouncementRequest
-   {
-      public List<string> announcements;
-
-      public AnnouncementRequest(List<string> announcements)
-      {
-         this.announcements = announcements;
-      }
-   }
 }

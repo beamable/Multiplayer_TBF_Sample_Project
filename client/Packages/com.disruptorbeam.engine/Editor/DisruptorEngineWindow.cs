@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Beamable.Common.Api.Auth;
 using Beamable.Editor.Login;
 using Beamable.Editor.Register;
 using Beamable.Editor.Toolbox;

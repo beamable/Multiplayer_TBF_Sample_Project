@@ -1,11 +1,10 @@
-#if UNITY_ANDROID
 using System;
 using System.Collections.Generic;
 using Beamable.Pooling;
 using Beamable.Serialization.SmallerJSON;
 using UnityEngine;
 
-namespace Beamable.Platform.SDK.Notification.Internal
+namespace Beamable.Api.Notification.Internal
 {
    /// <summary>
    /// Google local notification relay, for scheduling and canceling
@@ -85,4 +84,3 @@ namespace Beamable.Platform.SDK.Notification.Internal
       }
    }
 }
-#endif// UNITY_ANDROID

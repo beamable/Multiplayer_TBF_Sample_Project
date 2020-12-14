@@ -2,7 +2,7 @@ using System;
 using Beamable.Spew;
 using PubNubMessaging.Core;
 
-namespace Beamable.Platform.SDK.Notification.Internal
+namespace Beamable.Api.Notification.Internal
 {
    public class MultiChannelSubscriptionHandler
     {

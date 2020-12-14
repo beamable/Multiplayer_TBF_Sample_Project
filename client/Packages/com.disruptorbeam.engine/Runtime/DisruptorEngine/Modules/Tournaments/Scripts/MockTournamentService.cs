@@ -4,12 +4,13 @@ using System.Linq;
 using Beamable.Common;
 using Beamable.Content;
 using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Tournaments;
+using Beamable.Api.Tournaments;
+using Beamable.Common.Api.Tournaments;
 using UnityEngine;
 
 namespace Beamable.Modules.Tournaments
 {
-   public class MockTournamentService : ITournamentService
+   public class MockTournamentService : ITournamentApi
    {
       private const float LATENCY_MIN = .2f;
       private const float LATENCY_MAX = .7f;

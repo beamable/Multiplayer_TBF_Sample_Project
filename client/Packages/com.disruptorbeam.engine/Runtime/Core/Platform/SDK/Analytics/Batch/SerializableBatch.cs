@@ -1,6 +1,6 @@
 ﻿using Beamable.Serialization;
 
-namespace Beamable.Platform.SDK.Analytics.Batch {
+namespace Beamable.Api.Analytics.Batch {
 
 	/// <summary>
 	/// Serializable batch.

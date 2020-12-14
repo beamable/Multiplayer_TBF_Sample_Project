@@ -1,4 +1,4 @@
-using Beamable.Platform.SDK.Payments;
+using Beamable.Api.Payments;
 using UnityEngine;
 
 namespace Beamable.Modules.Shop

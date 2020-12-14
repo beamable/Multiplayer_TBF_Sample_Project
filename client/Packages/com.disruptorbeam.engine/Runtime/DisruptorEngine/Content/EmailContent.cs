@@ -1,5 +1,6 @@
 using Beamable.Common;
 using Beamable.Common.Content;
+using Beamable.Common.Content.Validation;
 using Beamable.Content.Validation;
 
 namespace Beamable.Content

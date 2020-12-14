@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
-using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Announcements;
-using Beamable.Platform.SDK.Auth;
-using Beamable.Platform.SDK.Calendars;
-using Beamable.Platform.SDK.Chat;
-using Beamable.Platform.SDK.Commerce;
-using Beamable.Platform.SDK.CloudSaving;
-using Beamable.Platform.SDK.Inventory;
-using Beamable.Platform.SDK.Leaderboard;
-using Beamable.Platform.SDK.Matchmaking;
-using Beamable.Platform.SDK.Payments;
-using Beamable.Platform.SDK.Sim;
-using Beamable.Platform.SDK.Stats;
-using Beamable.Platform.SDK.Tournaments;
+using Beamable.Api.Calendars;
+using Beamable.Api.Chat;
+using Beamable.Api.Commerce;
+using Beamable.Api.CloudSaving;
+using Beamable.Api.Inventory;
+using Beamable.Api.Leaderboard;
+using Beamable.Api.Matchmaking;
+using Beamable.Api.Payments;
+using Beamable.Api.Sim;
+using Beamable.Api.Stats;
 using Beamable;
+using Beamable.Api;
+using Beamable.Api.Announcements;
+using Beamable.Api.Auth;
+using Beamable.Api.Connectivity;
 using Beamable.Common;
+using Beamable.Common.Api.Auth;
+using Beamable.Common.Api.Tournaments;
 using Beamable.Content;
 
 namespace Packages.DisruptorEngine.Runtime.Tests.DisruptorEngine
@@ -41,7 +43,7 @@ namespace Packages.DisruptorEngine.Runtime.Tests.DisruptorEngine
       public MatchmakingService Matchmaking { get; }
       public Promise<PaymentDelegate> PaymentDelegate { get; }
       public ConnectivityService ConnectivityService { get;  }
-      public ITournamentService Tournaments { get; }
+      public ITournamentApi Tournaments { get; }
 
       public event Action<User> OnUserChanged;
       public event Action<bool> OnConnectivityChanged;

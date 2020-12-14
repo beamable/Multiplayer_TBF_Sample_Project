@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Beamable.Platform.SDK.Notification.Internal
+namespace Beamable.Api.Notification.Internal
 {
    public interface IMessageHandler<T>
    {

@@ -1,16 +1,14 @@
-using System;
+using System.Collections.Generic;
+using Beamable;
 using Beamable.Api;
+using Beamable.Common.Api.Inventory;
 using Beamable.Content;
-using Beamable.Platform.SDK;
-using Beamable.Platform.SDK.Inventory;
+using Beamable.Modules.Inventory.Scripts;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Beamable.Modules.Inventory.Scripts
 {
-
-
-
    [System.Serializable]
    public class InventoryUpdateEvent : UnityEvent<InventoryUpdateArg>
    {
@@ -27,7 +25,7 @@ namespace Beamable.Modules.Inventory.Scripts
 
       private void Start()
       {
-         API.Instance.Then(de =>
+         Beamable.API.Instance.Then(de =>
          {
             if (this == null) return; // unity lifecycle check.
 
@@ -46,10 +44,16 @@ namespace Beamable.Modules.Inventory.Scripts
 
       void HandleInventory(InventoryView inventory)
       {
+         List<ItemView> itemGroup;
+         if (!inventory.items.TryGetValue(_content.Id, out itemGroup))
+         {
+            itemGroup = new List<ItemView>();
+         }
+         
          var arg = new InventoryUpdateArg
          {
             Group = Group,
-            Inventory = inventory.items[_content.Id]
+            Inventory = itemGroup
          };
          OnInventoryReceived?.Invoke(arg);
       }

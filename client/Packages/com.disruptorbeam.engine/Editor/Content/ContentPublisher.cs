@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api;
 using Beamable.Content;
 using Beamable.Editor.Content.SaveRequest;
 using Beamable.Platform.SDK;
@@ -14,10 +16,10 @@ namespace Beamable.Editor.Content
 {
    public class ContentPublisher
    {
-      private readonly IPlatformRequester _requester;
+      private readonly IBeamableRequester _requester;
       private readonly IContentIO _io;
 
-      public ContentPublisher(IPlatformRequester requester, IContentIO io)
+      public ContentPublisher(IBeamableRequester requester, IContentIO io)
       {
          _requester = requester;
          _io = io;

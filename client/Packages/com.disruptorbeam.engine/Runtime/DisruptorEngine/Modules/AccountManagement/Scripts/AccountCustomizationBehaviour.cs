@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Beamable.Api;
 using Beamable.Common;
+using Beamable.Common.Api.Auth;
 using Beamable.Modules.Avatars;
 using Beamable.Modules.Theme;
 using Beamable.Modules.Theme.Palettes;

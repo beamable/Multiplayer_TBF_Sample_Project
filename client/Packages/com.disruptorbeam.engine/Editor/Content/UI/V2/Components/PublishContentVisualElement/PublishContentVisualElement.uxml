@@ -27,7 +27,7 @@
                 <engine:Label text="  Deleted"/>
             </engine:VisualElement>
             <engine:VisualElement class="summaryAlignRight">
-                <engine:Button name="detailBtn" text="Detail"/>
+<!--                <engine:Button name="detailBtn" text="Detail"/>-->
             </engine:VisualElement>
             <!--            <engine:Label name="overwriteCount"/>-->
             <!--            <engine:Label name="addCount"/>-->

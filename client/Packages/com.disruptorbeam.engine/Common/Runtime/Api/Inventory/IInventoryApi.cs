@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Beamable.Common.Api.Inventory
 {
@@ -16,6 +17,13 @@ namespace Beamable.Common.Api.Inventory
 
       Promise<long> GetCurrency(string currencyId);
       Promise<Unit> AddItem(string contentId, Dictionary<string, string> properties, string transaction = null);
+      Promise<Unit> DeleteItem(string contentId, long itemId, string transaction = null);
+
+      Promise<Unit> UpdateItem(string contentId, long itemId, Dictionary<string, string> properties,
+          string transaction = null);
+
+      Promise<Unit> Update(Action<InventoryUpdateBuilder> action, string transaction = null);
+      Promise<Unit> Update(InventoryUpdateBuilder builder, string transaction = null);
    }
 
    [System.Serializable]
@@ -30,80 +38,161 @@ namespace Beamable.Common.Api.Inventory
       public Dictionary<string, long> currencies;
    }
 
-   [Serializable]
-   public class InventoryResponse
-   {
-      public List<Currency> currencies;
-      public List<ItemGroup> items;
+    [Serializable]
+    public class InventoryResponse
+    {
+        public string scope;
+        public List<Currency> currencies;
+        public List<ItemGroup> items;
 
-      public void MergeView(InventoryView view)
-      {
-         foreach (var currency in currencies)
-         {
-            view.currencies[currency.id] = currency.amount;
-         }
-         view.items.Clear();
-         foreach (var itemGroup in items)
-         {
-            List<ItemView> itemList;
-            if (!view.items.TryGetValue(itemGroup.id, out itemList))
+        private HashSet<string> _scopes;
+        public HashSet<string> Scopes {
+            get {
+                if (_scopes == null) {
+                    if (!string.IsNullOrEmpty(scope))
+                        _scopes = new HashSet<string>(scope.Split(','));
+                    else
+                        _scopes = new HashSet<string>();
+                }
+
+                return _scopes;
+            }
+        }
+
+        public HashSet<string> GetNotifyScopes()
+        {
+            var notifyScopes = new HashSet<string>();
+            notifyScopes.UnionWith(currencies.Select(currency => currency.id));
+            notifyScopes.UnionWith(items.Select(item => item.id));
+            notifyScopes.UnionWith(Scopes);
+
+            return ResolveAllScopes(notifyScopes);
+        }
+
+        private HashSet<string> ResolveAllScopes(IEnumerable<string> notifyScopes)
+        {
+            var resolved = new HashSet<string>();
+
+            foreach (string notifyScope in notifyScopes)
             {
-               itemList = new List<ItemView>();
-               view.items[itemGroup.id] = itemList;
+                var newScopes = ResolveScope(notifyScope);
+                resolved.UnionWith(newScopes);
             }
 
-            foreach (var item in itemGroup.items)
+            return resolved;
+        }
+
+        private HashSet<string> ResolveScope(string notifyScope)
+        {
+            var result = new HashSet<string>();
+            string[] slicedScopes = notifyScope.Split('.');
+
+            foreach (string slicedScope in slicedScopes)
             {
-               ItemView itemView = new ItemView();
-               itemView.id = item.id;
-               itemView.properties = new Dictionary<string, string>();
-               foreach (var property in item.properties)
-               {
-                  itemView.properties[property.name] = property.value;
-               }
-               itemList.Add(itemView);
+                if (result.Count == 0)
+                {
+                    result.Add(slicedScope);
+                }
+                else
+                {
+                    string newScope = string.Join(".", result.Last(), slicedScope);
+                    result.Add(newScope);
+                }
             }
-         }
-      }
-   }
 
-   [Serializable]
-   public class Currency
-   {
-      public string id;
-      public long amount;
-   }
+            return result;
+        }
 
-   [Serializable]
-   public class Item
-   {
-      public string id;
-      public List<ItemProperty> properties;
-   }
+        private HashSet<string> ResolveMergeScopes(InventoryView view)
+        {
+            var resolved = new HashSet<string>();
+            var scopes = Scopes;
 
-   [Serializable]
-   public class ItemGroup
-   {
-      public string id;
-      public List<Item> items;
-   }
+            var scopesLookup = new HashSet<string>();
+            scopesLookup.UnionWith(scopes);
+            scopesLookup.UnionWith(scopes.Select(s => $"{s}."));
 
-   [Serializable]
-   public class ItemProperty
-   {
-      public string name;
-      public string value;
-   }
+            resolved.UnionWith(scopes);
+            resolved.UnionWith(view.currencies.Keys.Where(scopesLookup.Contains));
+            resolved.UnionWith(view.items.Keys.Where(scopesLookup.Contains));
+            resolved.UnionWith(currencies.Select(currency => currency.id));
+            resolved.UnionWith(items.Select(item => item.id));
 
-   public class InventoryView
-   {
-      public Dictionary<string, long> currencies = new Dictionary<string, long>();
-      public Dictionary<string, List<ItemView>> items = new Dictionary<string, List<ItemView>>();
-   }
+            return resolved;
+        }
 
-   public class ItemView
-   {
-      public string id;
-      public Dictionary<string, string> properties;
-   }
+        public void MergeView(InventoryView view)
+        {
+            var relevantScopes = ResolveMergeScopes(view);
+            foreach(var contentId in view.currencies.Keys.ToList().Where(relevantScopes.Contains))
+            {
+                view.currencies.Remove(contentId);
+            }
+
+            foreach(var contentId in view.items.Keys.ToList().Where(relevantScopes.Contains))
+            {
+                view.items.Remove(contentId);
+            }
+
+            foreach (var currency in currencies)
+            {
+                view.currencies[currency.id] = currency.amount;
+            }
+
+            foreach (var itemGroup in items)
+            {
+                var itemViews = itemGroup.items.Select(item =>
+                {
+                    ItemView itemView = new ItemView();
+                    itemView.id = item.id;
+                    itemView.properties = item.properties.ToDictionary(p => p.name, p => p.value);
+
+                    return itemView;
+                });
+
+                List<ItemView> itemList = new List<ItemView>(itemViews);
+                view.items[itemGroup.id] = itemList;
+            }
+        }
+    }
+
+    [Serializable]
+    public class Currency
+    {
+        public string id;
+        public long amount;
+    }
+
+    [Serializable]
+    public class Item
+    {
+        public string id;
+        public List<ItemProperty> properties;
+    }
+
+    [Serializable]
+    public class ItemGroup
+    {
+        public string id;
+        public List<Item> items;
+    }
+
+    [Serializable]
+    public class ItemProperty
+    {
+        public string name;
+        public string value;
+    }
+
+    public class InventoryView
+    {
+        public Dictionary<string, long> currencies = new Dictionary<string, long>();
+        public Dictionary<string, List<ItemView>> items = new Dictionary<string, List<ItemView>>();
+    }
+
+    public class ItemView
+    {
+        public string id;
+        public Dictionary<string, string> properties;
+    }
 }
