@@ -34,7 +34,8 @@ namespace Beamable.Samples.TBF
       protected void Start()
       {
          _introUIView.AboutBodyText = "";
-         _introUIView.StartGameButton.onClick.AddListener(StartGameButton_OnClicked);
+         _introUIView.StartGameOnePlayerButton.onClick.AddListener(StartGameOnePlayerButton_OnClicked);
+         _introUIView.StartGameTwoPlayerButton.onClick.AddListener(StartGameTwoPlayerButton_OnClicked);
          SetupBeamable();
       }
 
@@ -103,9 +104,19 @@ namespace Beamable.Samples.TBF
             _isBeamableSDKInstalledErrorMessage);
 
          _introUIView.AboutBodyText = aboutBodyText;
-         _introUIView.StartGameButton.interactable = _isConnected;
+         _introUIView.ButtonsCanvasGroup.interactable = _isConnected;
       }
 
+
+      private void StartGame(int targetPlayerCount)
+      {
+         RuntimeDataStorage.Instance.TargetPlayerCount = targetPlayerCount;
+
+         _introUIView.ButtonsCanvasGroup.interactable = false;
+
+         StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.LobbySceneName,
+            _configuration.DelayBeforeLoadScene));
+      }
 
       //  Event Handlers -------------------------------
       private void ConnectivityService_OnConnectivityChanged(bool isConnected)
@@ -114,12 +125,16 @@ namespace Beamable.Samples.TBF
          RenderUI();
       }
 
-      private void StartGameButton_OnClicked()
-      {
-         _introUIView.StartGameButton.interactable = false;
 
-         StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.LobbySceneName, 
-            _configuration.DelayBeforeLoadScene));
+      private void StartGameOnePlayerButton_OnClicked()
+      {
+         StartGame(1);
+      }
+
+
+      private void StartGameTwoPlayerButton_OnClicked()
+      {
+         StartGame(2);
       }
    }
 }

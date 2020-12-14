@@ -1,12 +1,14 @@
 ﻿using Beamable.Samples.TBF.Core;
 
-namespace Beamable.Samples.TBF.Audio
+namespace Beamable.Samples.TBF.Data
 {
 	/// <summary>
 	/// Store game-related data which survives across scenes
 	/// </summary>
 	public class RuntimeDataStorage : SingletonMonobehavior<RuntimeDataStorage>
 	{
+		public const int UnsetPlayerCount = -1;
+
 		public long LocalPlayerDbid { get { return _localPlayerDbid; } set { _localPlayerDbid = value; } }
 		public string RoomId { get { return _roomId; } set { _roomId = value; } }
 		public int TargetPlayerCount { get { return _targetPlayerCount; } set { _targetPlayerCount = value; } }
@@ -31,7 +33,7 @@ namespace Beamable.Samples.TBF.Audio
 			_isMatchmakingComplete = false;
 			_localPlayerDbid = 0;
 			_roomId = "";
-			_targetPlayerCount = 0;
+			_targetPlayerCount = UnsetPlayerCount;
 		}
    }
 }

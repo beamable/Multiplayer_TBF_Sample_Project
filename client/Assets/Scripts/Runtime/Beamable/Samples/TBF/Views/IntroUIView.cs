@@ -21,17 +21,26 @@ namespace Beamable.Samples.TBF.Views
          }
       }
 
-      public Button StartGameButton { get { return _startGameButton; } }
+      public Button StartGameOnePlayerButton { get { return _startGameOnePlayerButton; } }
+      public Button StartGameTwoPlayerButton { get { return _startGameTwoPlayerButton; } }
+
+      public CanvasGroup ButtonsCanvasGroup { get { return _buttonsCanvasGroup; } }
 
       //  Fields ---------------------------------------
       [SerializeField]
       private Configuration _configuration = null;
 
       [SerializeField]
-      private Button _startGameButton = null;
+      private Button _startGameOnePlayerButton = null;
+
+      [SerializeField]
+      private Button _startGameTwoPlayerButton = null;
 
       [SerializeField]
       private TMP_Text _aboutBodyText = null;
+
+      [SerializeField]
+      private CanvasGroup _buttonsCanvasGroup = null;
 
       [Header ("Cosmetic Animation")]
       [SerializeField]

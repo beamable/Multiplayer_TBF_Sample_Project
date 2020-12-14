@@ -246,6 +246,7 @@ namespace Beamable.Samples.TBF
 
                if (!RuntimeDataStorage.Instance.IsMatchmakingComplete)
                {
+                  Debug.Log($"Scene '{gameObject.scene.name}' was loaded directly. That is ok. Setting defaults.");
                   RuntimeDataStorage.Instance.LocalPlayerDbid = _beamableAPI.User.id;
                   RuntimeDataStorage.Instance.TargetPlayerCount = 1;
                   RuntimeDataStorage.Instance.RoomId = TBFMatchmaking.GetRandomRoomId();
