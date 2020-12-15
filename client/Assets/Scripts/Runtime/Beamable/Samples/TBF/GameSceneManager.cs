@@ -337,10 +337,8 @@ namespace Beamable.Samples.TBF
          }
          else
          {
-            //ASKJUSTIN: Why does my wrapper function here not compile?
-            //TODO: Unhook
-            //_tbfMultiplayerSession.Remove(MultiplayerSession_OnGameStartEvent);
-            // _tbfMultiplayerSession.Remove(MultiplayerSession_OnGameMoveEvent);
+            _tbfMultiplayerSession.Remove<GameStartEvent>(MultiplayerSession_OnGameStartEvent);
+            _tbfMultiplayerSession.Remove<GameMoveEvent>(MultiplayerSession_OnGameMoveEvent);
          }
       }
 
@@ -359,10 +357,6 @@ namespace Beamable.Samples.TBF
 
       private void BackButton_OnClicked()
       {
-         //ASKJUSTIN: So as the user, I'm playing the game, and I click 'back' to quit, 
-         //shouldn't I disconnect from the simclient manually? I don't see API for that.
-         //TODO: Disconnect the player?
-
          //Change scenes
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));

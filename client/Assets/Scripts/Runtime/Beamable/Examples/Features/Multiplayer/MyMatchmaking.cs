@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 /// </summary>
 namespace Beamable.Examples.Features.Multiplayer
 {
-   //ASKJUSTIN: I had to create this. Suggestion: Add to the SDK?
    [Serializable]
    public class SimGameTypeRef : ContentRef<SimGameType> { }
 
@@ -97,8 +96,6 @@ namespace Beamable.Examples.Features.Multiplayer
             {
                Debug.Log($"MyMatchmaking.Start() TargetPlayerCount={_simGameType.numberOfPlayers}");
 
-               //ASKJUSTIN: parameter API says "SimGameType". I would assume that is the "ContentName", 
-               //but instead its "Id". Thoughts?
                matchmakingResponse = await _matchmakingService.Match(_simGameType.Id);
             }
             catch (PlatformRequesterException e)
@@ -124,12 +121,8 @@ namespace Beamable.Examples.Features.Multiplayer
             await Task.Delay(Delay);
             _myMatchmakingResult.TicksRemaining = matchmakingResponse.ticksRemaining;
 
-            //ASKJUSTIN: I check A and B here, BOTH (why?). Sound good? Edge cases? Error cases?
-
-            //A
+            // Did the server send a RoomId with enough players?
             if (_myMatchmakingResult.Players.Count == _myMatchmakingResult.TargetPlayerCount &&
-
-               //B
                !string.IsNullOrEmpty(matchmakingResponse.game))
             {
                _myMatchmakingResult.RoomId = matchmakingResponse.game;

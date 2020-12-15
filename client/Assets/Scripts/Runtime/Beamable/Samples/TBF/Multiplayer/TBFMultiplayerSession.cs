@@ -1,5 +1,6 @@
 ﻿using Beamable.Api.Sim;
 using Beamable.Samples.TBF.Multiplayer.Events;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Beamable.Api.Sim.SimClient;
@@ -103,12 +104,14 @@ namespace Beamable.Samples.TBF.Multiplayer
       /// <summary>
       /// Convenience. Wrap <see cref="SimClient"/> method.
       /// </summary>
-      /// <param name="callback"></param>
-      public void Remove(EventCallback<string> callback)
+      /// <typeparam name="T"></typeparam>
+      /// <param name="multiplayerSession_OnGameStartEvent"></param>
+      public void Remove<T>(EventCallback<T> callback)
       {
-         _simClient.Remove(callback);
+         //FIX: Beamable API does not yet support EventCallback<T>,
+         //so the following casting is required. To be fixed. Known issue.
+         _simClient.Remove(callback as EventCallback<string>);
       }
-
 
       /// <summary>
       /// Convenience. Wrap <see cref="SimClient"/> method.
@@ -177,5 +180,7 @@ namespace Beamable.Samples.TBF.Multiplayer
       {
          _currentFrame = currentFrame;
       }
+
+
    }
 }
