@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 using static Beamable.Samples.TBF.Views.GameUIView;
 
 // Disable: "Because this call is not awaited, execution of the current method continues before the call is completed"
@@ -80,26 +81,26 @@ namespace Beamable.Samples.TBF
 
                _gameProgressData = new GameProgressData(_configuration);
 
-               SetStatusText("", StatusTextMode.Immediate);
+               SetStatusText("", BufferedTextMode.Immediate);
 
                _gameUIView.MoveButtonsCanvasGroup.interactable = false;
 
-               SetStatusText(TBFConstants.StatusText_GameState_Loading, StatusTextMode.Queue);
+               SetStatusText(TBFConstants.StatusText_GameState_Loading, BufferedTextMode.Queue);
 
                break;
             case GameState.Loaded:
-               SetStatusText(TBFConstants.StatusText_GameState_Loaded, StatusTextMode.Queue);
+               SetStatusText(TBFConstants.StatusText_GameState_Loaded, BufferedTextMode.Queue);
                break;
             case GameState.Initializing:
-               SetStatusText(TBFConstants.StatusText_GameState_Initializing, StatusTextMode.Queue);
+               SetStatusText(TBFConstants.StatusText_GameState_Initializing, BufferedTextMode.Queue);
                break;
             case GameState.Initialized:
-               SetStatusText(TBFConstants.StatusText_GameState_Initialized, StatusTextMode.Queue);
+               SetStatusText(TBFConstants.StatusText_GameState_Initialized, BufferedTextMode.Queue);
                break;
             case GameState.Connecting:
                SetStatusText(string.Format(TBFConstants.StatusText_GameState_Connecting,
                   _tbfMultiplayerSession.PlayerDbids.Count.ToString(),
-                  _tbfMultiplayerSession.TargetPlayerCount), StatusTextMode.Queue);
+                  _tbfMultiplayerSession.TargetPlayerCount), BufferedTextMode.Queue);
                break;
             case GameState.Connected:
                //Waits for GameStartEvent...
@@ -113,12 +114,12 @@ namespace Beamable.Samples.TBF
             case GameState.Moving:
 
                SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moving,
-                   _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
+                   _gameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
 
                _gameProgressData.GameMoveEventsThisRoundByPlayerDbid.Clear();
 
                //Wait for old messages to pass before allowing button clicks
-               while (_gameUIView.StatusMessageCount > 0)
+               while (_gameUIView.BufferedText.BufferedTextCount > 0)
                {
                   await Task.Delay(TBFConstants.TaskDelayMin);
                }
@@ -128,7 +129,7 @@ namespace Beamable.Samples.TBF
             case GameState.Moved:
 
                SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moved,
-                  _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
+                  _gameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
 
                _gameUIView.MoveButtonsCanvasGroup.interactable = false;
 
@@ -145,7 +146,7 @@ namespace Beamable.Samples.TBF
 
                SetStatusText(string.Format(TBFConstants.StatusText_GameState_Evaluated,
                   _gameProgressData.GameRoundCurrent,
-                  _gameProgressData.GetRoundWinnerPlayerDbid()), StatusTextMode.Queue);
+                  _gameProgressData.GetRoundWinnerPlayerDbid()), BufferedTextMode.Queue);
                
                //Wait for animations to finish
                await Task.Delay((int)_configuration.DelayGameBeforeGameOver * 
@@ -169,7 +170,7 @@ namespace Beamable.Samples.TBF
 
                SetStatusText(string.Format(TBFConstants.StatusText_GameState_Ending,
                   _gameProgressData.GameRoundCurrent,
-                  _gameProgressData.GetGameWinnerPlayerDbid()), StatusTextMode.Queue);
+                  _gameProgressData.GetGameWinnerPlayerDbid()), BufferedTextMode.Queue);
 
                if (_tbfMultiplayerSession.IsLocalPlayerDbid(_gameProgressData.GetGameWinnerPlayerDbid()))
                {
@@ -276,7 +277,7 @@ namespace Beamable.Samples.TBF
             }
             catch (Exception)
             {
-               SetStatusText(TBFHelper.InternetOfflineInstructionsText, StatusTextMode.Immediate);
+               SetStatusText(TBFHelper.InternetOfflineInstructionsText, BufferedTextMode.Immediate);
             }
          });
       }
@@ -303,7 +304,7 @@ namespace Beamable.Samples.TBF
             elapsedGameBeforeMove += Time.deltaTime;
             float remainingGameBeforeMove = delayGameBeforeMove - elapsedGameBeforeMove;
 
-            SetStatusText(string.Format(TBFConstants.StatusText_Before_Move, remainingGameBeforeMove), StatusTextMode.Immediate);
+            SetStatusText(string.Format(TBFConstants.StatusText_Before_Move, remainingGameBeforeMove), BufferedTextMode.Immediate);
             yield return new WaitForEndOfFrame();
          }
 
@@ -316,14 +317,14 @@ namespace Beamable.Samples.TBF
             float remainingGameDuringMove = delayGameMaxDuringMove - elapsedGameDuringMove;
 
             //Show as "3.2 seconds"
-            SetStatusText(string.Format(TBFConstants.StatusText_During_Move, remainingGameDuringMove), StatusTextMode.Immediate);
+            SetStatusText(string.Format(TBFConstants.StatusText_During_Move, remainingGameDuringMove), BufferedTextMode.Immediate);
             yield return new WaitForEndOfFrame();
          }
       }
 
-      private void SetStatusText(string message, GameUIView.StatusTextMode statusTextMode)
+      private void SetStatusText(string message, BufferedTextMode statusTextMode)
       {
-         _gameUIView.SetStatusText(message, statusTextMode);
+         _gameUIView.BufferedText.SetText(message, statusTextMode);
       }
 
 
@@ -411,7 +412,7 @@ namespace Beamable.Samples.TBF
 
          SetStatusText(string.Format(TBFConstants.StatusText_Multiplayer_OnDisconnect,
             _tbfMultiplayerSession.PlayerDbids.Count.ToString(),
-            _tbfMultiplayerSession.TargetPlayerCount), StatusTextMode.Immediate);
+            _tbfMultiplayerSession.TargetPlayerCount), BufferedTextMode.Immediate);
       }
 
 

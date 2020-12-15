@@ -1,5 +1,6 @@
 ﻿using Beamable.Samples.TBF.Animation;
 using Beamable.Samples.TBF.Data;
+using Beamable.Samples.TBF.UI;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Beamable.Samples.TBF.Views
    public class LobbyUIView : MonoBehaviour
    {
       //  Properties -----------------------------------
-      public TMP_Text StatusBodyText { get { return _statusBodyText; } }
+      public TMP_BufferedText BufferedText { get { return _bufferedText; } }
       public Button BackButton { get { return _backButton; } }
 
       //  Fields ---------------------------------------
@@ -21,13 +22,10 @@ namespace Beamable.Samples.TBF.Views
       private Configuration _configuration = null;
 
       [SerializeField]
-      private Button _startGameButton = null;
-
-      [SerializeField]
       private Button _backButton = null;
 
       [SerializeField]
-      private TMP_Text _statusBodyText = null;
+      private TMP_BufferedText _bufferedText = null;
 
       [Header ("Cosmetic Animation")]
       [SerializeField]

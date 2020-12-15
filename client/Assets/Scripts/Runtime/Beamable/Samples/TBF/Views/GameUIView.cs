@@ -1,8 +1,8 @@
 ﻿using Beamable.Samples.TBF.Animation;
 using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Exceptions;
+using Beamable.Samples.TBF.UI;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +13,6 @@ namespace Beamable.Samples.TBF.Views
    /// </summary>
    public class GameUIView : MonoBehaviour
    {
-      public enum StatusTextMode
-      {
-         Null,
-         Immediate,
-         Queue,
-      }
-
       //  Properties -----------------------------------
       public List<AvatarView> AvatarViews { get { return _avatarViews; } }
       public List<AvatarUIView> AvatarUIViews { get { return _avatarUIViews; } }
@@ -31,14 +24,14 @@ namespace Beamable.Samples.TBF.Views
       //
       public CanvasGroup MoveButtonsCanvasGroup { get { return _moveButtonsCanvasGroup; } }
 
-      public int StatusMessageCount { get { return _statusMessageQueue.Count; } }
+      public TMP_BufferedText BufferedText { get { return _bufferedText; } }
 
       //  Fields ---------------------------------------
       [SerializeField]
       private Configuration _configuration = null;
 
       [SerializeField]
-      private TMP_Text _statusText = null;
+      private TMP_BufferedText _bufferedText = null;
 
       [SerializeField]
       private Button _backButton = null;
@@ -65,10 +58,6 @@ namespace Beamable.Samples.TBF.Views
       [SerializeField]
       private List<CanvasGroup> _canvasGroups = null;
 
-      private Queue<string> _statusMessageQueue = new Queue<string>();
-
-      private float _statusMessageTimerElapsed = 0;
-
       //  Unity Methods   ------------------------------
       protected void Start()
       {
@@ -80,41 +69,5 @@ namespace Beamable.Samples.TBF.Views
          TweenHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
       }
 
-      protected void Update()
-      {
-         // Every x seconds, show the next status message
-         _statusMessageTimerElapsed += Time.deltaTime;
-         if (_statusMessageTimerElapsed > _configuration.StatusMessageMinDuration)
-         {
-            _statusMessageTimerElapsed = 0f;
-            if (_statusMessageQueue.Count > 0)
-            {
-               string message = _statusMessageQueue.Dequeue();
-               _statusText.text = message;
-            }
-         }
-      }
-
-
-      //  Unity Methods   ------------------------------
-      public void SetStatusText(string message, StatusTextMode statusTextMode)
-      {
-         switch (statusTextMode)
-         {
-            case StatusTextMode.Immediate:
-               //set now
-               _statusText.text = message;
-               //and queue so it lives a minimum lifetime
-               _statusMessageQueue.Clear();
-               
-               break;
-            case StatusTextMode.Queue:
-               _statusMessageQueue.Enqueue(message);
-               break;
-            default:
-               SwitchDefaultException.Throw(statusTextMode);
-               break;
-         }
-      }
    }
 }

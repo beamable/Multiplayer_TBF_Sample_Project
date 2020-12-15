@@ -199,7 +199,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 0}
+    textComponent: {fileID: 1418129319111605943}
     characterCount: 3
     spriteCount: 0
     spaceCount: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 0}
+    textComponent: {fileID: 1531730637033261738}
     characterCount: 3
     spriteCount: 0
     spaceCount: 0
@@ -730,7 +730,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 0}
+    textComponent: {fileID: 7136193733393083812}
     characterCount: 4
     spriteCount: 0
     spaceCount: 0
@@ -961,6 +961,7 @@ GameObject:
   - component: {fileID: 5949377017843430892}
   - component: {fileID: 8313276885165531349}
   - component: {fileID: 6518793486460843988}
+  - component: {fileID: 9045577542535011883}
   m_Layer: 5
   m_Name: StatusText
   m_TagString: Untagged
@@ -1083,7 +1084,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 0}
+    textComponent: {fileID: 6518793486460843988}
     characterCount: 12
     spriteCount: 0
     spaceCount: 0
@@ -1107,6 +1108,20 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9045577542535011883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208538095500777694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ee9c2993a8adb4b9dc642011f5daaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 6518793486460843988}
+  _minDisplayDuration: 3
 --- !u!1 &3228084039606761379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,7 +1499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _configuration: {fileID: 11400000, guid: 28e7b012a002a51458322ba2fc05964d, type: 2}
-  _statusText: {fileID: 6518793486460843988}
+  _bufferedText: {fileID: 9045577542535011883}
   _backButton: {fileID: 1464352103338948160}
   _moveButton_01: {fileID: 8580835493518452578}
   _moveButton_02: {fileID: 40453316078955455}
@@ -2129,7 +2144,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 0}
+    textComponent: {fileID: 5018443993868656852}
     characterCount: 4
     spriteCount: 0
     spaceCount: 0
@@ -2404,12 +2419,42 @@ PrefabInstance:
     - target: {fileID: 2860269303159204715, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 12
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860269303534113376, guid: fef0734594b116b468538f0e566d267f,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860269303534113376, guid: fef0734594b116b468538f0e566d267f,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860269303534113376, guid: fef0734594b116b468538f0e566d267f,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.6117647
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: _health
       value: 68
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
+        type: 3}
+      propertyPath: _backgroundColor.b
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
+        type: 3}
+      propertyPath: _backgroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
+        type: 3}
+      propertyPath: _backgroundColor.r
+      value: 0.6117647
       objectReference: {fileID: 0}
     - target: {fileID: 7206554265919532479, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
@@ -2528,6 +2573,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fef0734594b116b468538f0e566d267f, type: 3}
+--- !u!114 &9062704203249972189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2860269303159204715, guid: fef0734594b116b468538f0e566d267f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6517982659839613110}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &282869786937950239 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -2767336486775433047, guid: fef0734594b116b468538f0e566d267f,
@@ -2552,18 +2609,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6517982659839613110}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9062704203249972189 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2860269303159204715, guid: fef0734594b116b468538f0e566d267f,
-    type: 3}
-  m_PrefabInstance: {fileID: 6517982659839613110}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8937762380672284176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2628,23 +2673,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303159204715, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 6609305411391593851}
+    - target: {fileID: 2860269303159204715, guid: fef0734594b116b468538f0e566d267f,
+        type: 3}
       propertyPath: m_textInfo.characterCount
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303534113376, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.02133116
+      value: 0.6117647
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303534113376, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.16470589
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303534113376, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.6117647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
@@ -2654,17 +2704,17 @@ PrefabInstance:
     - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: _backgroundColor.b
-      value: 0.02133116
+      value: 0.6117647
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: _backgroundColor.g
-      value: 0
+      value: 0.16470589
       objectReference: {fileID: 0}
     - target: {fileID: 2860269303661139867, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
       propertyPath: _backgroundColor.r
-      value: 0.6117647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7206554265919532479, guid: fef0734594b116b468538f0e566d267f,
         type: 3}
@@ -2783,6 +2833,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fef0734594b116b468538f0e566d267f, type: 3}
+--- !u!114 &6609305411391593851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2860269303159204715, guid: fef0734594b116b468538f0e566d267f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8937762380672284176}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &439124628113239905 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 8795910512471873905, guid: fef0734594b116b468538f0e566d267f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8937762380672284176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1851553421222870993 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8937762380672284176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2707012640526823097 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -2767336486775433047, guid: fef0734594b116b468538f0e566d267f,
@@ -2795,15 +2869,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88182b9ea42285f4fb5393e4e21830d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &1851553421222870993 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7330529239776086465, guid: fef0734594b116b468538f0e566d267f,
-    type: 3}
-  m_PrefabInstance: {fileID: 8937762380672284176}
-  m_PrefabAsset: {fileID: 0}
---- !u!225 &439124628113239905 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 8795910512471873905, guid: fef0734594b116b468538f0e566d267f,
-    type: 3}
-  m_PrefabInstance: {fileID: 8937762380672284176}
-  m_PrefabAsset: {fileID: 0}

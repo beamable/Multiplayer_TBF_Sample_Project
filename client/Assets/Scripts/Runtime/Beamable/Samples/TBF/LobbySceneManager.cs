@@ -5,6 +5,7 @@ using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;
 using System;
 using UnityEngine;
+using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 
 namespace Beamable.Samples.TBF
 {
@@ -46,8 +47,10 @@ namespace Beamable.Samples.TBF
             RuntimeDataStorage.Instance.TargetPlayerCount = 1;
          }
 
-         _lobbyUIView.StatusBodyText.text = string.Format(TBFConstants.StatusText_Waiting, 0, 
+         string text = string.Format(TBFConstants.StatusText_Waiting, 0,
             RuntimeDataStorage.Instance.TargetPlayerCount);
+
+         _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Immediate);
 
          SetupBeamable();
       }
@@ -86,7 +89,8 @@ namespace Beamable.Samples.TBF
             }
             catch (Exception)
             {
-               _lobbyUIView.StatusBodyText.text = TBFHelper.InternetOfflineInstructionsText;
+               _lobbyUIView.BufferedText.SetText(TBFHelper.InternetOfflineInstructionsText,
+                  BufferedTextMode.Queue);
             }
          });
       }
@@ -95,7 +99,10 @@ namespace Beamable.Samples.TBF
       //  Event Handlers -------------------------------
       private void BackButton_OnClicked()
       {
-         matchmaking.Stop();
+         if (matchmaking != null)
+         {
+            matchmaking.Stop();
+         }
 
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
@@ -108,9 +115,11 @@ namespace Beamable.Samples.TBF
             $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
             $"RoomId={myMatchmakingResult.RoomId}");
 
-         _lobbyUIView.StatusBodyText.text = string.Format(TBFConstants.StatusText_Waiting,
+         string text = string.Format(TBFConstants.StatusText_Waiting,
             myMatchmakingResult.Players.Count,
             myMatchmakingResult.TargetPlayerCount);
+
+         _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Queue);
       }
 
 

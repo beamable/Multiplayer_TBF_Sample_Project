@@ -350,248 +350,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &877678344
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 877678346}
-  - component: {fileID: 877678345}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &877678345
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877678344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f9eb70e479f547f2bb99bde5281612c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Modify Albedo of AvatarRed
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Assign Material
-    - Assign Material
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - ApplyAll
-    - ApplyAll
-    - Apply instance to prefab
-    - Apply instance to prefab
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - 'Assign Material AvatarBlue '
-    - 'Assign Material AvatarRed '
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Modify Color of AvatarBlue
-    - Selection Change
-    - Selection Change
-    - 'Assign Material AvatarRed '
-    - Selection Change
-    - Selection Change
-    - 'Assign Material AvatarRed '
-    - Selection Change
-    - Selection Change
-    - Modify Color of AvatarBlue
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Driving RectTransform
-    - Driving RectTransform
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Rename AvatarView_02
-    - Selection Change
-    - Rename AvatarView_01
-    - Selection Change
-    - Selection Change
-    - AvatarView_02 Parenting
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Paste Transform Values
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Move
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Inspector
-    - AvatarView_01 Parenting
-    - AvatarView_02 Parenting
-    - Selection Change
---- !u!4 &877678346
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877678344}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &919519389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1015,6 +773,104 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1413401271}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1799469054
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1799469056}
+  - component: {fileID: 1799469055}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1799469055
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799469054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9eb70e479f547f2bb99bde5281612c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Drag MonoBehaviour
+    - Inspector
+    - Selection Change
+    - ApplyAll
+    - ApplyAll
+    - Apply instance to prefab
+    - Apply instance to prefab
+    - ApplyAll
+    - ApplyAll
+    - ApplyAll
+    - Apply instance to prefab
+    - Apply instance to prefab
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - ApplyAll
+    - ApplyAll
+    - Apply instance to prefab
+    - Apply instance to prefab
+    - Selection Change
+    - Inspector
+    - Inspector
+    - ApplyAll
+    - ApplyAll
+    - Apply instance to prefab
+    - Apply instance to prefab
+--- !u!4 &1799469056
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799469054}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1862949970
 GameObject:
@@ -1524,11 +1380,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4500877641402873097, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: m_Value
-      value: 68
-      objectReference: {fileID: 0}
     - target: {fileID: 4598108368854036921, guid: fd39caf993b537142b82f807f7a6302d,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1639,11 +1490,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUIView
       objectReference: {fileID: 0}
-    - target: {fileID: 4598108369378775412, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4598108369378775415, guid: fd39caf993b537142b82f807f7a6302d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1742,21 +1588,6 @@ PrefabInstance:
     - target: {fileID: 6169062926944205652, guid: fd39caf993b537142b82f807f7a6302d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609305411566641547, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: _backgroundColor.b
-      value: 0.6117647
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609305411566641547, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: _backgroundColor.g
-      value: 0.16470589
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609305411566641547, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: _backgroundColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6787507497734171614, guid: fd39caf993b537142b82f807f7a6302d,
@@ -1858,26 +1689,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9062704203249972189, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: m_text
-      value: '{Title} 68%'
-      objectReference: {fileID: 0}
-    - target: {fileID: 9062704203688333101, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: _backgroundColor.b
-      value: 0.019607844
-      objectReference: {fileID: 0}
-    - target: {fileID: 9062704203688333101, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: _backgroundColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9062704203688333101, guid: fd39caf993b537142b82f807f7a6302d,
-        type: 3}
-      propertyPath: _backgroundColor.r
-      value: 0.6117647
       objectReference: {fileID: 0}
     - target: {fileID: 9076946100264763501, guid: fd39caf993b537142b82f807f7a6302d,
         type: 3}
