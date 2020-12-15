@@ -47,7 +47,7 @@ namespace Beamable.Samples.TBF
       //  Properties -----------------------------------
 
       /// <summary>
-      /// For both organization and understandability, here a 
+      /// For ease of understandability and readability, here a 
       /// very LIGHT State Pattern is used.
       /// </summary>
       private async Task SetGameState(GameState gameState)
@@ -95,6 +95,7 @@ namespace Beamable.Samples.TBF
                _gameProgressData.GameRoundCurrent = 0;
                break;
             case GameState.Started:
+               SetGameState(GameState.Moving);
                break;
             case GameState.Moving:
 
@@ -181,11 +182,6 @@ namespace Beamable.Samples.TBF
 
       //  Fields ---------------------------------------
 
-      /// <summary>
-      /// Determines if using Unity debug log statements.
-      /// </summary>
-      private static bool IsDebugLogging = true;
-
       [SerializeField]
       private Configuration _configuration = null;
 
@@ -223,11 +219,12 @@ namespace Beamable.Samples.TBF
       //  Other Methods  -----------------------------
       private void DebugLog(string message)
       {
-         if (IsDebugLogging)
+         if (TBFConstants.IsDebugLogging)
          {
             Debug.Log(message);
          }
       }
+
 
       private async void SetupBeamable()
       {
@@ -241,9 +238,6 @@ namespace Beamable.Samples.TBF
             {
                _beamableAPI = de;
 
-               //TODO: Fetch the found matchmaking info from the previous scene
-               Debug.Log("Game, IsMatchmakingComplete: " + RuntimeDataStorage.Instance.IsMatchmakingComplete);
-
                if (!RuntimeDataStorage.Instance.IsMatchmakingComplete)
                {
                   Debug.Log($"Scene '{gameObject.scene.name}' was loaded directly. That is ok. Setting defaults.");
@@ -251,7 +245,6 @@ namespace Beamable.Samples.TBF
                   RuntimeDataStorage.Instance.TargetPlayerCount = 1;
                   RuntimeDataStorage.Instance.RoomId = TBFMatchmaking.GetRandomRoomId();
                }
-  
                
                _tbfMultiplayerSession = new TBFMultiplayerSession(
                   RuntimeDataStorage.Instance.LocalPlayerDbid,
@@ -329,9 +322,10 @@ namespace Beamable.Samples.TBF
          }
          else
          {
+            //ASKJUSTIN: Why does my wrapper function here not compile?
             //TODO: Unhook
             //_tbfMultiplayerSession.Remove(MultiplayerSession_OnGameStartEvent);
-            //_tbfMultiplayerSession.Remove(MultiplayerSession_OnGameMoveEvent);
+            // _tbfMultiplayerSession.Remove(MultiplayerSession_OnGameMoveEvent);
          }
       }
 
@@ -350,11 +344,11 @@ namespace Beamable.Samples.TBF
 
       private void BackButton_OnClicked()
       {
-         //TEMP - restart game
-         //RestartGame();
-
+         //ASKJUSTIN: So as the user, I'm playing the game, and I click 'back' to quit, 
+         //shouldn't I disconnect from the simclient manually? I don't see API for that.
          //TODO: Disconnect the player?
 
+         //Change scenes
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
       }
@@ -417,18 +411,14 @@ namespace Beamable.Samples.TBF
       {
          if (_tbfMultiplayerSession.PlayerDbids.Count == _tbfMultiplayerSession.TargetPlayerCount)
          {
-            //TODO: Move to a state pattern (version 1 where I just do a 
-            //switch statement atop this class and...
-            //1. toggle buttons off/on
-            //2. show text to status
             SetGameState (GameState.Started);
-            SetGameState (GameState.Moving);
          }
          else
          {
             SetGameState (GameState.Starting);
          }
       }
+
 
       private void MultiplayerSession_OnGameMoveEvent(GameMoveEvent gameMoveEvent)
       {

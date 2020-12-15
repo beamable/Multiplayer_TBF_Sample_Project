@@ -38,10 +38,7 @@ namespace Beamable.Examples.Features.Multiplayer
             _localPlayerDbid = de.User.id;
          });
 
-         //Randomize the roomId so that every play-session
-         //The game connects to a new room with no previous event history.
-         //This is optional, and ideal for a 'clean' demo.
-         roomId = "MyCustomRoomId_" + UnityEngine.Random.Range(100, 200);
+         roomId = GetRandomRoomId();
 
          // Create Multiplayer Session
          _simClient = new SimClient(new SimNetworkEventStream(roomId),
@@ -83,12 +80,15 @@ namespace Beamable.Examples.Features.Multiplayer
          //Debug.Log($"message:{message}");
       }
 
-      protected void OnDestroy()
+      /// <summary>
+      /// During development, if the game scene is loaded directly (and thus no matchmaking)
+      /// this method is used to give a RoomId. Why random? So that each connection is fresh
+      /// and has no history. Otherwise a new connection (within 10-15 seconds of the last connection)
+      /// may remember the 'old' session and contain 'old' events.
+      /// </summary>
+      public static string GetRandomRoomId()
       {
-         if (_simClient != null)
-         {
-            //TODO: Manually leave session. Needed?
-         }
+         return "MyCustomRoomId_" + string.Format("{00:00}", UnityEngine.Random.Range(0, 1000));
       }
 
       private void SimClient_OnInit(string sessionSeed)

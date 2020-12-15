@@ -97,7 +97,8 @@ namespace Beamable.Examples.Features.Multiplayer
             {
                Debug.Log($"MyMatchmaking.Start() TargetPlayerCount={_simGameType.numberOfPlayers}");
 
-               //ASKJUSTIN: parameter API says "SimGameType". I would assume that is the "ContentName", but instead its "Id". Thoughts?
+               //ASKJUSTIN: parameter API says "SimGameType". I would assume that is the "ContentName", 
+               //but instead its "Id". Thoughts?
                matchmakingResponse = await _matchmakingService.Match(_simGameType.Id);
             }
             catch (PlatformRequesterException e)
@@ -123,7 +124,7 @@ namespace Beamable.Examples.Features.Multiplayer
             await Task.Delay(Delay);
             _myMatchmakingResult.TicksRemaining = matchmakingResponse.ticksRemaining;
 
-            //ASKJUSTIN: I check A and B here both. Sound good? Edge cases? Error cases?
+            //ASKJUSTIN: I check A and B here, BOTH (why?). Sound good? Edge cases? Error cases?
 
             //A
             if (_myMatchmakingResult.Players.Count == _myMatchmakingResult.TargetPlayerCount &&

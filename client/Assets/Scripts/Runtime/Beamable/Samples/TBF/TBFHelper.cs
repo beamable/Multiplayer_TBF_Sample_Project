@@ -17,7 +17,10 @@ namespace Beamable.Samples.TBF
       {
          SoundManager.Instance.PlayAudioClip(SoundConstants.Click01);
 
-         Debug.Log($"LoadScene() to {sceneName}");
+         if (TBFConstants.IsDebugLogging)
+         {
+            Debug.Log($"LoadScene() to {sceneName}");
+         }
 
          yield return new WaitForSeconds(delayBeforeLoading);
          SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);

@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Beamable.Samples.TBF
 {
    /// <summary>
@@ -8,6 +7,15 @@ namespace Beamable.Samples.TBF
    public static class TBFConstants
    {
       //  Fields ---------------------------------------
+
+      /// <summary>
+      /// Determines if using Unity debug log statements.
+      /// </summary>
+      public static bool IsDebugLogging = true;
+
+      /// <summary>
+      /// Used as a 'null' value.
+      /// </summary>
       public const int UnsetValue = -1;
 
       /// <summary>

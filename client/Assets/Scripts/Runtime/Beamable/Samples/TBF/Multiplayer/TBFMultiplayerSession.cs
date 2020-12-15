@@ -14,11 +14,6 @@ namespace Beamable.Samples.TBF.Multiplayer
       public event EventCallback<long> OnDisconnect;
 
       /// <summary>
-      /// Determines if using Unity debug log statements.
-      /// </summary>
-      private static bool IsDebugLogging = true;
-
-      /// <summary>
       /// Determines if events objects are transfered with fullly qualified event names.
       /// True, is more correct.
       /// False, is easier debug logging.
@@ -130,7 +125,7 @@ namespace Beamable.Samples.TBF.Multiplayer
       //  Private Methods  -----------------------------
       private void DebugLog(string message)
       {
-         if (IsDebugLogging)
+         if (TBFConstants.IsDebugLogging)
          {
             Debug.Log(message);
          }

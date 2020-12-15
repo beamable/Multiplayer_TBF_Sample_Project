@@ -1,5 +1,4 @@
-﻿
-using Beamable.Api.Matchmaking;
+﻿using Beamable.Api.Matchmaking;
 using Beamable.Content;
 using Beamable.Examples.Features.Multiplayer;
 
@@ -14,7 +13,13 @@ namespace Beamable.Samples.TBF.Multiplayer
    /// </summary>
    public class TBFMatchmaking : MyMatchmaking
    {
-      //TODO: Needed?: works for single player only
+      /// <summary>
+      /// During development, if the game scene is loaded directly (and thus no matchmaking)
+      /// this method is used to give a RoomId. Why random? So that each connection is fresh
+      /// and has no history. Otherwise a new connection (within 10-15 seconds of the last connection)
+      /// may remember the 'old' session and contain 'old' events.
+      /// </summary>
+      /// <returns></returns>
       public static string GetRandomRoomId()
       {
          return "TBFRoomId" + string.Format("{00:00}", UnityEngine.Random.Range(0, 1000));
