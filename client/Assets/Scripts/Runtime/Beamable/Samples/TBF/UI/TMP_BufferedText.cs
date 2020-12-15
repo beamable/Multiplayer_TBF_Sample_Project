@@ -15,9 +15,14 @@ namespace Beamable.Samples.TBF.UI
       //  Properties --------------------------------------
 
       /// <summary>
-      /// Determines how many remain. 
+      /// Determines if any text is left in the queue. 
       /// </summary>
-      public int BufferedTextCount { get { return _bufferedTextQueue.Count; } }
+      public bool HasRemainingQueueText{ get { return RemainingQueueCount > 0; } }
+
+      /// <summary>
+      /// Determines how many texts remain in the queue.
+      /// </summary>
+      public int RemainingQueueCount { get { return _bufferedTextQueue.Count; } }
 
       //  Fields ---------------------------------------
       public enum BufferedTextMode

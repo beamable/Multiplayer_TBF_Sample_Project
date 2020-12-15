@@ -1,5 +1,6 @@
 ﻿using Beamable.Api.Sim;
 using Beamable.Samples.TBF.Multiplayer.Events;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Beamable.Api.Sim.SimClient;
@@ -24,8 +25,10 @@ namespace Beamable.Samples.TBF.Multiplayer
       private const long TargetNetworkLead = 4;
 
       public long SessionSeed { get { return _sessionSeed; } }
-      public List<long> PlayerDbids { get { return _playerDbids; } }
+      public int PlayerDbidsCount { get { return _playerDbids.Count; } }
       public int TargetPlayerCount { get { return _targetPlayerCount; } }
+
+      public bool IsHumanVsBotMode { get { return PlayerDbidsCount == 1; } }
 
       public bool IsLocalPlayerDbid (long dbid) { return dbid == _localPlayerDbid; }
 
@@ -61,6 +64,23 @@ namespace Beamable.Samples.TBF.Multiplayer
          _simClient.OnConnect(SimClient_OnConnect);
          _simClient.OnDisconnect(SimClient_OnDisconnect);
          _simClient.OnTick(SimClient_OnTick);
+      }
+
+      public bool HasPlayerDbidForIndex(int index)
+      {
+         return index < _playerDbids.Count;
+      }
+
+      public long GetPlayerDbidForIndex(int index)
+      {
+         if (HasPlayerDbidForIndex(index))
+         {
+            return _playerDbids[index];
+         }
+
+         //Log error since exceptions do not work in this context because of....async?
+         Debug.LogError ($"GetPlayerDbidForIndex() failed for index={index}.");
+         return TBFConstants.UnsetValue;
       }
 
       /// <summary>
@@ -120,7 +140,12 @@ namespace Beamable.Samples.TBF.Multiplayer
       public void SendEvent<T>(T evt) where T : TBFEvent
       {
          string name = GetEventName<T>();
-         DebugLog($"SimClient_SendEvent(): {name}");
+
+         //Pack in the local player to EVERY event
+         //Uses non-public API to reduce complexity during common use cases
+         (evt as IHiddenTBFEvent).SetPlayerDbid(_localPlayerDbid);
+
+         DebugLog($"SimClient_SendEvent(): name={name}, evt.PlayerDbid={evt.PlayerDbid }.");
          _simClient.SendEvent(name, evt);
       }
 

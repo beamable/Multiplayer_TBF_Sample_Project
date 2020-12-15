@@ -171,7 +171,6 @@ namespace Beamable.Samples.TBF
          }
       }
 
-
       private static string GetBulletList(string title, List<string> items)
       {
          string text = "";
@@ -183,6 +182,11 @@ namespace Beamable.Samples.TBF
          }
          text += "</indent>" + "\n";
          return text;
+      }
+
+      public static GameMoveType GetRandomGameMoveType()
+      {
+         return GameMoveType.Medium;
       }
    }
 }
