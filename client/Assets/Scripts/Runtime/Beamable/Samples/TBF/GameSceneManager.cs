@@ -10,17 +10,28 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Beamable.Samples.TBF.Views.GameUIView;
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+// Disable: "Because this call is not awaited, execution of the current method continues before the call is completed"
+#pragma warning disable CS4014 
 
 namespace Beamable.Samples.TBF
 {
+
+   /// <summary>
+   /// List of all users' moves
+   /// </summary>
    public enum GameMoveType
    {
       Null = 0,
-      High = 10,
-      Medium = 20,
-      Low = 30
+      High = 10,     // Like "Rock"
+      Medium = 20,   // Like "Paper"
+      Low = 30       // Like "Scissors"
    }
+
+   /// <summary>
+   /// List of all phases of the gameplay.
+   /// There are arguably more states here than are needed, 
+   /// however all are used for deliberate separation.
+   /// </summary>
    public enum GameState
    {
       Null,
@@ -37,8 +48,9 @@ namespace Beamable.Samples.TBF
       Evaluating,
       Evaluated,
       Ending,
-
    }
+
+
    /// <summary>
    /// Handles the main scene logic: Game
    /// </summary>
@@ -90,6 +102,7 @@ namespace Beamable.Samples.TBF
                   _tbfMultiplayerSession.TargetPlayerCount), StatusTextMode.Queue);
                break;
             case GameState.Connected:
+               //Waits for GameStartEvent...
                break;
             case GameState.Starting:
                _gameProgressData.GameRoundCurrent = 0;
@@ -118,6 +131,8 @@ namespace Beamable.Samples.TBF
                   _gameProgressData.GameRoundCurrent), StatusTextMode.Queue);
 
                _gameUIView.MoveButtonsCanvasGroup.interactable = false;
+
+               SetGameState(GameState.Evaluating);
 
                break;
             case GameState.Evaluating:
@@ -380,7 +395,6 @@ namespace Beamable.Samples.TBF
 
       private void MultiplayerSession_OnConnect(long playerDbid)
       {
-
          BindPlayerDbidToEvents(playerDbid, true);
 
          if (_tbfMultiplayerSession.PlayerDbids.Count < _tbfMultiplayerSession.TargetPlayerCount)
@@ -427,7 +441,6 @@ namespace Beamable.Samples.TBF
 
          Debug.Log($"gameMoveEvent.GameMoveType(): {gameMoveEvent.GameMoveType}");
 
-
          _gameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationByGameMoveType(gameMoveEvent.GameMoveType);
          _gameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationByGameMoveType(gameMoveEvent.GameMoveType);
 
@@ -435,7 +448,6 @@ namespace Beamable.Samples.TBF
          if (_gameProgressData.GameMoveEventsThisRoundByPlayerDbid.Count == _tbfMultiplayerSession.TargetPlayerCount)
          {
             SetGameState (GameState.Moved);
-            SetGameState (GameState.Evaluating);
          }
       }
    }
