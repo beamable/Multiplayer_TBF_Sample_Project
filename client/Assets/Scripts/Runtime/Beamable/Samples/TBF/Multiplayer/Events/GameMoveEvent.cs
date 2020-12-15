@@ -7,6 +7,10 @@ namespace Beamable.Samples.TBF.Multiplayer.Events
    public class GameMoveEvent : TBFEvent
    {
       //  Properties -----------------------------------
+
+      /// <summary>
+      /// The move SENT by the player.
+      /// </summary>
       public GameMoveType GameMoveType {  get { return _gameMoveType; } }
 
       //  Fields ---------------------------------------
@@ -18,7 +22,5 @@ namespace Beamable.Samples.TBF.Multiplayer.Events
       {
          _gameMoveType = gameMoveType;
       }
-
-      //  Other Methods   ------------------------------
    }
 }

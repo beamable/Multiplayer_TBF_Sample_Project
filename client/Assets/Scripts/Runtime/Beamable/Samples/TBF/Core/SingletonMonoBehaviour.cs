@@ -32,7 +32,6 @@ namespace Beamable.Samples.TBF.Core
 			{
 				_Instance = value;
 			}
-
 		}
 
 		//  Fields -------------------------------------------------

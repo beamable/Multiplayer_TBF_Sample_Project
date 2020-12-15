@@ -6,7 +6,9 @@ using UnityEngine.EventSystems;
 namespace Beamable.Samples.TBF.Core
 {
    /// <summary>
-   /// Open a web browser for any <link=blah>text</link> in the source text.
+   /// User may click any <link=blah>text</link> in the source text to
+   /// open a url in the default system web browser.
+   /// 
    /// <see cref="https://deltadreamgames.com/unity-tmp-hyperlinks/"/>
    /// </summary>
    public class TMPHyperlinkHandler : MonoBehaviour, IPointerClickHandler

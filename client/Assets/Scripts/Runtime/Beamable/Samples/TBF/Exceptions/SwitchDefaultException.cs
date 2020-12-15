@@ -4,7 +4,7 @@ namespace Beamable.Samples.TBF.Exceptions
 {
    /// <summary>
    /// Handles errors generated when the default clause of a
-   /// switch statement is reached despite intention.
+   /// switch statement is reached but not expected.
    /// </summary>
    public class SwitchDefaultException : Exception
    {
@@ -25,8 +25,8 @@ namespace Beamable.Samples.TBF.Exceptions
       }
 
       /// <summary>
-      /// Recommended instead of 'throw' to avoid warning of 
-      /// "warning CS0162: Unreachable code detected"
+      /// Call this instead of directly calling 'throw'. 
+      /// This is to avoid warning of "warning CS0162: Unreachable code detected"
       /// </summary>
       public static void Throw(object obj)
       {

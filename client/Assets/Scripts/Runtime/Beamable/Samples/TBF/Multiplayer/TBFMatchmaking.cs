@@ -5,11 +5,11 @@ using Beamable.Examples.Features.Multiplayer;
 namespace Beamable.Samples.TBF.Multiplayer
 {
    /// <summary>
-   /// For the SAMPLE PROJECT scene(s). For this project the needs are so similar to the 
-   /// EXAMPLE SCENE, that the EXAMPLE <see cref="MyMatchmaking"/> is extended. 
+   /// This is for the SAMPLE PROJECT Scene(s). For this project the needs are so similar to the 
+   /// EXAMPLE Scenes, that the EXAMPLE <see cref="MyMatchmaking"/> is extended. 
    /// 
    /// NOTE: For your production uses, simply copy <see cref="MyMatchmaking"/> as inspiration
-   /// into a new class.
+   /// and create a new custom class.
    /// </summary>
    public class TBFMatchmaking : MyMatchmaking
    {

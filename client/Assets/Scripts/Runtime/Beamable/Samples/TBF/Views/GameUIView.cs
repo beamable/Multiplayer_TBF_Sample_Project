@@ -1,7 +1,6 @@
 ﻿using Beamable.Samples.TBF.Animation;
 using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Exceptions;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;

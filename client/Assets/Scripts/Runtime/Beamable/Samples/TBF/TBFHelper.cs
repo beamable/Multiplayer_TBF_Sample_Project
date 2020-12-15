@@ -12,6 +12,7 @@ namespace Beamable.Samples.TBF
    /// </summary>
    public static class TBFHelper
    {
+
       //  Other Methods --------------------------------
       public static IEnumerator LoadScene_Coroutine(string sceneName, float delayBeforeLoading)
       {
@@ -25,6 +26,7 @@ namespace Beamable.Samples.TBF
          yield return new WaitForSeconds(delayBeforeLoading);
          SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
       }
+
 
       /// <summary>
       /// Return the intro menu text. This serves as a welcome to the game plot and game instructions.
@@ -65,32 +67,24 @@ namespace Beamable.Samples.TBF
          return text;
       }
 
-      private static string GameInstructionsText
+
+      /// <summary>
+      /// Return a random item from the list. 
+      /// This provides cosmetic variety.
+      /// </summary>
+      public static string GetRandomString(List<string> items)
       {
-         get
-         {
-            string text = "";
-
-            text += "Choose strategic attacks to win! Only the bravest knight survives." + "\n\n";
-
-            text += "This sample project demonstrates Beamable's Multiplayer feature.\n\n";
-
-            text += TBFHelper.GetBulletList("Resources", new List<string> 
-            {
-               "Overview: <u><link=https://docs.beamable.com/docs/multiplayer-sample>Multiplayer Sample</u>",
-               "Feature: <u><link=https://docs.beamable.com/docs/multiplayer>Multiplayer</u>",
-            });
-
-
-            return text;
-         }
+         int index = UnityEngine.Random.Range(0, items.Count);
+         return items[index];
       }
+
 
       public static float GetAudioPitchByGrowthPercentage(float growthPercentage)
       {
-         //From 0.5 to 1.5
+         //Range from 0.5 to 1.5
          return 0.5f + Mathf.Clamp01(growthPercentage);
       }
+
 
       public static string InternetOfflineInstructionsText
       {
@@ -110,6 +104,7 @@ namespace Beamable.Samples.TBF
          }
       }
 
+
       /// <summary>
       /// Convert the <see cref="float"/> to a <see cref="string"/>
       /// with rounding like "10.1";
@@ -119,6 +114,7 @@ namespace Beamable.Samples.TBF
          return string.Format("{0:0.0}", value);
       }
 
+
       /// <summary>
       /// Convert the <see cref="double"/> to a whole number like an <see cref="int"/>.
       /// </summary>
@@ -127,12 +123,35 @@ namespace Beamable.Samples.TBF
          return (int)score;
       }
 
+
       /// <summary>
       /// Convert the <see cref="string"/> to a whole number like an <see cref="int"/>.
       /// </summary>
       public static double GetRoundedScore(string score)
       {
          return GetRoundedScore(Double.Parse(score));
+      }
+
+
+      private static string GameInstructionsText
+      {
+         get
+         {
+            string text = "";
+
+            text += "Choose strategic attacks to win! Only the bravest knight survives." + "\n\n";
+
+            text += "This sample project demonstrates Beamable's Multiplayer feature.\n\n";
+
+            text += TBFHelper.GetBulletList("Resources", new List<string>
+            {
+               "Overview: <u><link=https://docs.beamable.com/docs/multiplayer-sample>Multiplayer Sample</u>",
+               "Feature: <u><link=https://docs.beamable.com/docs/multiplayer>Multiplayer</u>",
+            });
+
+
+            return text;
+         }
       }
 
 
@@ -152,6 +171,7 @@ namespace Beamable.Samples.TBF
          }
       }
 
+
       private static string GetBulletList(string title, List<string> items)
       {
          string text = "";
@@ -163,17 +183,6 @@ namespace Beamable.Samples.TBF
          }
          text += "</indent>" + "\n";
          return text;
-      }
-
-
-      /// <summary>
-      /// Return a random item from the list. 
-      /// This provides cosmetic variety.
-      /// </summary>
-      public static string GetRandomString(List<string> items)
-      {
-         int index = UnityEngine.Random.Range(0, items.Count);
-         return items[index];
       }
    }
 }

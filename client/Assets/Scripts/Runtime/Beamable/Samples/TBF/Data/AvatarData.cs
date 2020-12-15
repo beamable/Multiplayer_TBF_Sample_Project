@@ -13,7 +13,6 @@ namespace Beamable.Samples.TBF.Data
       public string Location {  get { return _location; } }
       public Color Color { get { return _color; } }
 
-
       //  Properties -----------------------------------
       [SerializeField]
       private string _location = "";

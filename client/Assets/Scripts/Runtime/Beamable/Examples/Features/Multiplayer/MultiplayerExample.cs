@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Beamable.Examples.Features.Multiplayer
 {
+   /// <summary>
+   /// Custom move
+   /// </summary>
    public class MyPlayerMoveEvent
    {
       public static string Name = "MyPlayerMoveEvent";
@@ -17,12 +20,16 @@ namespace Beamable.Examples.Features.Multiplayer
       }
    }
 
+   /// <summary>
+   /// Demonstrates send/receive of events to Beamable Multiplayer.
+   /// </summary>
    public class MultiplayerExample : MonoBehaviour
    {
+      //  Constants ---------------------------------------
       private const long FramesPerSecond = 20;
       private const long TargetNetworkLead = 4;
-      
 
+      //  Fields  -----------------------------------------
       private SimClient _simClient;
       private string _sessionSeed;
       private long _currentFrame;
@@ -30,6 +37,7 @@ namespace Beamable.Examples.Features.Multiplayer
       private long _localPlayerDbid;
       private string roomId = "";
 
+      //  Unity Methods -----------------------------------
       protected void Start()
       {
          // Access Local Player Information
@@ -80,6 +88,8 @@ namespace Beamable.Examples.Features.Multiplayer
          //Debug.Log($"message:{message}");
       }
 
+      //  Other Methods -----------------------------------
+
       /// <summary>
       /// During development, if the game scene is loaded directly (and thus no matchmaking)
       /// this method is used to give a RoomId. Why random? So that each connection is fresh
@@ -90,6 +100,8 @@ namespace Beamable.Examples.Features.Multiplayer
       {
          return "MyCustomRoomId_" + string.Format("{00:00}", UnityEngine.Random.Range(0, 1000));
       }
+
+      //  Event Handlers ----------------------------------
 
       private void SimClient_OnInit(string sessionSeed)
       {

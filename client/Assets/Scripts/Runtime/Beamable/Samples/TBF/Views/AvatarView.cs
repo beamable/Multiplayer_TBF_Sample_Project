@@ -26,10 +26,12 @@ namespace Beamable.Samples.TBF.Views
          _animator.SetTrigger(TBFConstants.Avatar_Idle);
       }
 
+
       public void PlayAnimationWin()
       {
          _animator.SetTrigger(TBFConstants.Avatar_Death);
       }
+
 
       public void PlayAnimationByGameMoveType(GameMoveType gameMoveType)
       {
@@ -56,18 +58,9 @@ namespace Beamable.Samples.TBF.Views
          }
       }
 
-      private void PlayAudioClipDelayed(string attack_01, object delayBeforeSoundAttack_01)
-      {
-         throw new NotImplementedException();
-      }
-
       private void PlayAudioClipDelayed(string audioClipName, float delay)
       {
          SoundManager.Instance.PlayAudioClipDelayed(audioClipName, delay);
       }
-
-
-
-      //  Event Handlers -------------------------------
    }
 }

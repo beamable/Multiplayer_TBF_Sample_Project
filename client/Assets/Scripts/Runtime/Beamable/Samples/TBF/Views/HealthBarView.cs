@@ -1,9 +1,7 @@
 ﻿using DG.Tweening;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.RectTransform;
 
 namespace Beamable.Samples.TBF.Views
 {

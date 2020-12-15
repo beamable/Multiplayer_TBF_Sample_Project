@@ -1,6 +1,5 @@
 ﻿using Beamable.Content;
 using Beamable.Examples.Features.Multiplayer;
-using Beamable.Samples.TBF.Audio;
 using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;
@@ -133,7 +132,6 @@ namespace Beamable.Samples.TBF
             //Store successful info here for use in another scene
             RuntimeDataStorage.Instance.IsMatchmakingComplete = true;
             RuntimeDataStorage.Instance.LocalPlayerDbid = myMatchmakingResult.LocalPlayerDbid;
-            
             RuntimeDataStorage.Instance.RoomId = myMatchmakingResult.RoomId;
 
             //Load another scene

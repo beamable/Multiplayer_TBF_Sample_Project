@@ -1,6 +1,5 @@
 ﻿using Beamable.Api.Sim;
 using Beamable.Samples.TBF.Multiplayer.Events;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Beamable.Api.Sim.SimClient;
@@ -162,12 +161,14 @@ namespace Beamable.Samples.TBF.Multiplayer
          OnInit?.Invoke(_sessionSeed);
       }
 
+
       private void SimClient_OnConnect(string dbid)
       {
          _playerDbids.Add(long.Parse(dbid));
          DebugLog($"SimClient_OnConnect(): {long.Parse(dbid)}");
          OnConnect?.Invoke(long.Parse(dbid));
       }
+
 
       private void SimClient_OnDisconnect(string dbid)
       {
@@ -180,7 +181,5 @@ namespace Beamable.Samples.TBF.Multiplayer
       {
          _currentFrame = currentFrame;
       }
-
-
    }
 }

@@ -53,9 +53,8 @@ namespace Beamable.Samples.TBF.Views
          _tween = gameObject.transform.DOLocalMoveY(gameObject.transform.position.y + DeltaYMove, 
             DurationTime, false)
             .OnComplete<Tween>(DoLocalMoveY_OnCompleted);
-
-
       }
+
 
       //  Event Handlers -------------------------------
       private void DoLocalMoveY_OnCompleted()

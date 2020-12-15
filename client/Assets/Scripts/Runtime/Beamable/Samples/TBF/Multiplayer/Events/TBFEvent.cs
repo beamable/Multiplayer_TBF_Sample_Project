@@ -10,6 +10,10 @@ namespace Beamable.Samples.TBF.Multiplayer.Events
    public class TBFEvent
    {
       //  Properties -----------------------------------
+
+      /// <summary>
+      /// The player who SENT the event.
+      /// </summary>
       public long PlayerDbid { get { return _playerDbid; } }
 
       //  Fields ---------------------------------------
