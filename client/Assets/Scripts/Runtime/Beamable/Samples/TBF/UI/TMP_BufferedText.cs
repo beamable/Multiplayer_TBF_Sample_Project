@@ -1,5 +1,4 @@
 ﻿using Beamable.Samples.TBF.Exceptions;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -40,10 +39,6 @@ namespace Beamable.Samples.TBF.UI
       private float _bufferedTextElapsedTime = 0;
 
       //  Unity Methods   ------------------------------
-      protected void Start()
-      {
-      }
-
       protected void Update()
       {
          // Every x seconds, show the next text
