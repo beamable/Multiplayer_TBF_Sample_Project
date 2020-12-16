@@ -9,6 +9,9 @@ namespace Beamable.Samples.Core
    /// </summary>
    public static class AsyncUtility 
    {
+      public static float TaskDelayMinimumSeconds = 0.025f;
+      public static int MillisecondMultiplier = 1000;
+
       /// <summary>
       /// By default "async" functionality hides any Exceptions thrown.
       /// Wrapping async calls with AsyncSafe provides visibility to Exceptions thrown.
@@ -36,6 +39,16 @@ namespace Beamable.Samples.Core
             // Log terse, helpful info
             UnityEngine.Debug.LogError($"[ {exceptionName} ({filename} : {line}) ] {exception.Message}");
          }
+      }
+
+      /// <summary>
+      /// Wait X Seconds
+      /// </summary>
+      /// <param name="delayInSeconds"></param>
+      /// <returns></returns>
+      public static async Task TaskDelaySeconds(float delayInSeconds)
+      {
+         await Task.Delay((int)(delayInSeconds * MillisecondMultiplier));
       }
    }
 }

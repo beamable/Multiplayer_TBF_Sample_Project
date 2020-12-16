@@ -87,6 +87,7 @@ namespace Beamable.Samples.TBF.Data
       [SerializeField]
       private float _delayBeforeSoundAttack_01a = 1;
 
+
       [SerializeField]
       private float _delayBeforeSoundAttack_01b = 1;
 

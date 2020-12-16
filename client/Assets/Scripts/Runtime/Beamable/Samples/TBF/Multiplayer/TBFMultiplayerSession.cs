@@ -179,13 +179,15 @@ namespace Beamable.Samples.TBF.Multiplayer
       //  Event Handlers  ------------------------------
       private void SimClient_OnInit(string sessionSeed)
       {
-         Debug.Log("sessionSeed: " + sessionSeed);
-         long s = long.Parse(sessionSeed);
-         _sessionSeed = (int)s;
-         DebugLog($"SimClient_OnInit(): {_roomId} {_sessionSeed}");
+         //Incoming long sessionSeed my be too large for the required int. Convert.
+         long sessionSeedLong = long.Parse(sessionSeed);
+         float sessionSeedFloat = Mathf.Min(Int32.MaxValue, sessionSeedLong);
+         _sessionSeed = (int)sessionSeedLong;
+
+         DebugLog($"SimClient_OnInit() RoomId {_roomId} SessionSeed {_sessionSeed}");
 
          //TODO: pass the seed to the random here. casting issue above
-         _random = new System.Random();
+         _random = new System.Random(_sessionSeed);
          OnInit?.Invoke(_random);
       }
 

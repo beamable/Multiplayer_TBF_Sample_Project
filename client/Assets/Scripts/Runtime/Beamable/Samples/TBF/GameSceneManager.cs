@@ -4,12 +4,8 @@ using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Multiplayer.Events;
 using Beamable.Samples.TBF.Views;
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
-
-// Disable: "Because this call is not awaited, execution of the current method continues before the call is completed"
-#pragma warning disable CS4014 
 
 namespace Beamable.Samples.TBF
 {
@@ -86,11 +82,11 @@ namespace Beamable.Samples.TBF
 
       private async void SetupBeamable()
       {
-         _gameStateHandler.SetGameState(GameState.Loading);
+         await _gameStateHandler.SetGameState(GameState.Loading);
 
-         await Beamable.API.Instance.Then(de =>
+         await Beamable.API.Instance.Then(async de =>
          {
-            _gameStateHandler.SetGameState (GameState.Loaded);
+            await _gameStateHandler.SetGameState (GameState.Loaded);
 
             try
             {
@@ -109,7 +105,7 @@ namespace Beamable.Samples.TBF
                   RuntimeDataStorage.Instance.TargetPlayerCount,
                   RuntimeDataStorage.Instance.RoomId) ;
 
-               _gameStateHandler.SetGameState(GameState.Initializing);
+               await _gameStateHandler.SetGameState(GameState.Initializing);
 
                _multiplayerSession.OnInit += MultiplayerSession_OnInit;
                _multiplayerSession.OnConnect += MultiplayerSession_OnConnect;
@@ -148,7 +144,7 @@ namespace Beamable.Samples.TBF
 
       private void SendGameMoveEventSave(GameMoveType gameMoveType)
       {
-         if (_gameStateHandler.GameState == GameState.PlayerMoving)
+         if (_gameStateHandler.GameState == GameState.RoundPlayerMoving)
          {
             _gameUIView.MoveButtonsCanvasGroup.interactable = false;
             SoundManager.Instance.PlayAudioClip(SoundConstants.Click02);
@@ -185,24 +181,24 @@ namespace Beamable.Samples.TBF
       }
 
 
-      private void MultiplayerSession_OnInit(System.Random random)
+      private async void MultiplayerSession_OnInit(System.Random random)
       {
-         _gameStateHandler.SetGameState(GameState.Initialized);
+         await _gameStateHandler.SetGameState(GameState.Initialized);
       }
 
 
-      private void MultiplayerSession_OnConnect(long playerDbid)
+      private async void MultiplayerSession_OnConnect(long playerDbid)
       {
          BindPlayerDbidToEvents(playerDbid, true);
 
          if (_multiplayerSession.PlayerDbidsCount < _multiplayerSession.TargetPlayerCount)
          {
-            _gameStateHandler.SetGameState (GameState.Connecting);
+            await _gameStateHandler.SetGameState (GameState.Connecting);
 
          }
          else
          {
-            _gameStateHandler.SetGameState (GameState.Connected);
+            await _gameStateHandler.SetGameState (GameState.Connected);
 
             _multiplayerSession.SendEvent<GameStartEvent>(new GameStartEvent());
          }
@@ -231,11 +227,14 @@ namespace Beamable.Samples.TBF
 
       private void MultiplayerSession_OnGameMoveEvent(GameMoveEvent gameMoveEvent)
       {
-         //Add each player event to a list
-         _gameProgressData.GameMoveEventsThisRoundByPlayerDbid[gameMoveEvent.PlayerDbid] = gameMoveEvent;
+         if (_gameStateHandler.GameState == GameState.RoundPlayerMoving)
+         {
+            //Add each player event to a list
+            _gameProgressData.GameMoveEventsThisRoundByPlayerDbid[gameMoveEvent.PlayerDbid] = gameMoveEvent;
 
-         Debug.Log($"gameMoveEvent.GameMoveType(): {gameMoveEvent.GameMoveType} for {gameMoveEvent.PlayerDbid}");
-         _gameStateHandler.SetGameState(GameState.PlayerMoved);
+            Debug.Log($"gameMoveEvent.GameMoveType(): {gameMoveEvent.GameMoveType} for {gameMoveEvent.PlayerDbid}");
+            _gameStateHandler.SetGameState(GameState.RoundPlayerMoved);
+         }
 
       }
    }

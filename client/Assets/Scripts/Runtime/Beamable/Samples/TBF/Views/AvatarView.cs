@@ -1,7 +1,6 @@
 ﻿using Beamable.Samples.TBF.Audio;
 using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Exceptions;
-using System;
 using UnityEngine;
 
 namespace Beamable.Samples.TBF.Views
@@ -20,14 +19,38 @@ namespace Beamable.Samples.TBF.Views
       [SerializeField]
       private Configuration _configuration = null;
 
+      /// <summary>
+      /// Store Idle info so we can check "IsIdleAnimation"
+      /// </summary>
+      private int _idleAnimationFullPathHash;
+
+      /// <summary>
+      /// Determines if the current playing animation is the idle animation.
+      /// </summary>
+      public bool IsIdleAnimation 
+      {
+         get
+         {
+            return _animator.GetCurrentAnimatorStateInfo(0).fullPathHash == _idleAnimationFullPathHash;
+         }
+      }
+
+
       //  Other Methods --------------------------------
       public void PlayAnimationIdle()
+      {
+         _animator.SetTrigger(TBFConstants.Avatar_Idle);
+         _idleAnimationFullPathHash = _animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
+      }
+
+
+      public void PlayAnimationWin()
       {
          _animator.SetTrigger(TBFConstants.Avatar_Idle);
       }
 
 
-      public void PlayAnimationWin()
+      public void PlayAnimationLoss()
       {
          _animator.SetTrigger(TBFConstants.Avatar_Death);
       }
@@ -48,7 +71,6 @@ namespace Beamable.Samples.TBF.Views
                PlayAudioClipDelayed(SoundConstants.Attack_02, _configuration.DelayBeforeSoundAttack_02b);
                break;
             case GameMoveType.Low:
-               Debug.Log("doing: " + TBFConstants.Avatar_Attack_03);
                _animator.SetTrigger(TBFConstants.Avatar_Attack_03);
                PlayAudioClipDelayed(SoundConstants.Attack_03, _configuration.DelayBeforeSoundAttack_03);
                break;

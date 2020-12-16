@@ -33,5 +33,6 @@ MonoBehaviour:
   _delayBeforeSoundAttack_02a: 0.1
   _delayBeforeSoundAttack_02b: 0.6
   _delayBeforeSoundAttack_03: 1
+  _delayGameBetweenPlayerAnimations: 3
   _statusMessageMinDuration: 1
   _delayFadeInUI: 0.25

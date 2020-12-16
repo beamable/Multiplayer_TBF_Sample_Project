@@ -168,7 +168,7 @@ namespace Beamable.Samples.TBF
          }
 
          //Show final status message a little longer
-         yield return new WaitForSeconds(1f);
+         yield return new WaitForSeconds(0.5f);
 
          //Load another scene
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.GameSceneName,

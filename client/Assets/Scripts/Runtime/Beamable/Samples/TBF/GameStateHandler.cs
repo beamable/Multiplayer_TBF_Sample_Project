@@ -4,23 +4,23 @@ using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Exceptions;
 using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Multiplayer.Events;
+using Beamable.Samples.TBF.Views;
+using System;
 using System.Threading.Tasks;
+using UnityAsync;
 using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 
-// Disable: "Because this call is not awaited, execution of the current method continues before the call is completed"
-#pragma warning disable CS4014 
-
 namespace Beamable.Samples.TBF
 {
-
    /// <summary>
    /// List of all phases of the gameplay.
    /// There are arguably more states here than are needed, 
-   /// however all are used for deliberate separation.
+   /// however all are indeed used, in the order shown, for deliberate separation.
    /// </summary>
    public enum GameState
    {
+      //Game loads within here
       Null,
       Loading,
       Loaded,
@@ -30,13 +30,17 @@ namespace Beamable.Samples.TBF
       Connected,
       GameStarting,
       GameStarted,
+
+      //Game repeats within here
       RoundStarting,
       RoundStarted,
-      PlayerMoving,
-      PlayerMoved,
-      Evaluating,
-      Evaluated,
-      Ending,
+      RoundPlayerMoving,
+      RoundPlayerMoved,
+      RoundEvaluating,
+      RoundEvaluated,
+
+      //Game ends here
+      GameEnding,
    }
 
    /// <summary>
@@ -52,18 +56,9 @@ namespace Beamable.Samples.TBF
       private GameSceneManager _gameSceneManager;
 
       //  Other Methods  -----------------------------
-      public GameStateHandler (GameSceneManager gameSceneManager)
+      public GameStateHandler(GameSceneManager gameSceneManager)
       {
          _gameSceneManager = gameSceneManager;
-      }
-
-
-      private void DebugLog(string message)
-      {
-         if (TBFConstants.IsDebugLogging)
-         {
-            Debug.Log(message);
-         }
       }
 
 
@@ -83,48 +78,91 @@ namespace Beamable.Samples.TBF
          //    Pros: We can use operations like "Task.Delay" to slow down execution
          //    Cons: Error handling is tricky. 
          //    Workaround: AsyncUtility helps with its try/catch.
-         await AsyncUtility.AsyncSafe(async() =>
+         await AsyncUtility.AsyncSafe(async () =>
          {
             switch (_gameState)
             {
                case GameState.Null:
                   break;
+
                case GameState.Loading:
-                  Debug.Log("1 GameProgressData!!!!!!!!!!!!!!!!!!!!!!!1");
+                  // **************************************
+                  // Render the scene before any latency 
+                  // of multiplayer begins
+                  // **************************************
+
+                  _gameSceneManager.SetStatusText("", BufferedTextMode.Immediate);
+
                   _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationIdle();
                   _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationIdle();
 
-
-                  Debug.Log("1 GameProgressData!!!!!!!!!!!!!!!!!!!!!!!1");
                   _gameSceneManager.GameProgressData = new GameProgressData(_gameSceneManager.Configuration);
-                  _gameSceneManager.SetStatusText("", BufferedTextMode.Immediate);
                   _gameSceneManager.GameUIView.MoveButtonsCanvasGroup.interactable = false;
                   _gameSceneManager.SetStatusText(TBFConstants.StatusText_GameState_Loading, BufferedTextMode.Queue);
 
                   break;
+
                case GameState.Loaded:
+                  // **************************************
+                  //  Update UI
+                  //  
+                  // **************************************
+
                   _gameSceneManager.SetStatusText(TBFConstants.StatusText_GameState_Loaded, BufferedTextMode.Queue);
                   break;
+
                case GameState.Initializing:
+                  // **************************************
+                  //  Update UI
+                  //  
+                  // **************************************
+
                   _gameSceneManager.SetStatusText(TBFConstants.StatusText_GameState_Initializing, BufferedTextMode.Queue);
                   break;
+
                case GameState.Initialized:
+                  // **************************************
+                  //  Update UI
+                  //  
+                  // **************************************
+
                   _gameSceneManager.SetStatusText(TBFConstants.StatusText_GameState_Initialized, BufferedTextMode.Queue);
                   break;
+
                case GameState.Connecting:
+                  // **************************************
+                  //  Update UI
+                  //  
+                  // **************************************
+
                   _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Connecting,
                      _gameSceneManager.MultiplayerSession.PlayerDbidsCount.ToString(),
                      _gameSceneManager.MultiplayerSession.TargetPlayerCount), BufferedTextMode.Queue);
                   break;
+
                case GameState.Connected:
-                  SetGameState(GameState.GameStarting);
+                  // **************************************
+                  //  Advanced the state 
+                  //  
+                  // **************************************
+                  await SetGameState(GameState.GameStarting);
                   break;
+
                case GameState.GameStarting:
+                  // **************************************
+                  //  Reset the game-specific data
+                  //  
+                  // **************************************
                   _gameSceneManager.GameProgressData.GameRoundCurrent = 0;
                   break;
-               case GameState.GameStarted:
 
-                  //Now that all players have connected and started, setup AI
+               case GameState.GameStarted:
+                  // **************************************
+                  //  Now that all players have connected, setup AI
+                  //  
+                  // **************************************
+
+                  // RemotePlayerAI is always created, but enabled only sometimes
                   bool isEnabledRemotePlayerAI = _gameSceneManager.MultiplayerSession.IsHumanVsBotMode;
                   System.Random random = _gameSceneManager.MultiplayerSession.Random;
 
@@ -133,37 +171,57 @@ namespace Beamable.Samples.TBF
                      Debug.Log($"isEnabledRemotePlayerAI={isEnabledRemotePlayerAI}");
                   }
 
-                  // RemotePlayerAI is always created, but enabled only sometimes
                   _gameSceneManager.RemotePlayerAI = new RemotePlayerAI(random, isEnabledRemotePlayerAI);
 
-                  SetGameState(GameState.RoundStarting);
+                  await SetGameState(GameState.RoundStarting);
                   break;
-               case GameState.RoundStarting:
-                  _gameSceneManager.GameProgressData.GameRoundCurrent++;
-                  SetGameState(GameState.RoundStarted);
-                  break;
-               case GameState.RoundStarted:
-                  SetGameState(GameState.PlayerMoving);
-                  break;
-               case GameState.PlayerMoving:
-                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moving,
-                      _gameSceneManager.GameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
 
+               case GameState.RoundStarting:
+                  // **************************************
+                  //  Reste the round-specific data.
+                  //  Advance the state. 
+                  //  This happens before EACH round during a game
+                  // **************************************
+                  _gameSceneManager.GameProgressData.GameRoundCurrent++;
                   _gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.Clear();
-                  //Wait for old messages to pass before allowing button clicks
+                  await SetGameState(GameState.RoundStarted);
+                  break;
+
+               case GameState.RoundStarted:
+                  // **************************************
+                  //  Advance the state
+                  //  
+                  // **************************************
+
                   while (_gameSceneManager.GameUIView.BufferedText.HasRemainingQueueText)
                   {
-                     await Task.Delay(TBFConstants.TaskDelayMin);
+                     // Wait for old messages to pass before allowing button clicks
+                     await Await.NextUpdate();
                   }
                   _gameSceneManager.GameUIView.MoveButtonsCanvasGroup.interactable = true;
 
+                  await SetGameState(GameState.RoundPlayerMoving);
                   break;
-               case GameState.PlayerMoved:
 
+               case GameState.RoundPlayerMoving:
+                  // **************************************
+                  //  Update UI
+                  //  
+                  // **************************************
+                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayerMoving,
+                      _gameSceneManager.GameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
+
+                  break;
+
+               case GameState.RoundPlayerMoved:
+                  // **************************************
+                  //  
+                  //  
+                  // **************************************
                   long localPlayerDbid = _gameSceneManager.MultiplayerSession.GetPlayerDbidForIndex(TBFConstants.PlayerIndexLocal);
                   GameMoveEvent localGameMoveEvent;
                   _gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.TryGetValue(localPlayerDbid, out localGameMoveEvent);
-                  
+
                   GameMoveType localGameMoveType = localGameMoveEvent.GameMoveType;
                   GameMoveType remoteGameMoveType = GameMoveType.Null;
                   if (_gameSceneManager.RemotePlayerAI.IsEnabled)
@@ -172,8 +230,6 @@ namespace Beamable.Samples.TBF
                   }
                   else
                   {
-                     Debug.Log($"here");
-
                      long remotePlayerDbid = _gameSceneManager.MultiplayerSession.GetPlayerDbidForIndex(TBFConstants.PlayerIndexRemote);
 
                      GameMoveEvent remoteGameEvent;
@@ -181,42 +237,82 @@ namespace Beamable.Samples.TBF
                      remoteGameMoveType = remoteGameEvent.GameMoveType;
                   }
 
-                  _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationByGameMoveType(localGameMoveType);
-                  _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationByGameMoveType(remoteGameMoveType);
+                  // LOCAL
+                  await RenderPlayerMove(TBFConstants.PlayerIndexLocal, localGameMoveType);
 
-                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moved,
+                  // REMOTE
+                  await RenderPlayerMove(TBFConstants.PlayerIndexRemote, remoteGameMoveType);
+
+                  // All players have moved
+                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayersAllMoved,
                      _gameSceneManager.GameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
 
-                  //Enough players did a move? Then advance game state
                   if (_gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.Count ==
                      _gameSceneManager.MultiplayerSession.TargetPlayerCount)
                   {
-                     SetGameState(GameState.Evaluating);
+                     // ALL players moved? See who won the round
+                     await SetGameState(GameState.RoundEvaluating);
+                  }
+                  else
+                  {
+                     // Only SOME players moved? Wait for others...
+                     await SetGameState(GameState.RoundPlayerMoving);
                   }
 
                   break;
-               case GameState.Evaluating:
 
+               case GameState.RoundEvaluating:
+                  // **************************************
+                  //  
+                  //  
+                  // **************************************
                   _gameSceneManager.GameProgressData.EvaluateGameMoveEventsThisRound();
-                  await SetGameState(GameState.Evaluated);
+                  await SetGameState(GameState.RoundEvaluated);
 
                   break;
-               case GameState.Evaluated:
+
+               case GameState.RoundEvaluated:
+                  // **************************************
+                  //  
+                  //  
+                  // **************************************
+
+                  long roundWinnerDbid = _gameSceneManager.GameProgressData.GetRoundWinnerPlayerDbid();
+                  string roundWinnerName;
+
+                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(roundWinnerDbid))
+                  {
+                     roundWinnerName = GetPlayerName(TBFConstants.PlayerIndexLocal);
+                  }
+                  else
+                  {
+                     roundWinnerName = GetPlayerName(TBFConstants.PlayerIndexRemote);
+                  }
 
                   _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Evaluated,
-                     _gameSceneManager.GameProgressData.GameRoundCurrent,
-                     _gameSceneManager.GameProgressData.GetRoundWinnerPlayerDbid()), BufferedTextMode.Queue);
+                     _gameSceneManager.GameProgressData.GameRoundCurrent, roundWinnerName), BufferedTextMode.Queue);
+
+                  while (_gameSceneManager.GameUIView.BufferedText.HasRemainingQueueText)
+                  {
+                     // Wait for old messages to pass before allowing button clicks
+                     await Await.NextUpdate();
+                  }
+
+                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(roundWinnerDbid))
+                  {
+                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health -= 34;
+                  }
+                  else
+                  {
+                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health -= 34;
+                  }
 
                   //Wait for animations to finish
-                  await Task.Delay((int)_gameSceneManager.Configuration.DelayGameBeforeGameOver *
-                     TBFConstants.MillisecondMultiplier);
-
-                  _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health = 50;
-                  _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health = 50;
+                  await AsyncUtility.TaskDelaySeconds(_gameSceneManager.Configuration.DelayGameBeforeGameOver);
 
                   if (_gameSceneManager.GameProgressData.GameHasWinner())
                   {
-                     await SetGameState(GameState.Ending);
+                     await SetGameState(GameState.GameEnding);
                   }
                   else
                   {
@@ -225,26 +321,41 @@ namespace Beamable.Samples.TBF
                   }
 
                   break;
-               case GameState.Ending:
-                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Ending,
-                     _gameSceneManager.GameProgressData.GameRoundCurrent,
-                     _gameSceneManager.GameProgressData.GetGameWinnerPlayerDbid()), BufferedTextMode.Queue);
 
-                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(_gameSceneManager.GameProgressData.GetGameWinnerPlayerDbid()))
+               case GameState.GameEnding:
+                  // **************************************
+                  //  
+                  //  
+                  // **************************************
+
+                  long gameWinnerDbid = _gameSceneManager.GameProgressData.GetGameWinnerPlayerDbid();
+                  string gameWinnerName;
+
+
+                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(gameWinnerDbid))
                   {
+                     gameWinnerName = GetPlayerName(TBFConstants.PlayerIndexLocal);
+
                      //Local winner
                      SoundManager.Instance.PlayAudioClip(SoundConstants.GameOverWin);
                      _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationWin();
-                     _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationIdle();
+                     _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationLoss();
                   }
                   else
                   {
+                     gameWinnerName = GetPlayerName(TBFConstants.PlayerIndexRemote);   
+
                      //Remote winner
                      SoundManager.Instance.PlayAudioClip(SoundConstants.GameOverLoss);
-                     _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationIdle();
+                     _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationLoss();
                      _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationWin();
                   }
+
+                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Ending,
+                    _gameSceneManager.GameProgressData.GameRoundCurrent, gameWinnerName), BufferedTextMode.Queue);
+
                   break;
+
                default:
                   SwitchDefaultException.Throw(_gameState);
                   break;
@@ -252,5 +363,39 @@ namespace Beamable.Samples.TBF
          }, new System.Diagnostics.StackTrace(true));
       }
 
+      private async Task RenderPlayerMove(int playerIndex, GameMoveType gameMoveType)
+      {
+         string playerName = GetPlayerName(playerIndex);
+         _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayerMoved,
+         _gameSceneManager.GameProgressData.GameRoundCurrent, playerName, gameMoveType), BufferedTextMode.Queue);
+
+         AvatarView avatarView = _gameSceneManager.GameUIView.AvatarViews[playerIndex];
+         avatarView.PlayAnimationByGameMoveType(gameMoveType);
+
+         // 1 Unity needs time to START non-IDLE animation ...
+         await Await.While(() =>
+         {
+            return avatarView.IsIdleAnimation;
+         });
+
+         // 2 Unity needs time to RETURN to the IDLE animation ...
+         await Await.While(() =>
+         {
+            return !avatarView.IsIdleAnimation;
+         });
+      }
+
+      private string GetPlayerName(int playerIndex)
+      {
+         return _gameSceneManager.Configuration.AvatarDatas[playerIndex].Location;
+      }
+
+      private void DebugLog(string message)
+      {
+         if (TBFConstants.IsDebugLogging)
+         {
+            Debug.Log(message);
+         }
+      }
    }
 }

@@ -52,7 +52,7 @@ namespace Beamable.Samples.TBF.Multiplayer
                break;
          }
 
-         DebugLog($"GetNextGameMoveType() {gameMoveType}");
+         DebugLog($"RemotePlayerAI.GetNextGameMoveType() {gameMoveType}");
          return gameMoveType;
       }
 
