@@ -184,9 +184,5 @@ namespace Beamable.Samples.TBF
          return text;
       }
 
-      public static GameMoveType GetRandomGameMoveType()
-      {
-         return GameMoveType.Medium;
-      }
    }
 }

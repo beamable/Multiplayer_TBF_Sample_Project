@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Beamable.Samples.TBF.Data
 {
@@ -25,6 +26,9 @@ namespace Beamable.Samples.TBF.Data
       public GameProgressData (Configuration configuration)
       {
          _configuration = configuration;
+         Debug.Log($"Create! GameMoveEventsThisRoundByPlayerDbid: " + GameMoveEventsThisRoundByPlayerDbid);
+         Debug.Log($"Create! RoundsWonByPlayerDbid: " + RoundsWonByPlayerDbid);
+         Debug.Log($"Create! GameRoundCurrent: " + GameRoundCurrent);
       }
 
       //  Other Methods  -------------------------------

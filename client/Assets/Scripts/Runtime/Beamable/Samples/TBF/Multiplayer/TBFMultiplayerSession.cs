@@ -10,7 +10,7 @@ namespace Beamable.Samples.TBF.Multiplayer
    public class TBFMultiplayerSession
    {
       //  Fields ---------------------------------------
-      public event EventCallback<long> OnInit;
+      public event EventCallback<System.Random> OnInit;
       public event EventCallback<long> OnConnect;
       public event EventCallback<long> OnDisconnect;
 
@@ -24,7 +24,7 @@ namespace Beamable.Samples.TBF.Multiplayer
       private const long FramesPerSecond = 20;
       private const long TargetNetworkLead = 4;
 
-      public long SessionSeed { get { return _sessionSeed; } }
+      public System.Random Random { get { return _random; } }
       public int PlayerDbidsCount { get { return _playerDbids.Count; } }
       public int TargetPlayerCount { get { return _targetPlayerCount; } }
 
@@ -32,7 +32,8 @@ namespace Beamable.Samples.TBF.Multiplayer
 
       public bool IsLocalPlayerDbid (long dbid) { return dbid == _localPlayerDbid; }
 
-      private long _sessionSeed;
+      private int _sessionSeed;
+      private System.Random _random;
       private List<long> _playerDbids = new List<long>();
       private SimClient _simClient;
       private long _currentFrame;
@@ -181,9 +182,14 @@ namespace Beamable.Samples.TBF.Multiplayer
       //  Event Handlers  ------------------------------
       private void SimClient_OnInit(string sessionSeed)
       {
-         _sessionSeed = long.Parse(sessionSeed);
+         Debug.Log("sessionSeed: " + sessionSeed);
+         long s = long.Parse(sessionSeed);
+         _sessionSeed = (int)s;
          DebugLog($"SimClient_OnInit(): {_roomId} {_sessionSeed}");
-         OnInit?.Invoke(_sessionSeed);
+
+         //TODO: pass the seed to the random here. casting issue above
+         _random = new System.Random();
+         OnInit?.Invoke(_random);
       }
 
 

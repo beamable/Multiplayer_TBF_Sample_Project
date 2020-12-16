@@ -1,4 +1,5 @@
-﻿using Beamable.Samples.TBF.Core;
+﻿
+using Beamable.Samples.Core;
 
 namespace Beamable.Samples.TBF.Data
 {

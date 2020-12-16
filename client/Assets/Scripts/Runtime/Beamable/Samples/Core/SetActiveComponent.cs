@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Beamable.Samples.TBF.Core
+namespace Beamable.Samples.Core
 {
 	/// <summary>
 	/// Toggle the visibility at runtime. This is helpful

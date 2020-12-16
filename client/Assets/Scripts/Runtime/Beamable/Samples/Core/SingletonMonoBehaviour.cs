@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Beamable.Samples.TBF.Core
+namespace Beamable.Samples.Core
 {
 	/// <summary>
 	/// Base class for any <see cref="MonoBehaviour"/> which follows the popular 
