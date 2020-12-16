@@ -78,9 +78,6 @@ namespace Beamable.Samples.TBF.Multiplayer
          {
             return _playerDbids[index];
          }
-
-         //Log error since exceptions do not work in this context because of....async?
-         Debug.LogError ($"GetPlayerDbidForIndex() failed for index={index}.");
          return TBFConstants.UnsetValue;
       }
 

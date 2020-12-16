@@ -18,7 +18,7 @@ namespace Beamable.Samples.TBF.Data
       //  Fields  --------------------------------------
       public Dictionary<long, GameMoveEvent> GameMoveEventsThisRoundByPlayerDbid = new Dictionary<long, GameMoveEvent>();
       public Dictionary<long, int> RoundsWonByPlayerDbid = new Dictionary<long, int>();
-      public int GameRoundCurrent = 1;
+      public int GameRoundCurrent = 0;
       
       private Configuration _configuration;
 
@@ -26,9 +26,6 @@ namespace Beamable.Samples.TBF.Data
       public GameProgressData (Configuration configuration)
       {
          _configuration = configuration;
-         Debug.Log($"Create! GameMoveEventsThisRoundByPlayerDbid: " + GameMoveEventsThisRoundByPlayerDbid);
-         Debug.Log($"Create! RoundsWonByPlayerDbid: " + RoundsWonByPlayerDbid);
-         Debug.Log($"Create! GameRoundCurrent: " + GameRoundCurrent);
       }
 
       //  Other Methods  -------------------------------

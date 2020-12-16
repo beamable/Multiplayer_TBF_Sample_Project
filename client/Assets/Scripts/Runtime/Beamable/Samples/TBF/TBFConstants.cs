@@ -56,6 +56,7 @@ namespace Beamable.Samples.TBF
       public static int MillisecondMultiplier = 1000;
 
       //Lobby
-      public static string StatusText_Waiting = "Player {0}/{1} joined. Waiting...";
+      public static string StatusText_Joining = "Player {0}/{1} joined. Waiting...";
+      public static string StatusText_Joined = "Player {0}/{1} joined. Ready.";
    }
 }

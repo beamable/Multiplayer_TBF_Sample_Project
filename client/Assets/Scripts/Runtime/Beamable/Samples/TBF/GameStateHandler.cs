@@ -2,8 +2,10 @@
 using Beamable.Samples.TBF.Audio;
 using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Exceptions;
+using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Multiplayer.Events;
 using System.Threading.Tasks;
+using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 
 // Disable: "Because this call is not awaited, execution of the current method continues before the call is completed"
@@ -60,7 +62,7 @@ namespace Beamable.Samples.TBF
       {
          if (TBFConstants.IsDebugLogging)
          {
-            UnityEngine.Debug.Log(message);
+            Debug.Log(message);
          }
       }
 
@@ -72,7 +74,7 @@ namespace Beamable.Samples.TBF
       /// <returns></returns>
       public async Task SetGameState(GameState gameState)
       {
-         DebugLog($"GameState() from {_gameState} to {gameState}");
+         DebugLog($"SetGameState() from {_gameState} to {gameState}");
 
          //NOTE: Do not set "_gameState" directly anywhere, except here.
          _gameState = gameState;
@@ -88,12 +90,12 @@ namespace Beamable.Samples.TBF
                case GameState.Null:
                   break;
                case GameState.Loading:
-                  UnityEngine.Debug.Log("1 GameProgressData!!!!!!!!!!!!!!!!!!!!!!!1");
+                  Debug.Log("1 GameProgressData!!!!!!!!!!!!!!!!!!!!!!!1");
                   _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationIdle();
-                  _gameSceneManager.GameUIView.AvatarViews[22].PlayAnimationIdle();
+                  _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationIdle();
 
 
-                  UnityEngine.Debug.Log("1 GameProgressData!!!!!!!!!!!!!!!!!!!!!!!1");
+                  Debug.Log("1 GameProgressData!!!!!!!!!!!!!!!!!!!!!!!1");
                   _gameSceneManager.GameProgressData = new GameProgressData(_gameSceneManager.Configuration);
                   _gameSceneManager.SetStatusText("", BufferedTextMode.Immediate);
                   _gameSceneManager.GameUIView.MoveButtonsCanvasGroup.interactable = false;
@@ -115,12 +117,25 @@ namespace Beamable.Samples.TBF
                      _gameSceneManager.MultiplayerSession.TargetPlayerCount), BufferedTextMode.Queue);
                   break;
                case GameState.Connected:
-                  //Waits for GameStartEvent...
+                  SetGameState(GameState.GameStarting);
                   break;
                case GameState.GameStarting:
                   _gameSceneManager.GameProgressData.GameRoundCurrent = 0;
                   break;
                case GameState.GameStarted:
+
+                  //Now that all players have connected and started, setup AI
+                  bool isEnabledRemotePlayerAI = _gameSceneManager.MultiplayerSession.IsHumanVsBotMode;
+                  System.Random random = _gameSceneManager.MultiplayerSession.Random;
+
+                  if (TBFConstants.IsDebugLogging)
+                  {
+                     Debug.Log($"isEnabledRemotePlayerAI={isEnabledRemotePlayerAI}");
+                  }
+
+                  // RemotePlayerAI is always created, but enabled only sometimes
+                  _gameSceneManager.RemotePlayerAI = new RemotePlayerAI(random, isEnabledRemotePlayerAI);
+
                   SetGameState(GameState.RoundStarting);
                   break;
                case GameState.RoundStarting:
@@ -131,44 +146,25 @@ namespace Beamable.Samples.TBF
                   SetGameState(GameState.PlayerMoving);
                   break;
                case GameState.PlayerMoving:
-                  UnityEngine.Debug.Log($"1a:");
                   _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Moving,
                       _gameSceneManager.GameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
-                  UnityEngine.Debug.Log($"1b1: " + _gameSceneManager.GameProgressData);
-                  UnityEngine.Debug.Log($"GameMoveEventsThisRoundByPlayerDbid: " + _gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid);
-                  UnityEngine.Debug.Log($"RoundsWonByPlayerDbid: " + _gameSceneManager.GameProgressData.RoundsWonByPlayerDbid);
-                  UnityEngine.Debug.Log($"GameRoundCurrent: " + _gameSceneManager.GameProgressData.GameRoundCurrent);
 
                   _gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.Clear();
-                  UnityEngine.Debug.Log($"1c:");
                   //Wait for old messages to pass before allowing button clicks
                   while (_gameSceneManager.GameUIView.BufferedText.HasRemainingQueueText)
                   {
-                     UnityEngine.Debug.Log($"1d:");
                      await Task.Delay(TBFConstants.TaskDelayMin);
                   }
-                  UnityEngine.Debug.Log($"1:e");
-
                   _gameSceneManager.GameUIView.MoveButtonsCanvasGroup.interactable = true;
 
                   break;
                case GameState.PlayerMoved:
 
-                  UnityEngine.Debug.Log($"PlayerMoved, {_gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.Count}" +
-                              $" ==? {_gameSceneManager.MultiplayerSession.TargetPlayerCount}");
-
                   long localPlayerDbid = _gameSceneManager.MultiplayerSession.GetPlayerDbidForIndex(TBFConstants.PlayerIndexLocal);
-
-                  GameMoveEvent localGameMoveEvent = new GameMoveEvent(GameMoveType.Null);
-                  UnityEngine.Debug.Log($"3b1 CONTAINS {localPlayerDbid} : " +
-                     _gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.ContainsKey(localPlayerDbid));
-
-                  UnityEngine.Debug.Log($"3b1 y3 : " + localGameMoveEvent);
-
+                  GameMoveEvent localGameMoveEvent;
                   _gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.TryGetValue(localPlayerDbid, out localGameMoveEvent);
-                  UnityEngine.Debug.Log($"3b1 z: for " + localGameMoveEvent.GameMoveType);
+                  
                   GameMoveType localGameMoveType = localGameMoveEvent.GameMoveType;
-
                   GameMoveType remoteGameMoveType = GameMoveType.Null;
                   if (_gameSceneManager.RemotePlayerAI.IsEnabled)
                   {
@@ -176,6 +172,8 @@ namespace Beamable.Samples.TBF
                   }
                   else
                   {
+                     Debug.Log($"here");
+
                      long remotePlayerDbid = _gameSceneManager.MultiplayerSession.GetPlayerDbidForIndex(TBFConstants.PlayerIndexRemote);
 
                      GameMoveEvent remoteGameEvent;

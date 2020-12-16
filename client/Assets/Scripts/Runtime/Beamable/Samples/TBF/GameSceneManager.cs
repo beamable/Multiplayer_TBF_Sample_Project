@@ -35,7 +35,7 @@ namespace Beamable.Samples.TBF
       public GameProgressData GameProgressData { get { return _gameProgressData; } set { _gameProgressData = value; } }
       public Configuration Configuration { get { return _configuration; } }
       public TBFMultiplayerSession MultiplayerSession { get { return _multiplayerSession; } }
-      public RemotePlayerAI RemotePlayerAI { get { return _remotePlayerAI; } }
+      public RemotePlayerAI RemotePlayerAI { get { return _remotePlayerAI; } set { _remotePlayerAI = value; } }
 
       //  Fields ---------------------------------------
 
@@ -187,10 +187,6 @@ namespace Beamable.Samples.TBF
 
       private void MultiplayerSession_OnInit(System.Random random)
       {
-         //For simplicity RemotePlayerAI is always created, but only enaabled if needed
-         bool isRemotePlayerAIEnabled = _multiplayerSession.IsHumanVsBotMode;
-         _remotePlayerAI = new RemotePlayerAI(random, isRemotePlayerAIEnabled);
-
          _gameStateHandler.SetGameState(GameState.Initialized);
       }
 
@@ -229,10 +225,6 @@ namespace Beamable.Samples.TBF
          if (_multiplayerSession.PlayerDbidsCount == _multiplayerSession.TargetPlayerCount)
          {
             _gameStateHandler.SetGameState (GameState.GameStarted);
-         }
-         else
-         {
-            _gameStateHandler.SetGameState (GameState.GameStarting);
          }
       }
 
