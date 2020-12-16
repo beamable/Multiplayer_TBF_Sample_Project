@@ -79,7 +79,8 @@ namespace Beamable.Samples.TBF
 
          // SetGameState() is async...
          //    Pros: We can use operations like "Task.Delay" to slow down execution
-         //    Cons: Error handling is tricky. So the try/catch is used.
+         //    Cons: Error handling is tricky. 
+         //    Workaround: AsyncUtility helps with its try/catch.
          await AsyncUtility.AsyncSafe(async() =>
          {
             switch (_gameState)
