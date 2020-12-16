@@ -215,17 +215,17 @@ namespace Beamable.Samples.TBF
       }
 
 
-      private void MultiplayerSession_OnGameStartEvent(GameStartEvent gameStartEvent)
+      private async void MultiplayerSession_OnGameStartEvent(GameStartEvent gameStartEvent)
       {
          //TODO: check if I got X responses. Don't check the following...
          if (_multiplayerSession.PlayerDbidsCount == _multiplayerSession.TargetPlayerCount)
          {
-            _gameStateHandler.SetGameState (GameState.GameStarted);
+            await _gameStateHandler.SetGameState (GameState.GameStarted);
          }
       }
 
 
-      private void MultiplayerSession_OnGameMoveEvent(GameMoveEvent gameMoveEvent)
+      private async void MultiplayerSession_OnGameMoveEvent(GameMoveEvent gameMoveEvent)
       {
          if (_gameStateHandler.GameState == GameState.RoundPlayerMoving)
          {
@@ -233,7 +233,7 @@ namespace Beamable.Samples.TBF
             _gameProgressData.GameMoveEventsThisRoundByPlayerDbid[gameMoveEvent.PlayerDbid] = gameMoveEvent;
 
             Debug.Log($"gameMoveEvent.GameMoveType(): {gameMoveEvent.GameMoveType} for {gameMoveEvent.PlayerDbid}");
-            _gameStateHandler.SetGameState(GameState.RoundPlayerMoved);
+            await _gameStateHandler.SetGameState(GameState.RoundPlayerMoved);
          }
 
       }
