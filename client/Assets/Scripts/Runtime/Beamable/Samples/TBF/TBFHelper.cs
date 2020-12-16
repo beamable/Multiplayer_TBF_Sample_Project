@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace Beamable.Samples.TBF
 {
    /// <summary>
-   /// Store commonly reused functionality for any concern
+   /// Store commonly reused functionality for concerns: General
    /// </summary>
    public static class TBFHelper
    {

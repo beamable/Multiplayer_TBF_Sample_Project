@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Beamable.Samples.Core
 {
    /// <summary>
-   /// Store commonly reused functionality for async/await/Task concerns
+   /// Store commonly reused functionality for concerns: async/await/Task
    /// </summary>
    public static class AsyncUtility 
    {
@@ -15,8 +14,8 @@ namespace Beamable.Samples.Core
       /// Wrapping async calls with AsyncSafe provides visibility to Exceptions thrown.
       /// </summary>
       /// <param name="asyncAction"></param>
+      /// <param name="incomingStackTrace"></param>
       /// <returns></returns>
-
       public static async Task AsyncSafe(Func<Task> asyncAction,
          System.Diagnostics.StackTrace incomingStackTrace)
       {
