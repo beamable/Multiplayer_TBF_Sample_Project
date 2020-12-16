@@ -4,6 +4,7 @@ using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;
 using System;
+using System.Collections;
 using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 
@@ -47,7 +48,7 @@ namespace Beamable.Samples.TBF
             RuntimeDataStorage.Instance.TargetPlayerCount = 1;
          }
 
-         string text = string.Format(TBFConstants.StatusText_Waiting, 0,
+         string text = string.Format(TBFConstants.StatusText_Joining, 0,
             RuntimeDataStorage.Instance.TargetPlayerCount);
 
          _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Immediate);
@@ -115,7 +116,7 @@ namespace Beamable.Samples.TBF
             $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
             $"RoomId={myMatchmakingResult.RoomId}");
 
-         string text = string.Format(TBFConstants.StatusText_Waiting,
+         string text = string.Format(TBFConstants.StatusText_Joining,
             myMatchmakingResult.Players.Count,
             myMatchmakingResult.TargetPlayerCount);
 
@@ -134,6 +135,12 @@ namespace Beamable.Samples.TBF
                return;
             }
 
+            string text = string.Format(TBFConstants.StatusText_Joined,
+               myMatchmakingResult.Players.Count,
+               myMatchmakingResult.TargetPlayerCount);
+
+            _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Queue);
+
             Debug.Log($"MyMatchmaking_OnComplete() " +
                $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
                $"RoomId={myMatchmakingResult.RoomId}");
@@ -143,14 +150,29 @@ namespace Beamable.Samples.TBF
             RuntimeDataStorage.Instance.LocalPlayerDbid = myMatchmakingResult.LocalPlayerDbid;
             RuntimeDataStorage.Instance.RoomId = myMatchmakingResult.RoomId;
 
-            //Load another scene
-            StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.GameSceneName,
-               _configuration.DelayBeforeLoadScene));
+            StartCoroutine(LoadScene_Coroutine());
+
          }
          else
          {
             throw new Exception("Codepath is never intended.");
          }
+      }
+
+      private IEnumerator LoadScene_Coroutine()
+      {
+         //Wait for old messages to pass before changing scenes
+         while (_lobbyUIView.BufferedText.HasRemainingQueueText)
+         {
+            yield return new WaitForEndOfFrame();
+         }
+
+         //Show final status message a little longer
+         yield return new WaitForSeconds(1f);
+
+         //Load another scene
+         StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.GameSceneName,
+            _configuration.DelayBeforeLoadScene));
       }
    }
 }

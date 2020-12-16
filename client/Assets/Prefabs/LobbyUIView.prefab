@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 6961013782191586758}
-  _minDisplayDuration: 3
+  _minDisplayDuration: 1
 --- !u!1 &1992002119254155027
 GameObject:
   m_ObjectHideFlags: 0
