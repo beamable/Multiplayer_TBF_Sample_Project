@@ -15,10 +15,10 @@ namespace Beamable.Samples.TBF
    /// </summary>
    public enum GameMoveType
    {
-      Null = 0,
-      High = 10,     // Like "Rock"
-      Medium = 20,   // Like "Paper"
-      Low = 30       // Like "Scissors"
+      Null,
+      High,     // Like "Rock"
+      Medium,   // Like "Paper"
+      Low       // Like "Scissors"
    }
 
    /// <summary>
