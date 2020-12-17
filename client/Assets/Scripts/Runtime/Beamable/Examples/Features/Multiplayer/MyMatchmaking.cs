@@ -2,6 +2,7 @@
 using Beamable.Api.Matchmaking;
 using Beamable.Common;
 using Beamable.Content;
+using Beamable.Samples.TBF;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -61,13 +62,16 @@ namespace Beamable.Examples.Features.Multiplayer
    /// </summary>
    public class MyMatchmaking
    {
-      public const string DefaultRoomId = "DefaultRoom";
-
-      public const int Delay = 1000;
-
+      //  Events  -----------------------------------------
       public event Action<MyMatchmakingResult> OnProgress;
       public event Action<MyMatchmakingResult> OnComplete;
+
+      //  Properties  -------------------------------------
       public MyMatchmakingResult MyMatchmakingResult { get { return _myMatchmakingResult; } }
+
+      //  Fields  -----------------------------------------
+      public const string DefaultRoomId = "DefaultRoom";
+      public const int Delay = 1000;
 
       private MyMatchmakingResult _myMatchmakingResult;
       private MatchmakingService _matchmakingService;
@@ -81,6 +85,8 @@ namespace Beamable.Examples.Features.Multiplayer
 
          _myMatchmakingResult = new MyMatchmakingResult(LocalPlayerDbid, _simGameType.numberOfPlayers);
       }
+
+      //  Other Methods  ----------------------------------
 
       /// <summary>
       /// Start the matchmaking process
@@ -98,7 +104,7 @@ namespace Beamable.Examples.Features.Multiplayer
          {
             try
             {
-               Debug.Log($"MyMatchmaking.Start() TargetPlayerCount={_simGameType.numberOfPlayers}");
+               DebugLog($"MyMatchmaking.Start() TargetPlayerCount={_simGameType.numberOfPlayers}");
 
                matchmakingResponse = await _matchmakingService.Match(_simGameType.Id);
             }
@@ -151,6 +157,14 @@ namespace Beamable.Examples.Features.Multiplayer
          //Next tick this will properly dispatch
          //an OnComplete with Error
          _myMatchmakingResult.IsInProgress = false;
+      }
+
+      private void DebugLog(string message)
+      {
+         if (TBFConstants.IsDebugLogging)
+         {
+            Debug.Log(message);
+         }
       }
    }
 }

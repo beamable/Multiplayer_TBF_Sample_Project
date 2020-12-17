@@ -312,7 +312,7 @@ namespace Beamable.Samples.TBF
                   //Wait for animations to finish
                   await AsyncUtility.TaskDelaySeconds(_gameSceneManager.Configuration.DelayGameBeforeGameOver);
 
-                  if (_gameSceneManager.GameProgressData.GameHasWinner())
+                  if (_gameSceneManager.GameProgressData.GameHasWinnerPlayerDbid())
                   {
                      await SetGameState(GameState.GameEnding);
                   }

@@ -44,7 +44,7 @@ namespace Beamable.Samples.TBF
 
          if (RuntimeDataStorage.Instance.TargetPlayerCount == RuntimeDataStorage.UnsetPlayerCount)
          {
-            Debug.Log($"Scene '{gameObject.scene.name}' was loaded directly. That is ok. Setting defaults.");
+            DebugLog($"Scene '{gameObject.scene.name}' was loaded directly. That is ok. Setting defaults.");
             RuntimeDataStorage.Instance.TargetPlayerCount = 1;
          }
 
@@ -97,6 +97,15 @@ namespace Beamable.Samples.TBF
       }
 
 
+      private void DebugLog(string message)
+      {
+         if (TBFConstants.IsDebugLogging)
+         {
+            Debug.Log(message);
+         }
+      }
+
+
       //  Event Handlers -------------------------------
       private void BackButton_OnClicked()
       {
@@ -112,7 +121,7 @@ namespace Beamable.Samples.TBF
 
       private void MyMatchmaking_OnProgress(MyMatchmakingResult myMatchmakingResult)
       {
-         Debug.Log($"MyMatchmaking_OnProgress() " +
+         DebugLog($"MyMatchmaking_OnProgress() " +
             $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
             $"RoomId={myMatchmakingResult.RoomId}");
 
@@ -130,7 +139,7 @@ namespace Beamable.Samples.TBF
          {
             if (myMatchmakingResult.IsError)
             {
-               Debug.Log($"MyMatchmaking_OnComplete() " +
+               DebugLog($"MyMatchmaking_OnComplete() " +
                   $"Error={myMatchmakingResult.ErrorMessage}.");
                return;
             }
@@ -141,7 +150,7 @@ namespace Beamable.Samples.TBF
 
             _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Queue);
 
-            Debug.Log($"MyMatchmaking_OnComplete() " +
+            DebugLog($"MyMatchmaking_OnComplete() " +
                $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
                $"RoomId={myMatchmakingResult.RoomId}");
 

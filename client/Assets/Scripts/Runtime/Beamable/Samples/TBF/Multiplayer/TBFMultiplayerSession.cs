@@ -9,10 +9,18 @@ namespace Beamable.Samples.TBF.Multiplayer
 {
    public class TBFMultiplayerSession
    {
-      //  Fields ---------------------------------------
+      //  Events -------------------------------------------
       public event EventCallback<System.Random> OnInit;
       public event EventCallback<long> OnConnect;
       public event EventCallback<long> OnDisconnect;
+
+      //  Fields  -----------------------------------------
+      public System.Random Random { get { return _random; } }
+      public int PlayerDbidsCount { get { return _playerDbids.Count; } }
+      public int TargetPlayerCount { get { return _targetPlayerCount; } }
+      public bool IsHumanVsBotMode { get { return PlayerDbidsCount == 1; } }
+      public bool IsLocalPlayerDbid(long dbid) { return dbid == _localPlayerDbid; }
+
 
       /// <summary>
       /// Determines if events objects are transfered with fullly qualified event names.
@@ -20,18 +28,8 @@ namespace Beamable.Samples.TBF.Multiplayer
       /// False, is easier debug logging.
       /// </summary>
       private static bool IsNamespaceSensitive = false;
-
       private const long FramesPerSecond = 20;
       private const long TargetNetworkLead = 4;
-
-      public System.Random Random { get { return _random; } }
-      public int PlayerDbidsCount { get { return _playerDbids.Count; } }
-      public int TargetPlayerCount { get { return _targetPlayerCount; } }
-
-      public bool IsHumanVsBotMode { get { return PlayerDbidsCount == 1; } }
-
-      public bool IsLocalPlayerDbid (long dbid) { return dbid == _localPlayerDbid; }
-
       private int _sessionSeed;
       private System.Random _random;
       private List<long> _playerDbids = new List<long>();

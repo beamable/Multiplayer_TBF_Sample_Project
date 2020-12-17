@@ -16,8 +16,17 @@ namespace Beamable.Samples.TBF.Data
    public class GameProgressData
    {
       //  Fields  --------------------------------------
+
+      /// <summary>
+      /// All game moves by DBID for the current ROUND.
+      /// </summary>
       public Dictionary<long, GameMoveEvent> GameMoveEventsThisRoundByPlayerDbid = new Dictionary<long, GameMoveEvent>();
+
+      /// <summary>
+      /// The total number of ROUNDS won in the current GAME by DBID
+      /// </summary>
       public Dictionary<long, int> RoundsWonByPlayerDbid = new Dictionary<long, int>();
+
       public int GameRoundCurrent = 0;
       
       private Configuration _configuration;
@@ -84,7 +93,7 @@ namespace Beamable.Samples.TBF.Data
          RoundsWonByPlayerDbid[roundWinnerPlayerDbid]++;
       }
 
-      public bool GameHasWinner()
+      public bool GameHasWinnerPlayerDbid()
       {
          if (GameRoundCurrent == _configuration.GameRoundsTotal)
          {
@@ -100,6 +109,11 @@ namespace Beamable.Samples.TBF.Data
       {
          int roundsWon01 = RoundsWonByPlayerDbid.Values.First();
          int roundsWon02 = RoundsWonByPlayerDbid.Values.Last();
+
+         if (TBFConstants.IsDebugLogging)
+         {
+            Debug.Log($"GetGameWinnerPlayerDbid() Player1:{roundsWon01} Player2:{roundsWon02}.");
+         }
 
          if (roundsWon01 > roundsWon02)
          {
