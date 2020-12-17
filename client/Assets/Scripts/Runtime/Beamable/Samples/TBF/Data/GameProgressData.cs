@@ -15,6 +15,50 @@ namespace Beamable.Samples.TBF.Data
    [Serializable]
    public class GameProgressData
    {
+      //  Properties  --------------------------------------
+      public bool CurrentRoundHasWinnerPlayerDbid {  get { return CurrentRoundWinnerPlayerDbid != TBFConstants.UnsetValue;  } }
+      public long CurrentRoundWinnerPlayerDbid {  get { return _currentRoundWinnerPlayerDbid;  } }
+
+
+      public bool GameHasWinnerPlayerDbid
+      {
+         get
+         {
+            if (CurrentRoundNumber == _configuration.GameRoundsTotal)
+            {
+               return true;
+            }
+            else
+            {
+               return false;
+            }
+         }
+      }
+
+      public long GameWinnerPlayerDbid
+      {
+         get
+         {
+            int roundsWon01 = RoundsWonByPlayerDbid.Values.First();
+            int roundsWon02 = RoundsWonByPlayerDbid.Values.Last();
+
+            if (TBFConstants.IsDebugLogging)
+            {
+               Debug.Log($"GetGameWinnerPlayerDbid() Player1:{roundsWon01} Player2:{roundsWon02}.");
+            }
+
+            if (roundsWon01 > roundsWon02)
+            {
+               return RoundsWonByPlayerDbid.Keys.First(); //ex. Key = 2, Value = dbid2342342
+            }
+            else
+            {
+               return RoundsWonByPlayerDbid.Keys.Last();
+            }
+         }
+      }
+
+
       //  Fields  --------------------------------------
 
       /// <summary>
@@ -27,8 +71,8 @@ namespace Beamable.Samples.TBF.Data
       /// </summary>
       public Dictionary<long, int> RoundsWonByPlayerDbid = new Dictionary<long, int>();
 
-      public int GameRoundCurrent = 0;
-      
+      public int CurrentRoundNumber = 0;
+      private long _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
       private Configuration _configuration;
 
       //  Constructor  ---------------------------------
@@ -40,12 +84,12 @@ namespace Beamable.Samples.TBF.Data
       //  Other Methods  -------------------------------
       public void EvaluateGameMoveEventsThisRound()
       {
-         long roundWinnerPlayerDbid = TBFConstants.UnsetValue;
+         _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
 
          //One player game
          if (GameMoveEventsThisRoundByPlayerDbid.Count == 1)
          {
-            roundWinnerPlayerDbid = GameMoveEventsThisRoundByPlayerDbid.First().Key;
+            _currentRoundWinnerPlayerDbid = GameMoveEventsThisRoundByPlayerDbid.First().Key;
          }
          //Two player game
          else if (GameMoveEventsThisRoundByPlayerDbid.Count == 2)
@@ -63,21 +107,21 @@ namespace Beamable.Samples.TBF.Data
                if (gameMoveEvent01.GameMoveType == GameMoveType.High ||
                   gameMoveEvent02.GameMoveType == GameMoveType.Medium)
                {
-                  roundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
+                  _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
                }
                else if (gameMoveEvent01.GameMoveType == GameMoveType.Medium ||
                         gameMoveEvent02.GameMoveType == GameMoveType.Low)
                {
-                  roundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
+                  _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
                }
                else if (gameMoveEvent01.GameMoveType == GameMoveType.Low ||
                         gameMoveEvent02.GameMoveType == GameMoveType.High)
                {
-                  roundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
+                  _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
                }
                else
                {
-                  roundWinnerPlayerDbid = gameMoveEvent02.PlayerDbid;
+                  _currentRoundWinnerPlayerDbid = gameMoveEvent02.PlayerDbid;
                }
             }
          }
@@ -86,49 +130,12 @@ namespace Beamable.Samples.TBF.Data
             throw new Exception("Bad game state");
          }
 
-         if (!RoundsWonByPlayerDbid.ContainsKey(roundWinnerPlayerDbid))
+         if (!RoundsWonByPlayerDbid.ContainsKey(_currentRoundWinnerPlayerDbid))
          {
-            RoundsWonByPlayerDbid.Add(roundWinnerPlayerDbid, 0);
+            RoundsWonByPlayerDbid.Add(_currentRoundWinnerPlayerDbid, 0);
          }
-         RoundsWonByPlayerDbid[roundWinnerPlayerDbid]++;
+         RoundsWonByPlayerDbid[_currentRoundWinnerPlayerDbid]++;
       }
 
-      public bool GameHasWinnerPlayerDbid()
-      {
-         if (GameRoundCurrent == _configuration.GameRoundsTotal)
-         {
-            return true;
-         }
-         else
-         {
-            return false;
-         }
-      }
-
-      public long GetGameWinnerPlayerDbid()
-      {
-         int roundsWon01 = RoundsWonByPlayerDbid.Values.First();
-         int roundsWon02 = RoundsWonByPlayerDbid.Values.Last();
-
-         if (TBFConstants.IsDebugLogging)
-         {
-            Debug.Log($"GetGameWinnerPlayerDbid() Player1:{roundsWon01} Player2:{roundsWon02}.");
-         }
-
-         if (roundsWon01 > roundsWon02)
-         {
-            return RoundsWonByPlayerDbid.Keys.First();
-         }
-         else
-         {
-            return RoundsWonByPlayerDbid.Keys.Last();
-         }
-      }
-
-      public long GetRoundWinnerPlayerDbid()
-      {
-         //TODO: evaluate
-         return RoundsWonByPlayerDbid.Keys.First(); 
-      }
    }
 }

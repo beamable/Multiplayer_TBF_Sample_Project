@@ -13,6 +13,7 @@ namespace Beamable.Samples.TBF.Audio
       public const string Click04 = "Click04";
       public const string Click05 = "Click05";
       public const string EnemyCry01 = "EnemyCry01";
+      public const string Coin01 = "Coin01";
       public const string Music01 = "Music01";
       public const string Music02 = "Music02";
       public const string Music02Exit = "Music02Exit";
@@ -28,7 +29,7 @@ namespace Beamable.Samples.TBF.Audio
       public const string Attack_01 = "Swing01";
       public const string Attack_02 = "Swing02";
       public const string Attack_03 = "Click03";
-      public const string HealthBarDecrement = "Coin01";
+      public const string HealthBarDecrement = EnemyCry01; //Use old sound for new situation
 
    }
 }

@@ -153,7 +153,7 @@ namespace Beamable.Samples.TBF
                   //  Reset the game-specific data
                   //  
                   // **************************************
-                  _gameSceneManager.GameProgressData.GameRoundCurrent = 0;
+                  _gameSceneManager.GameProgressData.CurrentRoundNumber = 0;
                   break;
 
                case GameState.GameStarted:
@@ -182,7 +182,7 @@ namespace Beamable.Samples.TBF
                   //  Advance the state. 
                   //  This happens before EACH round during a game
                   // **************************************
-                  _gameSceneManager.GameProgressData.GameRoundCurrent++;
+                  _gameSceneManager.GameProgressData.CurrentRoundNumber++;
                   _gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.Clear();
                   await SetGameState(GameState.RoundStarted);
                   break;
@@ -209,7 +209,7 @@ namespace Beamable.Samples.TBF
                   //  
                   // **************************************
                   _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayerMoving,
-                      _gameSceneManager.GameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
+                      _gameSceneManager.GameProgressData.CurrentRoundNumber), BufferedTextMode.Queue);
 
                   break;
 
@@ -245,7 +245,7 @@ namespace Beamable.Samples.TBF
 
                   // All players have moved
                   _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayersAllMoved,
-                     _gameSceneManager.GameProgressData.GameRoundCurrent), BufferedTextMode.Queue);
+                     _gameSceneManager.GameProgressData.CurrentRoundNumber), BufferedTextMode.Queue);
 
                   if (_gameSceneManager.GameProgressData.GameMoveEventsThisRoundByPlayerDbid.Count ==
                      _gameSceneManager.MultiplayerSession.TargetPlayerCount)
@@ -277,10 +277,10 @@ namespace Beamable.Samples.TBF
                   //  
                   // **************************************
 
-                  long roundWinnerDbid = _gameSceneManager.GameProgressData.GetRoundWinnerPlayerDbid();
+                  long currentRoundWinnerPlayerDbid = _gameSceneManager.GameProgressData.CurrentRoundWinnerPlayerDbid;
                   string roundWinnerName;
 
-                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(roundWinnerDbid))
+                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(currentRoundWinnerPlayerDbid))
                   {
                      roundWinnerName = GetPlayerName(TBFConstants.PlayerIndexLocal);
                   }
@@ -290,7 +290,7 @@ namespace Beamable.Samples.TBF
                   }
 
                   _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Evaluated,
-                     _gameSceneManager.GameProgressData.GameRoundCurrent, roundWinnerName), BufferedTextMode.Queue);
+                     _gameSceneManager.GameProgressData.CurrentRoundNumber, roundWinnerName), BufferedTextMode.Queue);
 
                   while (_gameSceneManager.GameUIView.BufferedText.HasRemainingQueueText)
                   {
@@ -298,21 +298,21 @@ namespace Beamable.Samples.TBF
                      await Await.NextUpdate();
                   }
 
-                  SoundManager.Instance.PlayAudioClip(SoundConstants.HealthBarDecrement);
+                  
 
-                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(roundWinnerDbid))
+                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(currentRoundWinnerPlayerDbid))
                   {
-                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health -= 34;
+                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Value -= 34;
                   }
                   else
                   {
-                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health -= 34;
+                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Value -= 34;
                   }
 
                   //Wait for animations to finish
                   await AsyncUtility.TaskDelaySeconds(_gameSceneManager.Configuration.DelayGameBeforeGameOver);
 
-                  if (_gameSceneManager.GameProgressData.GameHasWinnerPlayerDbid())
+                  if (_gameSceneManager.GameProgressData.GameHasWinnerPlayerDbid)
                   {
                      await SetGameState(GameState.GameEnding);
                   }
@@ -330,10 +330,9 @@ namespace Beamable.Samples.TBF
                   //  
                   // **************************************
 
-                  long gameWinnerDbid = _gameSceneManager.GameProgressData.GetGameWinnerPlayerDbid();
+                  long gameWinnerDbid = _gameSceneManager.GameProgressData.GameWinnerPlayerDbid;
+
                   string gameWinnerName;
-
-
                   if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(gameWinnerDbid))
                   {
                      gameWinnerName = GetPlayerName(TBFConstants.PlayerIndexLocal);
@@ -354,7 +353,7 @@ namespace Beamable.Samples.TBF
                   }
 
                   _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_Ending,
-                    _gameSceneManager.GameProgressData.GameRoundCurrent, gameWinnerName), BufferedTextMode.Queue);
+                    _gameSceneManager.GameProgressData.CurrentRoundNumber, gameWinnerName), BufferedTextMode.Queue);
 
                   break;
 
@@ -369,7 +368,7 @@ namespace Beamable.Samples.TBF
       {
          string playerName = GetPlayerName(playerIndex);
          _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayerMoved,
-         _gameSceneManager.GameProgressData.GameRoundCurrent, playerName, gameMoveType), BufferedTextMode.Queue);
+         _gameSceneManager.GameProgressData.CurrentRoundNumber, playerName, gameMoveType), BufferedTextMode.Queue);
 
          AvatarView avatarView = _gameSceneManager.GameUIView.AvatarViews[playerIndex];
          avatarView.PlayAnimationByGameMoveType(gameMoveType);

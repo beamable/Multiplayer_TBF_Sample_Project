@@ -27,10 +27,12 @@ namespace Beamable.Examples.Features.Multiplayer
    [Serializable]
    public class MyMatchmakingResult
    {
+      //  Properties  -------------------------------------
       public bool IsComplete { get { return !string.IsNullOrEmpty(RoomId); } }
       public long LocalPlayerDbid { get { return _localPlayerDbid; } }
       public int TargetPlayerCount { get { return _targetPlayerCount; } }
-      //
+
+      //  Fields  -----------------------------------------
       public string RoomId;
       public int TicksRemaining;
       public List<long> Players = new List<long>();
@@ -41,12 +43,15 @@ namespace Beamable.Examples.Features.Multiplayer
       private long _localPlayerDbid;
       private int _targetPlayerCount;
 
+
       public MyMatchmakingResult(long localPlayerDbid, int targetPlayerCount)
       {
          _localPlayerDbid = localPlayerDbid;
          _targetPlayerCount = targetPlayerCount;
       }
 
+
+      //  Other Methods  ----------------------------------
       public override string ToString()
       {
          return $"[MyMatchmakingResult (" +

@@ -56,13 +56,19 @@ namespace Beamable.Samples.TBF
          _gameUIView.MoveButton_02.onClick.AddListener(MoveButton_02_OnClicked);
          _gameUIView.MoveButton_03.onClick.AddListener(MoveButton_03_OnClicked);
 
-         _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Health = 100;
-         _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health = 100;
+         foreach (AvatarUIView avatarUIView in _gameUIView.AvatarUIViews)
+         {
+            avatarUIView.HealthBarView.OnValueChanged += HealthBarView_OnValueChanged;
+         }
+
+         _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Value = 100;
+         _gameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Value = 100;
 
          //
          _gameStateHandler = new GameStateHandler(this);
          SetupBeamable();
       }
+
 
 
       protected void Update()
@@ -159,6 +165,15 @@ namespace Beamable.Samples.TBF
       }
 
       //  Event Handlers -------------------------------
+      private void HealthBarView_OnValueChanged(int oldValue, int newValue)
+      {
+         if (newValue < oldValue)
+         {
+            // Play "damage" sound
+            SoundManager.Instance.PlayAudioClip(SoundConstants.HealthBarDecrement);
+         }
+      }
+
       private void BackButton_OnClicked()
       {
          //Change scenes
