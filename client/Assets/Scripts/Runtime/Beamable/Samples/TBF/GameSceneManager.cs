@@ -136,6 +136,15 @@ namespace Beamable.Samples.TBF
          _gameUIView.BufferedText.SetText(message, statusTextMode);
       }
 
+      /// <summary>
+      /// Render UI text
+      /// </summary>
+      /// <param name="message"></param>
+      public void SetRoundText(int roundNumber)
+      {
+         _gameUIView.RoundText.text = string.Format(TBFConstants.RoundText, roundNumber, _configuration.GameRoundsTotal);
+      }
+
 
       private void BindPlayerDbidToEvents(long playerDbid, bool isBinding)
       {

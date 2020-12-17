@@ -1,5 +1,5 @@
-﻿
-using Beamable.Samples.TBF.Multiplayer;
+﻿using Beamable.Samples.TBF.Multiplayer;
+using System;
 using static Beamable.Samples.TBF.Multiplayer.RemotePlayerAI;
 
 namespace Beamable.Samples.TBF
@@ -37,17 +37,19 @@ namespace Beamable.Samples.TBF
       /// </summary>
       public const int PlayerIndexRemote = 1;
 
+      // Round
+      public static string RoundText = "<b>Round</b><br><size=20>{0} of {1}</size>";
+
+      // Status
       public const string StatusText_GameState_Loading = "Beamable Loading ...";
       public const string StatusText_GameState_Loaded = "Beamable Loaded ...";
-      //
       public const string StatusText_GameState_Initializing = "Beamable Initializing ...";
       public const string StatusText_GameState_Initialized = "Beamable Initialized ...";
-      //
       public const string StatusText_GameState_Connecting = "Connecting. Players <b>{0}</b>/<b>{1}</b> ...";
       public const string StatusText_Multiplayer_OnDisconnect = "Disconnecting. Players <b>{0}</b>/<b>{1}</b> ...";
-      public const string StatusText_GameState_PlayerMoving = "Round <b>{0}</b>. Waiting For Moves ...";
-      public const string StatusText_GameState_PlayerMoved = "Round <b>{0}</b>. <b>{1}</b> Player Moves <b>{2}</b> ...";
-      public const string StatusText_GameState_PlayersAllMoved = "Round <b>{0}</b>. All Moves Complete ...";
+      public const string StatusText_GameState_PlayerMoving = "Waiting For Moves ...";
+      public const string StatusText_GameState_PlayerMoved = "<b>{0}</b> Player Moves <b>{1}</b> ...";
+      public const string StatusText_GameState_PlayersAllMoved = "All Moves Complete ...";
       public const string StatusText_GameState_EvaluatedWinner = "Round <b>{0}</b> Over. Round Winner <b>{1}</b> Player ...";
       public const string StatusText_GameState_EvaluatedTie = "Round <b>{0}</b> Over. <b>Tie!</b> Repeat Round {0}...";
       public const string StatusText_GameState_Ending = "Round <b>{0}</b> Over. Game Over. Game Winner <b>{1}</b> ...";
@@ -62,6 +64,7 @@ namespace Beamable.Samples.TBF
       public static string StatusText_Joining = "Player {0}/{1} joined. Waiting ...";
       public static string StatusText_Joined = "Player {0}/{1} joined. Ready!";
 
-      
+
+
    }
 }

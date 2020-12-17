@@ -3,6 +3,7 @@ using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Exceptions;
 using Beamable.Samples.TBF.UI;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,7 @@ namespace Beamable.Samples.TBF.Views
       public CanvasGroup MoveButtonsCanvasGroup { get { return _moveButtonsCanvasGroup; } }
 
       public TMP_BufferedText BufferedText { get { return _bufferedText; } }
+      public TMP_Text RoundText { get { return _roundText; } }
 
       //  Fields ---------------------------------------
       [SerializeField]
@@ -32,6 +34,9 @@ namespace Beamable.Samples.TBF.Views
 
       [SerializeField]
       private TMP_BufferedText _bufferedText = null;
+
+      [SerializeField]
+      private TMP_Text _roundText = null;
 
       [SerializeField]
       private Button _backButton = null;

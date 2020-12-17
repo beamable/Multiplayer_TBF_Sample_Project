@@ -94,6 +94,7 @@ namespace Beamable.Samples.TBF
                   // **************************************
 
                   _gameSceneManager.SetStatusText("", BufferedTextMode.Immediate);
+                  _gameSceneManager.SetRoundText(1);
 
                   _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexLocal].PlayAnimationIdle();
                   _gameSceneManager.GameUIView.AvatarViews[TBFConstants.PlayerIndexRemote].PlayAnimationIdle();
@@ -185,7 +186,9 @@ namespace Beamable.Samples.TBF
                   //  This happens before EACH round during a game
                   // **************************************
                   _gameSceneManager.GameProgressData.StartNextRound();
-                  
+
+                  _gameSceneManager.SetRoundText(_gameSceneManager.GameProgressData.CurrentRoundNumber);
+
                   await SetGameState(GameState.RoundStarted);
                   break;
 
@@ -210,8 +213,8 @@ namespace Beamable.Samples.TBF
                   //  Update UI
                   //  
                   // **************************************
-                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayerMoving,
-                      _gameSceneManager.GameProgressData.CurrentRoundNumber), BufferedTextMode.Queue);
+                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayerMoving), 
+                     BufferedTextMode.Queue);
 
                   break;
 
@@ -286,8 +289,8 @@ namespace Beamable.Samples.TBF
                   await RenderPlayerMove(TBFConstants.PlayerIndexRemote, remoteGameMoveType);
 
                   // All players have moved
-                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayersAllMoved,
-                     _gameSceneManager.GameProgressData.CurrentRoundNumber), BufferedTextMode.Queue);
+                  _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayersAllMoved), 
+                     BufferedTextMode.Queue);
 
                   if (_gameSceneManager.RemotePlayerAI.IsEnabled)
                   {
@@ -455,7 +458,7 @@ namespace Beamable.Samples.TBF
       {
          string playerName = GetPlayerName(playerIndex);
          _gameSceneManager.SetStatusText(string.Format(TBFConstants.StatusText_GameState_PlayerMoved,
-         _gameSceneManager.GameProgressData.CurrentRoundNumber, playerName, gameMoveType), BufferedTextMode.Queue);
+            playerName, gameMoveType), BufferedTextMode.Queue);
 
          AvatarView avatarView = _gameSceneManager.GameUIView.AvatarViews[playerIndex];
          avatarView.PlayAnimationByGameMoveType(gameMoveType);
