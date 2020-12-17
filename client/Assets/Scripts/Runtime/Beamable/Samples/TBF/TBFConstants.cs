@@ -36,7 +36,7 @@ namespace Beamable.Samples.TBF
       //
       public const string StatusText_GameState_Connecting = "Connecting. Players <b>{0}</b>/<b>{1}</b> ...";
       public const string StatusText_Multiplayer_OnDisconnect = "Disconnecting. Players <b>{0}</b>/<b>{1}</b> ...";
-      public const string StatusText_GameState_PlayerMoving = "Round <b>{0}</b>. Waiting for moves...";
+      public const string StatusText_GameState_PlayerMoving = "Round <b>{0}</b>. Waiting for moves ...";
       public const string StatusText_GameState_PlayerMoved = "Round <b>{0}</b>. Player <b>{1}</b> moves <b>{2}</b> ...";
       public const string StatusText_GameState_PlayersAllMoved = "Round <b>{0}</b>. All moves complete ...";
       public const string StatusText_GameState_Evaluated = "Round <b>{0}</b> over. Round winner <b>{1}</b> ...";
@@ -49,7 +49,7 @@ namespace Beamable.Samples.TBF
       public static string Avatar_Death = "Death"; //end here
 
       //Lobby
-      public static string StatusText_Joining = "Player {0}/{1} joined. Waiting...";
-      public static string StatusText_Joined = "Player {0}/{1} joined. Ready.";
+      public static string StatusText_Joining = "Player {0}/{1} joined. Waiting ...";
+      public static string StatusText_Joined = "Player {0}/{1} joined. Ready!";
    }
 }

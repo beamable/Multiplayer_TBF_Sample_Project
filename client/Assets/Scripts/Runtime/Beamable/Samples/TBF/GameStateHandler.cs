@@ -298,6 +298,8 @@ namespace Beamable.Samples.TBF
                      await Await.NextUpdate();
                   }
 
+                  SoundManager.Instance.PlayAudioClip(SoundConstants.HealthBarDecrement);
+
                   if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(roundWinnerDbid))
                   {
                      _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Health -= 34;
