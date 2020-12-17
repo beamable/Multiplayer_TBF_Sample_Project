@@ -137,7 +137,6 @@ namespace Beamable.Samples.TBF.Data
             Debug.Log($"EvaluateGameMoveEventsThisRound() Player1 {gameMoveEvent01.GameMoveType}, Player2 {gameMoveEvent02.GameMoveType}.");
          }
 
-
          if (gameMoveEvent01.GameMoveType == gameMoveEvent02.GameMoveType)
          {
             //RESULT: Tie

@@ -1,4 +1,5 @@
 ﻿using Beamable.Samples.TBF.Exceptions;
+using Beamable.Samples.TBF.Multiplayer.Events;
 using System;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Beamable.Samples.TBF.Multiplayer
       //  Properties -----------------------------------
       public bool IsEnabled { get { return _isEnabled; } }
 
-      public const long RemotePlayerDbid = -999999999; //conspicous fake dbid for production usage
+      public readonly long RemotePlayerDbid = -999999999; //conspicous, fake dbid for production usage
 
       //  Fields ---------------------------------------
       private bool _isEnabled = false;
@@ -38,11 +39,57 @@ namespace Beamable.Samples.TBF.Multiplayer
          _isEnabled = isEnabled;
       }
 
-      /// <summary>
-      /// Get a random next move for the AI bot player
-      /// </summary>
-      /// <returns></returns>
-      public GameMoveType GetNextGameMoveType()
+
+      public GameMoveEvent GetNextRemoteGameMoveEvent(GameMoveType localGameMoveType)
+      {
+         GameMoveType remotePlayerAIGameMoveType = GetNextRemoteGameMoveType(localGameMoveType);
+         GameMoveEvent remotePlayerAIGameMoveEvent = new GameMoveEvent(remotePlayerAIGameMoveType);
+         ((IHiddenTBFEvent)remotePlayerAIGameMoveEvent).SetPlayerDbid(RemotePlayerDbid);
+         
+         return remotePlayerAIGameMoveEvent;
+      }
+
+
+      private GameMoveType GetNextRemoteGameMoveType(GameMoveType localGameMoveType)
+      {
+
+         GameMoveType gameMoveType = GameMoveType.Null;
+
+         //The AI has optional debug modes for testing 
+         switch (TBFConstants.AIMode)
+         {
+            case RemotePlayerAI.AIMode.Production:
+
+               //Typical, for production usage
+               gameMoveType = GetRandomRemoteGameMoveType();
+               break;
+
+            case RemotePlayerAI.AIMode.DebugAlwaysTie:
+
+               gameMoveType = localGameMoveType;
+
+               DebugLog($"[Debug] RemotePlayerAIDebugMode={TBFConstants.AIMode}");
+               break;
+
+            case RemotePlayerAI.AIMode.DebugNeverTie:
+
+               do
+               {
+                  gameMoveType = GetRandomRemoteGameMoveType();
+               } while (gameMoveType == localGameMoveType);
+
+               DebugLog($"[Debug] RemotePlayerAIDebugMode={TBFConstants.AIMode}");
+               break;
+
+            default:
+               SwitchDefaultException.Throw(TBFConstants.AIMode);
+               break;
+         }
+
+         return gameMoveType;
+      }
+
+      private GameMoveType GetRandomRemoteGameMoveType()
       {
          GameMoveType gameMoveType = GameMoveType.Null;
 
