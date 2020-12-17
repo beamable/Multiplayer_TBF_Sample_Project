@@ -18,6 +18,9 @@ namespace Beamable.Samples.Core
 			}
 		}
 
+		/// <summary>
+		/// Reference to the runtime instance of the singleton class of type <see cref="T"/>.
+		/// </summary>
 		public static T Instance
 		{
 			get
@@ -40,6 +43,11 @@ namespace Beamable.Samples.Core
 		public static OnInstantiateCompletedDelegate OnInstantiateCompleted;
 
 		//  Instantiation ------------------------------------------
+
+		/// <summary>
+		/// Create and/or return the instance.
+		/// </summary>
+		/// <returns></returns>
 
 		public static T Instantiate()
 		{
@@ -75,6 +83,9 @@ namespace Beamable.Samples.Core
 			Instantiate();
 		}
 
+		/// <summary>
+		/// Destroy the <see cref="SingletonMonobehavior{T}"/>
+		/// </summary>
 		public static void Destroy()
 		{
 			if (IsInstantiated)

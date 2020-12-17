@@ -43,6 +43,11 @@ namespace Beamable.Samples.TBF.Audio
 			Debug.Log(stringBuilder.ToString());
 		}
 
+		/// <summary>
+		/// Play the audio
+		/// </summary>
+		/// <param name="audioClipName"></param>
+		/// <param name="pitch"></param>
 		public void PlayAudioClip(string audioClipName, float pitch)
 		{
 			foreach (AudioClip audioClip in _audioClips)
@@ -55,6 +60,12 @@ namespace Beamable.Samples.TBF.Audio
 			}
 		}
 
+		/// <summary>
+		/// Play the audio
+		/// </summary>
+		/// <param name="audioClipName"></param>
+		/// <param name="delay"></param>
+		/// <param name="pitch"></param>
 		public void PlayAudioClipDelayed(string audioClipName, float delay, float pitch)
 		{
 			foreach (AudioClip audioClip in _audioClips)
@@ -67,6 +78,11 @@ namespace Beamable.Samples.TBF.Audio
 			}
 		}
 
+		/// <summary>
+		/// Play the audio
+		/// </summary>
+		/// <param name="audioClipName"></param>
+		/// <param name="delay"></param>
 		public void PlayAudioClipDelayed(string audioClipName, float delay)
 		{
 			foreach (AudioClip audioClip in _audioClips)

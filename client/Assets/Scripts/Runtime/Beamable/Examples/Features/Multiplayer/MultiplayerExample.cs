@@ -5,7 +5,8 @@ using UnityEngine;
 namespace Beamable.Examples.Features.Multiplayer
 {
    /// <summary>
-   /// Custom move
+   /// Custom move. Typically a move is some user input gesture
+   /// translated into a Multiplayer event object.
    /// </summary>
    public class MyPlayerMoveEvent
    {

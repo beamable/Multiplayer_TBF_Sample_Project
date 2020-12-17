@@ -6,6 +6,10 @@ namespace Beamable.Samples.TBF.Multiplayer.Events
    //Used to hide some API from common use cases
    public interface IHiddenTBFEvent
    {
+      /// <summary>
+      /// This is set to pack-in WHO SENT the event object.
+      /// </summary>
+      /// <param name="playerDbid"></param>
       void SetPlayerDbid(long playerDbid);
    }
 

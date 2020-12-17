@@ -82,6 +82,10 @@ namespace Beamable.Examples.Features.Multiplayer
          _myMatchmakingResult = new MyMatchmakingResult(LocalPlayerDbid, _simGameType.numberOfPlayers);
       }
 
+      /// <summary>
+      /// Start the matchmaking process
+      /// </summary>
+      /// <returns></returns>
       public async Task<MyMatchmakingResult> Start()
       {
          _myMatchmakingResult.IsInProgress = true;
@@ -138,6 +142,10 @@ namespace Beamable.Examples.Features.Multiplayer
          return _myMatchmakingResult;
       }
 
+      /// <summary>
+      /// Stop the matchmaking process
+      /// </summary>
+      /// <returns></returns>
       public void Stop()
       {
          //Next tick this will properly dispatch

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Beamable.Samples.TBF.Multiplayer
 {
    /// <summary>
-   /// 
+   /// This is the AI for the bot if bot mode is enabled (optional).
    /// </summary>
    [Serializable]
    public class RemotePlayerAI
@@ -29,6 +29,10 @@ namespace Beamable.Samples.TBF.Multiplayer
          _isEnabled = isEnabled;
       }
 
+      /// <summary>
+      /// Get a random next move for the AI bot player
+      /// </summary>
+      /// <returns></returns>
       public GameMoveType GetNextGameMoveType()
       {
          GameMoveType gameMoveType = GameMoveType.Null;

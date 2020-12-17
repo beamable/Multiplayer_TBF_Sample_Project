@@ -9,7 +9,15 @@ namespace Beamable.Samples.Core
    /// </summary>
    public static class AsyncUtility 
    {
+      /// <summary>
+      /// Used for tiny delays
+      /// </summary>
       public static float TaskDelayMinimumSeconds = 0.025f;
+
+      /// <summary>
+      /// The <see cref="Configuration"/> class uses delays in seconds.
+      /// Some API's require delays in milliseconds. This multiplier is used.
+      /// </summary>
       public static int MillisecondMultiplier = 1000;
 
       /// <summary>

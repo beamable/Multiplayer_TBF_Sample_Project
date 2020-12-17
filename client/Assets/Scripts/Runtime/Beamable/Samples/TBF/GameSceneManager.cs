@@ -120,7 +120,11 @@ namespace Beamable.Samples.TBF
          });
       }
 
-
+      /// <summary>
+      /// Render UI text
+      /// </summary>
+      /// <param name="message"></param>
+      /// <param name="statusTextMode"></param>
       public void SetStatusText(string message, BufferedTextMode statusTextMode)
       {
          _gameUIView.BufferedText.SetText(message, statusTextMode);

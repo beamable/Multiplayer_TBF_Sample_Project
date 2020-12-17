@@ -13,13 +13,7 @@ namespace Beamable.Samples.TBF.Views
    public class IntroUIView : MonoBehaviour
    {
       //  Properties -----------------------------------
-      public string AboutBodyText
-      {
-         set
-         {
-            _aboutBodyText.text = value;
-         }
-      }
+      public string AboutBodyText { set { _aboutBodyText.text = value; } }
 
       public Button StartGameOnePlayerButton { get { return _startGameOnePlayerButton; } }
       public Button StartGameTwoPlayerButton { get { return _startGameTwoPlayerButton; } }
