@@ -1,6 +1,4 @@
-﻿using Beamable.Samples.TBF.Multiplayer;
-using System;
-using static Beamable.Samples.TBF.Multiplayer.RemotePlayerAI;
+﻿using static Beamable.Samples.TBF.Multiplayer.RemotePlayerAI;
 
 namespace Beamable.Samples.TBF
 {
@@ -20,7 +18,7 @@ namespace Beamable.Samples.TBF
       /// <summary>
       /// Toggle various modes for AI testing
       /// </summary>
-      public static DebugModeRemotePlayerAI RemotePlayerAIDebugMode = DebugModeRemotePlayerAI.AlwaysTie;
+      public static AIMode AIMode = AIMode.Production;
 
       /// <summary>
       /// Used as a 'null' value.

@@ -132,6 +132,12 @@ namespace Beamable.Samples.TBF.Data
          GameMoveEvent gameMoveEvent01 = _currentRoundGameMoveEventsByPlayerDbid.Values.First();
          GameMoveEvent gameMoveEvent02 = _currentRoundGameMoveEventsByPlayerDbid.Values.Last();
 
+         if (TBFConstants.IsDebugLogging)
+         {
+            Debug.Log($"EvaluateGameMoveEventsThisRound() Player1 {gameMoveEvent01.GameMoveType}, Player2 {gameMoveEvent02.GameMoveType}.");
+         }
+
+
          if (gameMoveEvent01.GameMoveType == gameMoveEvent02.GameMoveType)
          {
             //RESULT: Tie
@@ -143,14 +149,20 @@ namespace Beamable.Samples.TBF.Data
             _currentRoundResult = RoundResult.Winner;
 
             //RESULT: Winner #1
-            if (gameMoveEvent01.GameMoveType == GameMoveType.High ||
+            if (gameMoveEvent01.GameMoveType == GameMoveType.High &&
                gameMoveEvent02.GameMoveType == GameMoveType.Medium)
             {
                _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
             }
             //RESULT: Winner #1
-            else if (gameMoveEvent01.GameMoveType == GameMoveType.Medium ||
+            else if (gameMoveEvent01.GameMoveType == GameMoveType.Medium &&
                      gameMoveEvent02.GameMoveType == GameMoveType.Low)
+            {
+               _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
+            }
+            //RESULT: Winner #1
+            else if (gameMoveEvent01.GameMoveType == GameMoveType.Low &&
+                     gameMoveEvent02.GameMoveType == GameMoveType.High)
             {
                _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
             }

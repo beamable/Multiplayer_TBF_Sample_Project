@@ -10,11 +10,11 @@ namespace Beamable.Samples.TBF.Multiplayer
    [Serializable]
    public class RemotePlayerAI
    {
-      public enum DebugModeRemotePlayerAI
+      public enum AIMode
       {
-         Off,        //for production
-         AlwaysTie,  // testing
-         NeverTie    // testing
+         Production,      // For production
+         DebugAlwaysTie,  // For testing
+         DebugNeverTie    // For testing
       }
 
       //  Properties -----------------------------------
@@ -47,7 +47,7 @@ namespace Beamable.Samples.TBF.Multiplayer
          GameMoveType gameMoveType = GameMoveType.Null;
 
          // Values of 1/2/3
-         int index = _random.Next(1, 3);
+         int index = _random.Next(1, 4);
 
          switch (index)
          {

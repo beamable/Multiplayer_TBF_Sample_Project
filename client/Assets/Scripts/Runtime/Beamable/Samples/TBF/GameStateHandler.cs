@@ -239,31 +239,31 @@ namespace Beamable.Samples.TBF
                      GameMoveType remotePlayerAIGameMoveType = GameMoveType.Null;
 
                      //The AI has optional debug modes for testing 
-                     switch (TBFConstants.RemotePlayerAIDebugMode)
+                     switch (TBFConstants.AIMode)
                      {
-                        case RemotePlayerAI.DebugModeRemotePlayerAI.Off:
+                        case RemotePlayerAI.AIMode.Production:
 
                            //Typical, for production usage
                            remotePlayerAIGameMoveType = _gameSceneManager.RemotePlayerAI.GetNextGameMoveType();
                            break;
 
-                        case RemotePlayerAI.DebugModeRemotePlayerAI.AlwaysTie:
+                        case RemotePlayerAI.AIMode.DebugAlwaysTie:
 
                            remotePlayerAIGameMoveType = localGameMoveType;
-                           DebugLog($"[Debug] RemotePlayerAIDebugMode={TBFConstants.RemotePlayerAIDebugMode}");
+                           DebugLog($"[Debug] RemotePlayerAIDebugMode={TBFConstants.AIMode}");
                            break;
 
-                        case RemotePlayerAI.DebugModeRemotePlayerAI.NeverTie:
+                        case RemotePlayerAI.AIMode.DebugNeverTie:
 
                            do
                            {
                               remotePlayerAIGameMoveType = _gameSceneManager.RemotePlayerAI.GetNextGameMoveType();
                            } while (remotePlayerAIGameMoveType == localGameMoveType);
-                           DebugLog($"[Debug] RemotePlayerAIDebugMode={TBFConstants.RemotePlayerAIDebugMode}");
+                           DebugLog($"[Debug] RemotePlayerAIDebugMode={TBFConstants.AIMode}");
                            break;
 
                         default:
-                           SwitchDefaultException.Throw(TBFConstants.RemotePlayerAIDebugMode);
+                           SwitchDefaultException.Throw(TBFConstants.AIMode);
                            break;
                      }
            
@@ -330,7 +330,6 @@ namespace Beamable.Samples.TBF
                   // **************************************
                   RoundResult currentRoundResult = _gameSceneManager.GameProgressData.CurrentRoundResult;
 
-                  Debug.Log("currentRoundResult: " + currentRoundResult);
                   switch (currentRoundResult)
                   {
                      case RoundResult.Tie:
@@ -381,14 +380,9 @@ namespace Beamable.Samples.TBF
                      await Await.NextUpdate();
                   }
 
-                  if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(currentRoundWinnerPlayerDbid))
-                  {
-                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Value -= 34;
-                  }
-                  else
-                  {
-                     _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Value -= 34;
-                  }
+                  // Ex. Do 34 damage for each round of 3 rounds so that 3 hits = total death
+                  int deltaHealth = -(1 + HealthBarView.MaxValue / _gameSceneManager.Configuration.GameRoundsTotal);
+                  UpdateHealth(currentRoundWinnerPlayerDbid, deltaHealth);
 
                   //Wait for animations to finish
                   await AsyncUtility.TaskDelaySeconds(_gameSceneManager.Configuration.DelayGameBeforeGameOver);
@@ -397,13 +391,9 @@ namespace Beamable.Samples.TBF
 
                case GameState.GameEvaluating:
                   // **************************************
-                  //  
+                  //  Advance the state 
                   //  
                   // **************************************
-
-                  //Wait for animations to finish
-                  await AsyncUtility.TaskDelaySeconds(_gameSceneManager.Configuration.DelayGameBeforeGameOver);
-
                   if (_gameSceneManager.GameProgressData.GameHasWinnerPlayerDbid)
                   {
                      await SetGameState(GameState.GameEnding);
@@ -416,11 +406,15 @@ namespace Beamable.Samples.TBF
                   break;
                case GameState.GameEnding:
                   // **************************************
-                  //  
-                  //  
+                  //  Render loss (animation and sound)
+                  //  Game stays here. 
+                  //  User must click "Back" buton
                   // **************************************
 
+                  // if the game loser does not have 0 health, move to 0 health
                   long gameWinnerDbid = _gameSceneManager.GameProgressData.GameWinnerPlayerDbid;
+                  UpdateHealth(gameWinnerDbid, -HealthBarView.MaxValue);
+                  
 
                   string gameWinnerName;
                   if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(gameWinnerDbid))
@@ -452,6 +446,23 @@ namespace Beamable.Samples.TBF
                   break;
             }
          }, new System.Diagnostics.StackTrace(true));
+      }
+
+      /// <summary>
+      /// Decrements the LOSERS health
+      /// </summary>
+      /// <param name="currentRoundWinnerPlayerDbid"></param>
+      /// <param name="deltaHealth"></param>
+      private void UpdateHealth(long currentRoundWinnerPlayerDbid, int deltaHealth)
+      {
+         if (_gameSceneManager.MultiplayerSession.IsLocalPlayerDbid(currentRoundWinnerPlayerDbid))
+         {
+            _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexRemote].HealthBarView.Value += deltaHealth;
+         }
+         else
+         {
+            _gameSceneManager.GameUIView.AvatarUIViews[TBFConstants.PlayerIndexLocal].HealthBarView.Value += deltaHealth;
+         }
       }
 
       private async Task RenderPlayerMove(int playerIndex, GameMoveType gameMoveType)
