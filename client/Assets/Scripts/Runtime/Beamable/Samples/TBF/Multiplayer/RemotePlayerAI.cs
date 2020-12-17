@@ -10,11 +10,20 @@ namespace Beamable.Samples.TBF.Multiplayer
    [Serializable]
    public class RemotePlayerAI
    {
+      public enum DebugModeRemotePlayerAI
+      {
+         Off,        //for production
+         AlwaysTie,  // testing
+         NeverTie    // testing
+      }
+
       //  Properties -----------------------------------
       public bool IsEnabled { get { return _isEnabled; } }
 
+      public const long RemotePlayerDbid = -999999999; //conspicous fake dbid for production usage
+
       //  Fields ---------------------------------------
-      private bool _isEnabled;
+      private bool _isEnabled = false;
 
       /// <summary>
       /// A custom Random is used for deterministic results for all
@@ -37,7 +46,7 @@ namespace Beamable.Samples.TBF.Multiplayer
       {
          GameMoveType gameMoveType = GameMoveType.Null;
 
-         //Values of 1/2/3
+         // Values of 1/2/3
          int index = _random.Next(1, 3);
 
          switch (index)

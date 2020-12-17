@@ -1,4 +1,5 @@
-﻿using Beamable.Samples.TBF.Multiplayer.Events;
+﻿using Beamable.Samples.TBF.Exceptions;
+using Beamable.Samples.TBF.Multiplayer.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,17 @@ namespace Beamable.Samples.TBF.Data
    [Serializable]
    public class GameProgressData
    {
+      public enum RoundResult
+      {
+         Null,
+         Winner,
+         Tie
+      }
+
       //  Properties  --------------------------------------
+      public int CurrentRoundNumber { get { return _currentRoundNumber; } }
+      public int CurrentRoundGameMoveEventCount { get { return _currentRoundGameMoveEventsByPlayerDbid.Count; } }
+      public RoundResult CurrentRoundResult { get { return _currentRoundResult; } }
       public bool CurrentRoundHasWinnerPlayerDbid {  get { return CurrentRoundWinnerPlayerDbid != TBFConstants.UnsetValue;  } }
       public long CurrentRoundWinnerPlayerDbid {  get { return _currentRoundWinnerPlayerDbid;  } }
 
@@ -24,7 +35,7 @@ namespace Beamable.Samples.TBF.Data
       {
          get
          {
-            if (CurrentRoundNumber == _configuration.GameRoundsTotal)
+            if (_currentRoundNumber == _configuration.GameRoundsTotal)
             {
                return true;
             }
@@ -58,22 +69,21 @@ namespace Beamable.Samples.TBF.Data
          }
       }
 
+      
+
 
       //  Fields  --------------------------------------
-
-      /// <summary>
-      /// All game moves by DBID for the current ROUND.
-      /// </summary>
-      public Dictionary<long, GameMoveEvent> GameMoveEventsThisRoundByPlayerDbid = new Dictionary<long, GameMoveEvent>();
+      private Dictionary<long, GameMoveEvent> _currentRoundGameMoveEventsByPlayerDbid = new Dictionary<long, GameMoveEvent>();
 
       /// <summary>
       /// The total number of ROUNDS won in the current GAME by DBID
       /// </summary>
       public Dictionary<long, int> RoundsWonByPlayerDbid = new Dictionary<long, int>();
 
-      public int CurrentRoundNumber = 0;
+      private int _currentRoundNumber = 0;
       private long _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
       private Configuration _configuration;
+      private RoundResult _currentRoundResult = RoundResult.Null;
 
       //  Constructor  ---------------------------------
       public GameProgressData (Configuration configuration)
@@ -82,52 +92,73 @@ namespace Beamable.Samples.TBF.Data
       }
 
       //  Other Methods  -------------------------------
+      public void StartGame()
+      {
+         _currentRoundNumber = 0;
+      }
+
+      public void StartNextRound()
+      {
+         //Advance to the next round number, EXCEPT when
+         //LAST round was a TIE
+         if (_currentRoundResult != RoundResult.Tie)
+         {
+            _currentRoundNumber++;
+         }
+
+         _currentRoundResult = RoundResult.Null;
+         _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
+         _currentRoundGameMoveEventsByPlayerDbid.Clear();
+      }
+
+      public void AddCurrentRoundGameMoveEvent (GameMoveEvent gameMoveEvent)
+      {
+         if (_currentRoundGameMoveEventsByPlayerDbid.ContainsKey (gameMoveEvent.PlayerDbid))
+         {
+            throw new ArgumentException("AddGameMoveEventThisRound() This GameMoveEvent has already been added.");
+         }
+         _currentRoundGameMoveEventsByPlayerDbid[gameMoveEvent.PlayerDbid] = gameMoveEvent;
+      }
+
+      public GameMoveEvent GetCurrentRoundGameMoveEvent(long playerDbid)
+      {
+         GameMoveEvent remoteGameEvent;
+         _currentRoundGameMoveEventsByPlayerDbid.TryGetValue(playerDbid, out remoteGameEvent);
+         return remoteGameEvent;
+      }
+
       public void EvaluateGameMoveEventsThisRound()
       {
-         _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
+         GameMoveEvent gameMoveEvent01 = _currentRoundGameMoveEventsByPlayerDbid.Values.First();
+         GameMoveEvent gameMoveEvent02 = _currentRoundGameMoveEventsByPlayerDbid.Values.Last();
 
-         //One player game
-         if (GameMoveEventsThisRoundByPlayerDbid.Count == 1)
+         if (gameMoveEvent01.GameMoveType == gameMoveEvent02.GameMoveType)
          {
-            _currentRoundWinnerPlayerDbid = GameMoveEventsThisRoundByPlayerDbid.First().Key;
-         }
-         //Two player game
-         else if (GameMoveEventsThisRoundByPlayerDbid.Count == 2)
-         {
-            GameMoveEvent gameMoveEvent01 = GameMoveEventsThisRoundByPlayerDbid.Values.First();
-            GameMoveEvent gameMoveEvent02 = GameMoveEventsThisRoundByPlayerDbid.Values.Last();
-
-            if (gameMoveEvent01.GameMoveType == gameMoveEvent02.GameMoveType)
-            {
-               //Game is a tie, increment NOONE as winner
-               return;
-            }
-            else
-            {
-               if (gameMoveEvent01.GameMoveType == GameMoveType.High ||
-                  gameMoveEvent02.GameMoveType == GameMoveType.Medium)
-               {
-                  _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
-               }
-               else if (gameMoveEvent01.GameMoveType == GameMoveType.Medium ||
-                        gameMoveEvent02.GameMoveType == GameMoveType.Low)
-               {
-                  _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
-               }
-               else if (gameMoveEvent01.GameMoveType == GameMoveType.Low ||
-                        gameMoveEvent02.GameMoveType == GameMoveType.High)
-               {
-                  _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
-               }
-               else
-               {
-                  _currentRoundWinnerPlayerDbid = gameMoveEvent02.PlayerDbid;
-               }
-            }
+            //RESULT: Tie
+            _currentRoundResult = RoundResult.Tie;
+            return;
          }
          else
          {
-            throw new Exception("Bad game state");
+            _currentRoundResult = RoundResult.Winner;
+
+            //RESULT: Winner #1
+            if (gameMoveEvent01.GameMoveType == GameMoveType.High ||
+               gameMoveEvent02.GameMoveType == GameMoveType.Medium)
+            {
+               _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
+            }
+            //RESULT: Winner #1
+            else if (gameMoveEvent01.GameMoveType == GameMoveType.Medium ||
+                     gameMoveEvent02.GameMoveType == GameMoveType.Low)
+            {
+               _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
+            }
+            //RESULT: Winner #2
+            else
+            {
+               _currentRoundWinnerPlayerDbid = gameMoveEvent02.PlayerDbid;
+            }
          }
 
          if (!RoundsWonByPlayerDbid.ContainsKey(_currentRoundWinnerPlayerDbid))
@@ -136,6 +167,5 @@ namespace Beamable.Samples.TBF.Data
          }
          RoundsWonByPlayerDbid[_currentRoundWinnerPlayerDbid]++;
       }
-
    }
 }

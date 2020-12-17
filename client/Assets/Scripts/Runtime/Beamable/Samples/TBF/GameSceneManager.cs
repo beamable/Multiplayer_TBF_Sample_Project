@@ -248,8 +248,7 @@ namespace Beamable.Samples.TBF
       {
          if (_gameStateHandler.GameState == GameState.RoundPlayerMoving)
          {
-            //Add each player event to a list
-            _gameProgressData.GameMoveEventsThisRoundByPlayerDbid[gameMoveEvent.PlayerDbid] = gameMoveEvent;
+            _gameProgressData.AddCurrentRoundGameMoveEvent(gameMoveEvent);
 
             DebugLog($"gameMoveEvent.GameMoveType(): {gameMoveEvent.GameMoveType} for {gameMoveEvent.PlayerDbid}");
             await _gameStateHandler.SetGameState(GameState.RoundPlayerMoved);

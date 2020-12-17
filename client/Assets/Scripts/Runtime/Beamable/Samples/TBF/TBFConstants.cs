@@ -1,4 +1,7 @@
 ﻿
+using Beamable.Samples.TBF.Multiplayer;
+using static Beamable.Samples.TBF.Multiplayer.RemotePlayerAI;
+
 namespace Beamable.Samples.TBF
 {
    /// <summary>
@@ -6,12 +9,18 @@ namespace Beamable.Samples.TBF
    /// </summary>
    public static class TBFConstants
    {
+
       //  Fields ---------------------------------------
 
       /// <summary>
       /// Determines if using Unity debug log statements.
       /// </summary>
       public static bool IsDebugLogging = true;
+
+      /// <summary>
+      /// Toggle various modes for AI testing
+      /// </summary>
+      public static DebugModeRemotePlayerAI RemotePlayerAIDebugMode = DebugModeRemotePlayerAI.AlwaysTie;
 
       /// <summary>
       /// Used as a 'null' value.
@@ -36,11 +45,12 @@ namespace Beamable.Samples.TBF
       //
       public const string StatusText_GameState_Connecting = "Connecting. Players <b>{0}</b>/<b>{1}</b> ...";
       public const string StatusText_Multiplayer_OnDisconnect = "Disconnecting. Players <b>{0}</b>/<b>{1}</b> ...";
-      public const string StatusText_GameState_PlayerMoving = "Round <b>{0}</b>. Waiting for moves ...";
-      public const string StatusText_GameState_PlayerMoved = "Round <b>{0}</b>. Player <b>{1}</b> moves <b>{2}</b> ...";
-      public const string StatusText_GameState_PlayersAllMoved = "Round <b>{0}</b>. All moves complete ...";
-      public const string StatusText_GameState_Evaluated = "Round <b>{0}</b> over. Round winner <b>{1}</b> ...";
-      public const string StatusText_GameState_Ending = "Round <b>{0}</b> over. Game over. Game winner <b>{1}</b> ...";
+      public const string StatusText_GameState_PlayerMoving = "Round <b>{0}</b>. Waiting For Moves ...";
+      public const string StatusText_GameState_PlayerMoved = "Round <b>{0}</b>. <b>{1}</b> Player Moves <b>{2}</b> ...";
+      public const string StatusText_GameState_PlayersAllMoved = "Round <b>{0}</b>. All Moves Complete ...";
+      public const string StatusText_GameState_EvaluatedWinner = "Round <b>{0}</b> Over. Round Winner <b>{1}</b> Player ...";
+      public const string StatusText_GameState_EvaluatedTie = "Round <b>{0}</b> Over. <b>Tie!</b> Repeat Round {0}...";
+      public const string StatusText_GameState_Ending = "Round <b>{0}</b> Over. Game Over. Game Winner <b>{1}</b> ...";
       //
       public static string Avatar_Idle = "Idle"; //start here
       public static string Avatar_Attack_01 = "Attack_01";
@@ -51,5 +61,7 @@ namespace Beamable.Samples.TBF
       //Lobby
       public static string StatusText_Joining = "Player {0}/{1} joined. Waiting ...";
       public static string StatusText_Joined = "Player {0}/{1} joined. Ready!";
+
+      
    }
 }
