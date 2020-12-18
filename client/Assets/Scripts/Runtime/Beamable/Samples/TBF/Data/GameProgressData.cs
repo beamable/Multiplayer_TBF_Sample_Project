@@ -25,7 +25,6 @@ namespace Beamable.Samples.TBF.Data
 
       //  Properties  --------------------------------------
       public int CurrentRoundNumber { get { return _currentRoundNumber; } }
-      public int CurrentRoundGameMoveEventCount { get { return _currentRoundGameMoveEventsByPlayerDbid.Count; } }
       public RoundResult CurrentRoundResult { get { return _currentRoundResult; } }
       public bool CurrentRoundHasWinnerPlayerDbid {  get { return CurrentRoundWinnerPlayerDbid != TBFConstants.UnsetValue;  } }
       public long CurrentRoundWinnerPlayerDbid {  get { return _currentRoundWinnerPlayerDbid;  } }
@@ -69,29 +68,33 @@ namespace Beamable.Samples.TBF.Data
          }
       }
 
-      
-
+      public EventBucket<GameStartEvent> GameStartEventsBucket { get { return _gameStartEventsBucket; } }
+      public EventBucket<GameMoveEvent> GameMoveEventsThisRoundBucket { get { return _gameMoveEventsThisRoundBucket; } }
 
       //  Fields  --------------------------------------
-      private Dictionary<long, GameMoveEvent> _currentRoundGameMoveEventsByPlayerDbid = new Dictionary<long, GameMoveEvent>();
+      private EventBucket<GameStartEvent> _gameStartEventsBucket = new EventBucket<GameStartEvent>();
+      private EventBucket<GameMoveEvent> _gameMoveEventsThisRoundBucket = new EventBucket<GameMoveEvent>();
+      private int _currentRoundNumber = 0;
+      private long _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
+      private Configuration _configuration;
+      private RoundResult _currentRoundResult = RoundResult.Null;
 
       /// <summary>
       /// The total number of ROUNDS won in the current GAME by DBID
       /// </summary>
       public Dictionary<long, int> RoundsWonByPlayerDbid = new Dictionary<long, int>();
 
-      private int _currentRoundNumber = 0;
-      private long _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
-      private Configuration _configuration;
-      private RoundResult _currentRoundResult = RoundResult.Null;
 
       //  Constructor  ---------------------------------
       public GameProgressData (Configuration configuration)
       {
          _configuration = configuration;
+         _gameStartEventsBucket.Clear();
+         
       }
 
       //  Other Methods  -------------------------------
+
       public void StartGame()
       {
          _currentRoundNumber = 0;
@@ -108,29 +111,13 @@ namespace Beamable.Samples.TBF.Data
 
          _currentRoundResult = RoundResult.Null;
          _currentRoundWinnerPlayerDbid = TBFConstants.UnsetValue;
-         _currentRoundGameMoveEventsByPlayerDbid.Clear();
-      }
-
-      public void AddCurrentRoundGameMoveEvent (GameMoveEvent gameMoveEvent)
-      {
-         if (_currentRoundGameMoveEventsByPlayerDbid.ContainsKey (gameMoveEvent.PlayerDbid))
-         {
-            throw new ArgumentException("AddGameMoveEventThisRound() This GameMoveEvent has already been added.");
-         }
-         _currentRoundGameMoveEventsByPlayerDbid[gameMoveEvent.PlayerDbid] = gameMoveEvent;
-      }
-
-      public GameMoveEvent GetCurrentRoundGameMoveEvent(long playerDbid)
-      {
-         GameMoveEvent remoteGameEvent;
-         _currentRoundGameMoveEventsByPlayerDbid.TryGetValue(playerDbid, out remoteGameEvent);
-         return remoteGameEvent;
+         _gameMoveEventsThisRoundBucket.Clear();
       }
 
       public void EvaluateGameMoveEventsThisRound()
       {
-         GameMoveEvent gameMoveEvent01 = _currentRoundGameMoveEventsByPlayerDbid.Values.First();
-         GameMoveEvent gameMoveEvent02 = _currentRoundGameMoveEventsByPlayerDbid.Values.Last();
+         GameMoveEvent gameMoveEvent01 = _gameMoveEventsThisRoundBucket.Values.First();
+         GameMoveEvent gameMoveEvent02 = _gameMoveEventsThisRoundBucket.Values.Last();
 
          if (TBFConstants.IsDebugLogging)
          {

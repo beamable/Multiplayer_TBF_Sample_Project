@@ -245,22 +245,37 @@ namespace Beamable.Samples.TBF
 
       private async void MultiplayerSession_OnGameStartEvent(GameStartEvent gameStartEvent)
       {
-         //TODO: check if I got X responses. Don't check the following...
-         if (_multiplayerSession.PlayerDbidsCount == _multiplayerSession.TargetPlayerCount)
+         DebugLog($"OnGameStartEvent() by {gameStartEvent.PlayerDbid}");
+
+         if (_gameStateHandler.GameState == GameState.GameStarting)
          {
-            await _gameStateHandler.SetGameState (GameState.GameStarted);
+            _gameProgressData.GameStartEventsBucket.Add(gameStartEvent);
+
+            DebugLog($"GameStartEventBucket.Count = {_gameProgressData.GameStartEventsBucket.Count}");
+
+            if (_gameProgressData.GameStartEventsBucket.Count == _multiplayerSession.TargetPlayerCount)
+            {
+               await _gameStateHandler.SetGameState(GameState.GameStarted);
+            }
          }
       }
 
 
       private async void MultiplayerSession_OnGameMoveEvent(GameMoveEvent gameMoveEvent)
       {
+         DebugLog($"OnGameMoveEvent() of {gameMoveEvent.GameMoveType} by {gameMoveEvent.PlayerDbid}");
+
          if (_gameStateHandler.GameState == GameState.RoundPlayerMoving)
          {
-            _gameProgressData.AddCurrentRoundGameMoveEvent(gameMoveEvent);
+            _gameProgressData.GameMoveEventsThisRoundBucket.Add(gameMoveEvent);
 
-            DebugLog($"gameMoveEvent.GameMoveType(): {gameMoveEvent.GameMoveType} for {gameMoveEvent.PlayerDbid}");
-            await _gameStateHandler.SetGameState(GameState.RoundPlayerMoved);
+            DebugLog($"GameMoveEventsThisRoundBucket.Count = {_gameProgressData.GameMoveEventsThisRoundBucket.Count}");
+
+            if (_gameProgressData.GameMoveEventsThisRoundBucket.Count == _multiplayerSession.TargetPlayerCount)
+            {
+               await _gameStateHandler.SetGameState(GameState.RoundPlayerMoved);
+            }
+            
          }
 
       }

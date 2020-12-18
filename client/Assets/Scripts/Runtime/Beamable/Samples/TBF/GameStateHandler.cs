@@ -227,7 +227,7 @@ namespace Beamable.Samples.TBF
                   // **************************************
 
                   long localPlayerDbid = _gameSceneManager.MultiplayerSession.GetPlayerDbidForIndex(TBFConstants.PlayerIndexLocal);
-                  GameMoveEvent localGameMoveEvent = _gameSceneManager.GameProgressData.GetCurrentRoundGameMoveEvent(localPlayerDbid);
+                  GameMoveEvent localGameMoveEvent = _gameSceneManager.GameProgressData.GameMoveEventsThisRoundBucket.GetByPlayerDbid(localPlayerDbid);
 
                   GameMoveType localGameMoveType = localGameMoveEvent.GameMoveType;
                   
@@ -238,14 +238,14 @@ namespace Beamable.Samples.TBF
                      // HumanVSBot: Create an AI movement here...
                      remotePlayerDbid = _gameSceneManager.RemotePlayerAI.RemotePlayerDbid;
                      GameMoveEvent gameMoveEvent = _gameSceneManager.RemotePlayerAI.GetNextRemoteGameMoveEvent(localGameMoveType);
-                     _gameSceneManager.GameProgressData.AddCurrentRoundGameMoveEvent(gameMoveEvent);
+                     _gameSceneManager.GameProgressData.GameMoveEventsThisRoundBucket.Add(gameMoveEvent);
                   }
                   else
                   {
                      remotePlayerDbid = _gameSceneManager.MultiplayerSession.GetPlayerDbidForIndex(TBFConstants.PlayerIndexRemote);
                   }
 
-                  GameMoveEvent remoteGameEvent = _gameSceneManager.GameProgressData.GetCurrentRoundGameMoveEvent(remotePlayerDbid);
+                  GameMoveEvent remoteGameEvent = _gameSceneManager.GameProgressData.GameMoveEventsThisRoundBucket.GetByPlayerDbid(remotePlayerDbid);
                   GameMoveType remoteGameMoveType = remoteGameEvent.GameMoveType;
 
                   // 1 LOCAL
@@ -263,7 +263,7 @@ namespace Beamable.Samples.TBF
                      // HumanVSBot: The human move is done. Don't wait for other moves.
                      await SetGameState(GameState.RoundEvaluating);
                   }
-                  else if  (_gameSceneManager.GameProgressData.CurrentRoundGameMoveEventCount ==
+                  else if  (_gameSceneManager.GameProgressData.GameMoveEventsThisRoundBucket.Count ==
                      _gameSceneManager.MultiplayerSession.TargetPlayerCount)
                   {
                      // HumanVSHuman: All moves are complete, so evaluate
