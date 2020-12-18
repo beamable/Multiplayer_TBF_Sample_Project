@@ -102,7 +102,7 @@ namespace Beamable.Samples.TBF.Multiplayer
                gameMoveType = GameMoveType.High;
                break;
             case 2:
-               gameMoveType = GameMoveType.Medium;
+               gameMoveType = GameMoveType.Mid;
                break;
             case 3:
                gameMoveType = GameMoveType.Low;

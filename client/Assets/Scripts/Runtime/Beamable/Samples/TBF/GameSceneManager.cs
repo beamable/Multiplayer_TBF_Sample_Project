@@ -17,7 +17,7 @@ namespace Beamable.Samples.TBF
    {
       Null,
       High,     // Like "Rock"
-      Medium,   // Like "Paper"
+      Mid,   // Like "Paper"
       Low       // Like "Scissors"
    }
 
@@ -199,7 +199,7 @@ namespace Beamable.Samples.TBF
 
       private void MoveButton_02_OnClicked()
       {
-         SendGameMoveEventSave(GameMoveType.Medium);
+         SendGameMoveEventSave(GameMoveType.Mid);
       }
 
 
@@ -233,13 +233,15 @@ namespace Beamable.Samples.TBF
       }
 
 
-      private void MultiplayerSession_OnDisconnect(long playerDbid)
+      private async void MultiplayerSession_OnDisconnect(long playerDbid)
       {
          BindPlayerDbidToEvents(playerDbid, false);
 
          SetStatusText(string.Format(TBFConstants.StatusText_Multiplayer_OnDisconnect,
             _multiplayerSession.PlayerDbidsCount.ToString(),
             _multiplayerSession.TargetPlayerCount), BufferedTextMode.Immediate);
+
+         await _gameStateHandler.SetGameState(GameState.GameEnded);
       }
 
 

@@ -17,7 +17,7 @@ namespace Beamable.Samples.TBF.Views
 
       public Button StartGameOnePlayerButton { get { return _startGameOnePlayerButton; } }
       public Button StartGameTwoPlayerButton { get { return _startGameTwoPlayerButton; } }
-
+      public Button QuitButton { get { return _quitButton; } }
       public CanvasGroup ButtonsCanvasGroup { get { return _buttonsCanvasGroup; } }
 
       //  Fields ---------------------------------------
@@ -29,6 +29,9 @@ namespace Beamable.Samples.TBF.Views
 
       [SerializeField]
       private Button _startGameTwoPlayerButton = null;
+
+      [SerializeField]
+      private Button _quitButton = null;
 
       [SerializeField]
       private TMP_Text _aboutBodyText = null;

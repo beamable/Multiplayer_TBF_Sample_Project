@@ -44,7 +44,7 @@ namespace Beamable.Samples.TBF
       public const string StatusText_GameState_Initializing = "Beamable Initializing ...";
       public const string StatusText_GameState_Initialized = "Beamable Initialized ...";
       public const string StatusText_GameState_Connecting = "Connecting. Players <b>{0}</b>/<b>{1}</b> ...";
-      public const string StatusText_Multiplayer_OnDisconnect = "Disconnecting. Players <b>{0}</b>/<b>{1}</b> ...";
+      public const string StatusText_Multiplayer_OnDisconnect = "Disconnecting. Players Remaining <b>{0}</b>/<b>{1}</b>. Game Over.";
       public const string StatusText_GameState_PlayerMoving = "Waiting For Moves ...";
       public const string StatusText_GameState_PlayerMoved = "<b>{0}</b> Player Moves <b>{1}</b> ...";
       public const string StatusText_GameState_PlayersAllMoved = "All Moves Complete ...";

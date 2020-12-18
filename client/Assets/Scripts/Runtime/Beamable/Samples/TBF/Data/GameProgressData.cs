@@ -136,12 +136,12 @@ namespace Beamable.Samples.TBF.Data
 
             //RESULT: Winner #1
             if (gameMoveEvent01.GameMoveType == GameMoveType.High &&
-               gameMoveEvent02.GameMoveType == GameMoveType.Medium)
+               gameMoveEvent02.GameMoveType == GameMoveType.Mid)
             {
                _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;
             }
             //RESULT: Winner #1
-            else if (gameMoveEvent01.GameMoveType == GameMoveType.Medium &&
+            else if (gameMoveEvent01.GameMoveType == GameMoveType.Mid &&
                      gameMoveEvent02.GameMoveType == GameMoveType.Low)
             {
                _currentRoundWinnerPlayerDbid = gameMoveEvent01.PlayerDbid;

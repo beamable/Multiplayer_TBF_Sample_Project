@@ -36,6 +36,7 @@ namespace Beamable.Samples.TBF
          _introUIView.AboutBodyText = "";
          _introUIView.StartGameOnePlayerButton.onClick.AddListener(StartGameOnePlayerButton_OnClicked);
          _introUIView.StartGameTwoPlayerButton.onClick.AddListener(StartGameTwoPlayerButton_OnClicked);
+         _introUIView.QuitButton.onClick.AddListener(QuitButton_OnClicked);
          SetupBeamable();
       }
 
@@ -136,5 +137,22 @@ namespace Beamable.Samples.TBF
       {
          StartGame(2);
       }
+
+      private void QuitButton_OnClicked()
+      {
+         if (Application.isEditor)
+         {
+            //In the Unity Editor, mimic the user clicking 'Stop' to stop.
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+         }
+         else
+         {
+            //In the build, mimic the user clicking 'X' to quit.
+            Application.Quit();
+         }
+      }
+      
    }
 }

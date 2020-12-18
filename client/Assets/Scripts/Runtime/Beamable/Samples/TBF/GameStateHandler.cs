@@ -404,7 +404,13 @@ namespace Beamable.Samples.TBF
                   // **************************************
                   //  Game stays here. 
                   //  User must click "Back" buton
+                  //
+                  // NOTE: We come here from GameState.GameEnding and/or when a player disconnects
+                  //
                   // **************************************
+
+                  //Turn off buttons. We may come here from any state, if a player disconnects
+                  _gameSceneManager.GameUIView.MoveButtonsCanvasGroup.interactable = false;
                   break;
                default:
                   SwitchDefaultException.Throw(_gameState);

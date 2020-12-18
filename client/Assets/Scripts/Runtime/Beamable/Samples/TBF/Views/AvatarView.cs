@@ -65,7 +65,7 @@ namespace Beamable.Samples.TBF.Views
                PlayAudioClipDelayed(SoundConstants.Attack_01, _configuration.DelayBeforeSoundAttack_01a);
                PlayAudioClipDelayed(SoundConstants.Attack_01, _configuration.DelayBeforeSoundAttack_01b);
                break;
-            case GameMoveType.Medium:
+            case GameMoveType.Mid:
                _animator.SetTrigger(TBFConstants.Avatar_Attack_02);
                PlayAudioClipDelayed(SoundConstants.Attack_02, _configuration.DelayBeforeSoundAttack_02a);
                PlayAudioClipDelayed(SoundConstants.Attack_02, _configuration.DelayBeforeSoundAttack_02b);
