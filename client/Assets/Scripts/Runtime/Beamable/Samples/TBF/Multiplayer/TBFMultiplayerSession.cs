@@ -1,18 +1,17 @@
-﻿using Beamable.Api.Sim;
-using Beamable.Samples.TBF.Multiplayer.Events;
+﻿using Beamable.Samples.TBF.Multiplayer.Events;
 using System;
 using System.Collections.Generic;
+using Beamable.Experimental.Api.Sim;
 using UnityEngine;
-using static Beamable.Api.Sim.SimClient;
 
 namespace Beamable.Samples.TBF.Multiplayer
 {
    public class TBFMultiplayerSession
    {
       //  Events -------------------------------------------
-      public event EventCallback<System.Random> OnInit;
-      public event EventCallback<long> OnConnect;
-      public event EventCallback<long> OnDisconnect;
+      public event SimClient.EventCallback<System.Random> OnInit;
+      public event SimClient.EventCallback<long> OnConnect;
+      public event SimClient.EventCallback<long> OnDisconnect;
 
       //  Fields  -----------------------------------------
       public System.Random Random { get { return _random; } }
@@ -108,12 +107,11 @@ namespace Beamable.Samples.TBF.Multiplayer
       /// <typeparam name="T"></typeparam>
       /// <param name="callback"></param>
       /// <returns></returns>
-      public EventCallback<string> On<T>(string origin, EventCallback<T> callback) where T : TBFEvent
+      public SimClient.EventCallback<string> On<T>(string origin, SimClient.EventCallback<T> callback) where T : TBFEvent
       {
          string name = GetEventName<T>();
          DebugLog($"SimClient_On(): {name}");
          return _simClient.On<T>(GetEventName<T>(), origin, callback);
-         
       }
 
       /// <summary>
@@ -121,11 +119,11 @@ namespace Beamable.Samples.TBF.Multiplayer
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="multiplayerSession_OnGameStartEvent"></param>
-      public void Remove<T>(EventCallback<T> callback)
+      public void Remove<T>(SimClient.EventCallback<T> callback)
       {
          //FIX: Beamable API does not yet support EventCallback<T>,
          //so the following casting is required. To be fixed. Known issue.
-         _simClient.Remove(callback as EventCallback<string>);
+         _simClient.Remove(callback as SimClient.EventCallback<string>);
       }
 
       /// <summary>

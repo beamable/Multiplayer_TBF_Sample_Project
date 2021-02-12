@@ -1,5 +1,5 @@
-﻿using Beamable.Api.Sim;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Beamable.Experimental.Api.Sim;
 using UnityEngine;
 
 namespace Beamable.Examples.Features.Multiplayer
@@ -75,7 +75,7 @@ namespace Beamable.Examples.Features.Multiplayer
                new MyPlayerMoveEvent(_localPlayerDbid, new Vector3(0, 0, 0)));
          }
 
-         // More debug info. 
+         // More debug info.
          string message = "";
          message += $"Room: {roomId}\n";
          message += $"Seed: {_sessionSeed}\n";
