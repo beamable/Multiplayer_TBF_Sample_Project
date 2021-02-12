@@ -1,8 +1,8 @@
 {
   "scopedRegistries": [
     {
-      "name": "Disruptor Beam",
-      "url": "https://nexus.beamable.com/nexus/content/repositories/unity/",
+      "name": "Beamable",
+      "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all/",
       "scopes": [
         "com.disruptorbeam",
         "com.beamable"
