@@ -1,7 +1,0 @@
-﻿{
-	"name": "Beamable.ConsoleCommands",
-    "references": [
-        "Beamable.Service",
-        "Beamable.Coroutines"
-    ]
-}
