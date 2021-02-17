@@ -30,9 +30,9 @@ namespace Beamable.Samples.TBF
 		}
 
 		[MenuItem(
-			ContentConstants.MENU_ITEM_PATH_WINDOW_BEAMABLE_SAMPLES + "/Multiplayer/" +
-			ContentConstants.OPEN + " " + Title,
-			priority = ContentConstants.MENU_ITEM_PATH_WINDOW_PRIORITY_4)]
+			BeamableConstants.MENU_ITEM_PATH_WINDOW_BEAMABLE_SAMPLES + "/Multiplayer/" +
+			BeamableConstants.OPEN + " " + Title,
+			priority = BeamableConstants.MENU_ITEM_PATH_WINDOW_PRIORITY_4)]
 		private static Readme SelectSpecificReadmeMenuItem()
 		{
 			// Reset SessionState if/when MenuItem is used

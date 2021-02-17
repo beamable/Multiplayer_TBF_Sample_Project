@@ -9,9 +9,9 @@ namespace Beamable.Samples.TBF.Data
    /// </summary>
    [CreateAssetMenu(
       fileName = Title,
-      menuName = ContentConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_SAMPLES + "/" +
+      menuName = BeamableConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_SAMPLES + "/" +
       "Multiplayer/Create New " + Title,
-      order = ContentConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_ORDER_1)]
+      order = BeamableConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_ORDER_1)]
    public class Configuration : ScriptableObject
    {
       //  Constants  -----------------------------------

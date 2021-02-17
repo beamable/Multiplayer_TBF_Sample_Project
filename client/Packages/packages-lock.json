@@ -1,22 +1,24 @@
 {
   "dependencies": {
-    "com.beamable.server": {
-      "version": "file:com.beamable.server",
+    "com.beamable": {
+      "version": "0.0.0-PREVIEW.NIGHTLY-202102111645",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.disruptorbeam.engine": "BUILD__SDK__VERSION__STRING"
-      }
-    },
-    "com.disruptorbeam.engine": {
-      "version": "file:com.disruptorbeam.engine",
-      "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0",
         "com.unity.addressables": "1.2.4",
         "com.unity.textmeshpro": "1.4.1"
-      }
+      },
+      "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all"
+    },
+    "com.beamable.server": {
+      "version": "0.0.0-PREVIEW.NIGHTLY-202102111645",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.beamable": "0.0.0-PREVIEW.NIGHTLY-202102111645"
+      },
+      "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

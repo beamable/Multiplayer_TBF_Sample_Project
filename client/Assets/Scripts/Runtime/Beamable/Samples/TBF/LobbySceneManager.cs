@@ -5,6 +5,7 @@ using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;
 using System;
 using System.Collections;
+using Beamable.Common.Content;
 using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 
@@ -73,16 +74,17 @@ namespace Beamable.Samples.TBF
          {
             throw new Exception("Codepath is never intended.");
          }
-            
-         await Beamable.API.Instance.Then(async de =>
+
+         await Beamable.API.Instance.Then(async beamable =>
          {
             try
             {
-               _beamableAPI = de;
+               _beamableAPI = beamable;
 
                RuntimeDataStorage.Instance.IsMatchmakingComplete = false;
 
-               matchmaking = new TBFMatchmaking(de.Matchmaking, simGameType, _beamableAPI.User.id);
+               matchmaking = new TBFMatchmaking(beamable.Experimental.MatchmakingService, simGameType,
+                  _beamableAPI.User.id);
                matchmaking.OnProgress += MyMatchmaking_OnProgress;
                matchmaking.OnComplete += MyMatchmaking_OnComplete;
                await matchmaking.Start();
@@ -109,10 +111,7 @@ namespace Beamable.Samples.TBF
       //  Event Handlers -------------------------------
       private void BackButton_OnClicked()
       {
-         if (matchmaking != null)
-         {
-            matchmaking.Stop();
-         }
+         matchmaking?.Stop();
 
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
@@ -137,13 +136,6 @@ namespace Beamable.Samples.TBF
       {
          if (!RuntimeDataStorage.Instance.IsMatchmakingComplete)
          {
-            if (myMatchmakingResult.IsError)
-            {
-               DebugLog($"MyMatchmaking_OnComplete() " +
-                  $"Error={myMatchmakingResult.ErrorMessage}.");
-               return;
-            }
-
             string text = string.Format(TBFConstants.StatusText_Joined,
                myMatchmakingResult.Players.Count,
                myMatchmakingResult.TargetPlayerCount);

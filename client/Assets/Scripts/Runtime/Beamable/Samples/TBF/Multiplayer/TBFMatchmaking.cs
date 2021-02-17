@@ -1,13 +1,13 @@
-﻿using Beamable.Api.Matchmaking;
-using Beamable.Content;
+﻿using Beamable.Common.Content;
 using Beamable.Examples.Features.Multiplayer;
+using Beamable.Experimental.Api.Matchmaking;
 
 namespace Beamable.Samples.TBF.Multiplayer
 {
    /// <summary>
-   /// This is for the SAMPLE PROJECT Scene(s). For this project the needs are so similar to the 
-   /// EXAMPLE Scenes, that the EXAMPLE <see cref="MyMatchmaking"/> is extended. 
-   /// 
+   /// This is for the SAMPLE PROJECT Scene(s). For this project the needs are so similar to the
+   /// EXAMPLE Scenes, that the EXAMPLE <see cref="MyMatchmaking"/> is extended.
+   ///
    /// NOTE: For your production uses, simply copy <see cref="MyMatchmaking"/> as inspiration
    /// and create a new custom class.
    /// </summary>
@@ -25,7 +25,7 @@ namespace Beamable.Samples.TBF.Multiplayer
          return "TBFRoomId" + string.Format("{00:00}", UnityEngine.Random.Range(0, 1000));
       }
 
-      public TBFMatchmaking(MatchmakingService matchmakingService, SimGameType simGameType, long LocalPlayerDbid) : 
+      public TBFMatchmaking(MatchmakingService matchmakingService, SimGameType simGameType, long LocalPlayerDbid) :
          base(matchmakingService, simGameType, LocalPlayerDbid)
       {
       }

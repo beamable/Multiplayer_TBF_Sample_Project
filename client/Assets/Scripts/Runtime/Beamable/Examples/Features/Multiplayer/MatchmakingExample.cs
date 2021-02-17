@@ -1,10 +1,10 @@
-﻿using Beamable.Content;
+﻿using Beamable.Common.Content;
 using UnityEngine;
 
 namespace Beamable.Examples.Features.Multiplayer
 {
    /// <summary>
-   /// Demonstrates the creation of and joining to a 
+   /// Demonstrates the creation of and joining to a
    /// Multiplayer game room with Beamable Multiplayer.
    /// </summary>
    public class MatchmakingExample : MonoBehaviour
@@ -29,9 +29,9 @@ namespace Beamable.Examples.Features.Multiplayer
       {
          SimGameType simGameType = await _simGameTypeRef.Resolve();
 
-         await Beamable.API.Instance.Then(async de =>
+         await Beamable.API.Instance.Then(async beamable =>
          {
-            MyMatchmaking myMatchmaking = new MyMatchmaking(de.Matchmaking, simGameType, de.User.id);
+            MyMatchmaking myMatchmaking = new MyMatchmaking(beamable.Experimental.MatchmakingService, simGameType, beamable.User.id);
             myMatchmaking.OnProgress += MyMatchmaking_OnProgress;
             myMatchmaking.OnComplete += MyMatchmaking_OnComplete;
             await myMatchmaking.Start();
@@ -49,17 +49,8 @@ namespace Beamable.Examples.Features.Multiplayer
 
       private void MyMatchmaking_OnComplete(MyMatchmakingResult myMatchmakingResult)
       {
-         if (!myMatchmakingResult.IsError)
-         {
-            Debug.Log($"MyMatchmaking_OnComplete() " +
-               $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
-               $"RoomId={myMatchmakingResult.RoomId}");
-         }
-         else
-         {
-            Debug.Log($"MyMatchmaking_OnComplete() " +
-               $"Error={myMatchmakingResult.ErrorMessage}.");
-         }
+         Debug.Log($"MyMatchmaking_OnComplete() " +
+                   $"Error={myMatchmakingResult.ErrorMessage}.");
       }
    }
 }
