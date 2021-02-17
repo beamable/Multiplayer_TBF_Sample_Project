@@ -57,6 +57,13 @@ namespace Beamable.Samples.TBF
          SetupBeamable();
       }
 
+      private Action _onDestroy;
+
+      public void OnDestroy()
+      {
+         _onDestroy?.Invoke();
+      }
+
       //  Other Methods   ------------------------------
       private async void SetupBeamable()
       {
@@ -87,6 +94,7 @@ namespace Beamable.Samples.TBF
                   _beamableAPI.User.id);
                matchmaking.OnProgress += MyMatchmaking_OnProgress;
                matchmaking.OnComplete += MyMatchmaking_OnComplete;
+               _onDestroy = matchmaking.Stop;
                await matchmaking.Start();
 
             }

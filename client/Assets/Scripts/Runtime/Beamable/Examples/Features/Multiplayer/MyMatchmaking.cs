@@ -2,6 +2,7 @@
 using Beamable.Samples.TBF;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Beamable.Common.Content;
 using Beamable.Experimental.Api.Matchmaking;
@@ -79,6 +80,7 @@ namespace Beamable.Examples.Features.Multiplayer
       private MyMatchmakingResult _myMatchmakingResult;
       private MatchmakingService _matchmakingService;
       private SimGameType _simGameType;
+      private CancellationTokenSource _matchmakingOngoing;
 
       public MyMatchmaking(MatchmakingService matchmakingService,
          SimGameType simGameType, long LocalPlayerDbid)
@@ -103,13 +105,23 @@ namespace Beamable.Examples.Features.Multiplayer
          DebugLog($"MyMatchmaking.Start() TargetPlayerCount={_simGameType.maxPlayers}");
          var handle = await _matchmakingService.StartMatchmaking(_simGameType.Id);
 
-         while (!handle.Status.GameStarted)
+         try
          {
-            _myMatchmakingResult.Players = handle.Status.Players;
-            _myMatchmakingResult.SecondsRemaining = handle.Status.SecondsRemaining;
-            _myMatchmakingResult.RoomId = handle.Status.GameId;
-            OnProgress?.Invoke(_myMatchmakingResult);
-            await Task.Delay(1000);
+            _matchmakingOngoing = new CancellationTokenSource();
+            var token = _matchmakingOngoing.Token;
+            while (!token.IsCancellationRequested && !handle.Status.GameStarted)
+            {
+               _myMatchmakingResult.Players = handle.Status.Players;
+               _myMatchmakingResult.SecondsRemaining = handle.Status.SecondsRemaining;
+               _myMatchmakingResult.RoomId = handle.Status.GameId;
+               OnProgress?.Invoke(_myMatchmakingResult);
+               await Task.Delay(1000, token);
+            }
+         }
+         finally
+         {
+            _matchmakingOngoing.Dispose();
+            _matchmakingOngoing = null;
          }
 
          // Invoke Progress #2
@@ -126,11 +138,10 @@ namespace Beamable.Examples.Features.Multiplayer
       /// <returns></returns>
       public void Stop()
       {
-         //Next tick this will properly dispatch
-         //an OnComplete with Error
+         _matchmakingOngoing?.Cancel();
       }
 
-      private void DebugLog(string message)
+      private static void DebugLog(string message)
       {
          if (TBFConstants.IsDebugLogging)
          {
