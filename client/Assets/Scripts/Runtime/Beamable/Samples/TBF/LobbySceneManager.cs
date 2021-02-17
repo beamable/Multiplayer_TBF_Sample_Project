@@ -1,5 +1,4 @@
-﻿using Beamable.Content;
-using Beamable.Examples.Features.Multiplayer;
+﻿using Beamable.Examples.Features.Multiplayer;
 using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;

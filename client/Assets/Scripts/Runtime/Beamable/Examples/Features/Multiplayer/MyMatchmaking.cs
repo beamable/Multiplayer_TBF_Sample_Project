@@ -97,7 +97,7 @@ namespace Beamable.Examples.Features.Multiplayer
       /// Start the matchmaking process
       /// </summary>
       /// <returns></returns>
-      public async Task<MyMatchmakingResult> Start()
+      public async Task Start()
       {
          _myMatchmakingResult.RoomId = "";
          _myMatchmakingResult.SecondsRemaining = 0;
@@ -109,8 +109,10 @@ namespace Beamable.Examples.Features.Multiplayer
          {
             _matchmakingOngoing = new CancellationTokenSource();
             var token = _matchmakingOngoing.Token;
-            while (!token.IsCancellationRequested && !handle.Status.GameStarted)
+            while (!handle.Status.GameStarted)
             {
+               if (token.IsCancellationRequested) return;
+
                _myMatchmakingResult.Players = handle.Status.Players;
                _myMatchmakingResult.SecondsRemaining = handle.Status.SecondsRemaining;
                _myMatchmakingResult.RoomId = handle.Status.GameId;
@@ -129,15 +131,15 @@ namespace Beamable.Examples.Features.Multiplayer
 
          // Invoke Complete
          OnComplete?.Invoke(_myMatchmakingResult);
-         return _myMatchmakingResult;
       }
 
       /// <summary>
       /// Stop the matchmaking process
       /// </summary>
       /// <returns></returns>
-      public void Stop()
+      public async void Stop()
       {
+         await _matchmakingService.CancelMatchmaking(_simGameType.Id);
          _matchmakingOngoing?.Cancel();
       }
 
