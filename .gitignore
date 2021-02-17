@@ -66,3 +66,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+### End of Unity-specific ignores
+
+# Ignore Beamable project config so that everyone can set up their own.
+client/Assets/Beamable/Resources/
+client/Assets/Beamable/Resources.meta
