@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TwoPlayerGameType
   m_EditorClassIdentifier: 
   _tags: []
-  maxPlayers: 0
+  maxPlayers: 2
   minPlayersToStart:
     HasValue: 0
     Value: 0
