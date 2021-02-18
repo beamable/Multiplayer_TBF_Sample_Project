@@ -14,9 +14,6 @@
 # Logging
 /client/debug.log
 
-# Asset meta data should only be ignored when the corresponding asset is also ignored
-!/[Aa]ssets/**/*.meta
-
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
 
@@ -25,10 +22,6 @@
 
 # Visual Studio cache directory
 .vs/
-
-# User-specific files
-config-defaults.txt
-config-defaults.txt.meta
 
 # Gradle cache directory
 .gradle/
@@ -69,5 +62,7 @@ crashlytics-build.properties
 ### End of Unity-specific ignores
 
 # Ignore Beamable project config so that everyone can set up their own.
-client/Assets/Beamable/Resources/
-client/Assets/Beamable/Resources.meta
+config-defaults.txt
+config-defaults.txt.meta
+/client/Assets/Beamable/Resources/
+/client/Assets/Beamable/Resources.meta
