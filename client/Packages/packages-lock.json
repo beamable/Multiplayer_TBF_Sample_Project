@@ -11,15 +11,6 @@
       },
       "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all"
     },
-    "com.beamable.server": {
-      "version": "0.0.0-PREVIEW.NIGHTLY-202102231520",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.beamable": "0.0.0-PREVIEW.NIGHTLY-202102231520"
-      },
-      "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

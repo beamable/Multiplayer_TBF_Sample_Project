@@ -1,7 +1,7 @@
 {
   "scopedRegistries": [
     {
-      "name": "Beamable",
+      "name": "Disruptor Beam",
       "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all/",
       "scopes": [
         "com.disruptorbeam",
@@ -10,8 +10,7 @@
     }
   ],
   "dependencies": {
-    "com.beamable": "0.0.0-PREVIEW.NIGHTLY-202102111645",
-    "com.beamable.server": "0.0.0-PREVIEW.NIGHTLY-202102111645",
+    "com.beamable": "0.0.0-PREVIEW.NIGHTLY-202102231520",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.addressables": "1.16.10",
