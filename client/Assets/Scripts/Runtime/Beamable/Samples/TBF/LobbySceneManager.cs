@@ -34,7 +34,7 @@ namespace Beamable.Samples.TBF
       [SerializeField]
       private SimGameTypeRef _twoPlayerSimGameTypeRef;
 
-      private IBeamableAPI _beamableAPI = null;
+      private IBeamableAPI _beamableAPI;
       private TBFMatchmaking matchmaking;
 
       //  Unity Methods   ------------------------------
@@ -48,7 +48,7 @@ namespace Beamable.Samples.TBF
             RuntimeDataStorage.Instance.TargetPlayerCount = 1;
          }
 
-         string text = string.Format(TBFConstants.StatusText_Joining, 0,
+         var text = string.Format(TBFConstants.StatusText_Joining, 0,
             RuntimeDataStorage.Instance.TargetPlayerCount);
 
          _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Immediate);
@@ -81,30 +81,26 @@ namespace Beamable.Samples.TBF
             throw new Exception("Codepath is never intended.");
          }
 
-         await Beamable.API.Instance.Then(async beamable =>
+         var beamable = await Beamable.API.Instance;
+         _beamableAPI = beamable;
+         RuntimeDataStorage.Instance.IsMatchmakingComplete = false;
+
+         matchmaking = new TBFMatchmaking(beamable.Experimental.MatchmakingService, simGameType,
+            _beamableAPI.User.id);
+         matchmaking.OnProgress += MyMatchmaking_OnProgress;
+         matchmaking.OnComplete += MyMatchmaking_OnComplete;
+         _onDestroy = matchmaking.Stop;
+
+         try
          {
-            try
-            {
-               _beamableAPI = beamable;
-
-               RuntimeDataStorage.Instance.IsMatchmakingComplete = false;
-
-               matchmaking = new TBFMatchmaking(beamable.Experimental.MatchmakingService, simGameType,
-                  _beamableAPI.User.id);
-               matchmaking.OnProgress += MyMatchmaking_OnProgress;
-               matchmaking.OnComplete += MyMatchmaking_OnComplete;
-               _onDestroy = matchmaking.Stop;
-               await matchmaking.Start();
-
-            }
-            catch (Exception)
-            {
-               _lobbyUIView.BufferedText.SetText(TBFHelper.InternetOfflineInstructionsText,
-                  BufferedTextMode.Queue);
-            }
-         });
+            await matchmaking.Start();
+         }
+         catch (Exception)
+         {
+            _lobbyUIView.BufferedText.SetText(TBFHelper.InternetOfflineInstructionsText,
+               BufferedTextMode.Queue);
+         }
       }
-
 
       private void DebugLog(string message)
       {

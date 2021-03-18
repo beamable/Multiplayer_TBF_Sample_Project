@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404f8a85a397642f5b56ce1f2d8cebea, type: 3}
   m_Name: TwoPlayerGameType
   m_EditorClassIdentifier: 
-  _tags: []
+  _tags:
+  - base
   maxPlayers: 2
   minPlayersToStart:
     HasValue: 0

@@ -1,5 +1,4 @@
-﻿using Beamable.Common.Content;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Beamable.Examples.Features.Multiplayer
 {
@@ -27,15 +26,13 @@ namespace Beamable.Examples.Features.Multiplayer
 
       protected async void SetupBeamable()
       {
-         SimGameType simGameType = await _simGameTypeRef.Resolve();
+         var simGameType = await _simGameTypeRef.Resolve();
+         var beamable = await Beamable.API.Instance;
 
-         await Beamable.API.Instance.Then(async beamable =>
-         {
-            MyMatchmaking myMatchmaking = new MyMatchmaking(beamable.Experimental.MatchmakingService, simGameType, beamable.User.id);
-            myMatchmaking.OnProgress += MyMatchmaking_OnProgress;
-            myMatchmaking.OnComplete += MyMatchmaking_OnComplete;
-            await myMatchmaking.Start();
-         });
+         var myMatchmaking = new MyMatchmaking(beamable.Experimental.MatchmakingService, simGameType, beamable.User.id);
+         myMatchmaking.OnProgress += MyMatchmaking_OnProgress;
+         myMatchmaking.OnComplete += MyMatchmaking_OnComplete;
+         await myMatchmaking.Start();
       }
 
       //  Event Handlers ----------------------------------
