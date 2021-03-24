@@ -62,9 +62,6 @@ namespace Beamable.Samples.TBF.Data
       private int _gameRoundsTotal = 3;
 
       [SerializeField]
-      private float _delayMatchmakingMax = 10f;
-
-      [SerializeField]
       private float _delayGameBeforeMove = 1;
 
       [SerializeField]
