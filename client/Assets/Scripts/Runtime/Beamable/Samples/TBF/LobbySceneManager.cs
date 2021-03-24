@@ -5,6 +5,7 @@ using Beamable.Samples.TBF.Views;
 using System;
 using System.Collections;
 using Beamable.Common.Content;
+using Beamable.Examples.Features.Multiplayer.Core;
 using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 

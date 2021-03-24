@@ -1,5 +1,4 @@
-﻿using Beamable.Api;
-using Beamable.Samples.TBF;
+﻿using Beamable.Samples.TBF;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -16,7 +15,7 @@ using UnityEngine;
 /// 2. copy/move/rename/renamespace the file below for sole use in the SAMPLE.
 ///
 /// </summary>
-namespace Beamable.Examples.Features.Multiplayer
+namespace Beamable.Examples.Features.Multiplayer.Core
 {
    [Serializable]
    public class SimGameTypeRef : ContentRef<SimGameType> { }

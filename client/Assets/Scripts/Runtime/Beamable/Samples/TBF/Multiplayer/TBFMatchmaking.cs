@@ -1,5 +1,5 @@
 ﻿using Beamable.Common.Content;
-using Beamable.Examples.Features.Multiplayer;
+using Beamable.Examples.Features.Multiplayer.Core;
 using Beamable.Experimental.Api.Matchmaking;
 
 namespace Beamable.Samples.TBF.Multiplayer
