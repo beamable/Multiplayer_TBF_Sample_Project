@@ -1,5 +1,4 @@
-﻿using Beamable.Examples.Features.Multiplayer;
-using Beamable.Samples.TBF.Data;
+﻿using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Views;
 using System;
@@ -8,6 +7,7 @@ using Beamable.Common.Content;
 using Beamable.Examples.Features.Multiplayer.Core;
 using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
+using SimGameTypeRef = Beamable.Common.Content.SimGameTypeRef;
 
 namespace Beamable.Samples.TBF
 {
