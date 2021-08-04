@@ -16,9 +16,9 @@ namespace Beamable.Samples.TBF
    public enum GameMoveType
    {
       Null,
-      High,     // Like "Rock"
+      High,  // Like "Rock"
       Mid,   // Like "Paper"
-      Low       // Like "Scissors"
+      Low    // Like "Scissors"
    }
 
    /// <summary>
@@ -278,9 +278,7 @@ namespace Beamable.Samples.TBF
             {
                await _gameStateHandler.SetGameState(GameState.RoundPlayerMoved);
             }
-            
          }
-
       }
    }
 }
