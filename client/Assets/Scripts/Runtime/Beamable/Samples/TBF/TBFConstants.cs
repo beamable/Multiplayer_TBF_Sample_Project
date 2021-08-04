@@ -60,6 +60,7 @@ namespace Beamable.Samples.TBF
 
       //Lobby
       public static string StatusText_Joining = "Player {0}/{1} joined. Waiting ...";
+      public static string StatusText_Error = "Player {0}/{1} joined. Error: {2} ...";
       public static string StatusText_Joined = "Player {0}/{1} joined. Ready!";
 
 

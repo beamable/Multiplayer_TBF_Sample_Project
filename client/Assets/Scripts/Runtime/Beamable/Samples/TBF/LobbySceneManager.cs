@@ -4,7 +4,6 @@ using Beamable.Samples.TBF.Views;
 using System;
 using System.Collections;
 using Beamable.Common.Content;
-using Beamable.Examples.Features.Multiplayer.Core;
 using UnityEngine;
 using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 using SimGameTypeRef = Beamable.Common.Content.SimGameTypeRef;
@@ -88,13 +87,14 @@ namespace Beamable.Samples.TBF
 
          matchmaking = new TBFMatchmaking(beamable.Experimental.MatchmakingService, simGameType,
             _beamableAPI.User.id);
-         matchmaking.OnProgress += MyMatchmaking_OnProgress;
-         matchmaking.OnComplete += MyMatchmaking_OnComplete;
+         matchmaking.OnProgress.AddListener(MyMatchmaking_OnProgress);
+         matchmaking.OnComplete.AddListener(MyMatchmaking_OnComplete);
+         matchmaking.OnError.AddListener(MyMatchmaking_OnError);
          _onDestroy = matchmaking.Stop;
 
          try
          {
-            await matchmaking.Start();
+            await matchmaking.StartMatchmaking();
          }
          catch (Exception)
          {
@@ -125,12 +125,12 @@ namespace Beamable.Samples.TBF
       private void MyMatchmaking_OnProgress(MyMatchmakingResult myMatchmakingResult)
       {
          DebugLog($"MyMatchmaking_OnProgress() " +
-            $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
-            $"RoomId={myMatchmakingResult.RoomId}");
+            $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.PlayerCountMax} " +
+            $"MatchId={myMatchmakingResult.MatchId}");
 
          string text = string.Format(TBFConstants.StatusText_Joining,
             myMatchmakingResult.Players.Count,
-            myMatchmakingResult.TargetPlayerCount);
+            myMatchmakingResult.PlayerCountMax);
 
          _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Queue);
       }
@@ -142,20 +142,42 @@ namespace Beamable.Samples.TBF
          {
             string text = string.Format(TBFConstants.StatusText_Joined,
                myMatchmakingResult.Players.Count,
-               myMatchmakingResult.TargetPlayerCount);
+               myMatchmakingResult.PlayerCountMax);
 
             _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Queue);
 
             DebugLog($"MyMatchmaking_OnComplete() " +
-               $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.TargetPlayerCount} " +
-               $"RoomId={myMatchmakingResult.RoomId}");
+               $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.PlayerCountMax} " +
+               $"MatchId={myMatchmakingResult.MatchId}");
 
             //Store successful info here for use in another scene
             RuntimeDataStorage.Instance.IsMatchmakingComplete = true;
-            RuntimeDataStorage.Instance.LocalPlayerDbid = myMatchmakingResult.LocalPlayerDbid;
-            RuntimeDataStorage.Instance.RoomId = myMatchmakingResult.RoomId;
+            RuntimeDataStorage.Instance.LocalPlayerDbid = myMatchmakingResult.LocalPlayer;
+            RuntimeDataStorage.Instance.MatchId = myMatchmakingResult.MatchId;
 
             StartCoroutine(LoadScene_Coroutine());
+
+         }
+         else
+         {
+            throw new Exception("Codepath is never intended.");
+         }
+      }
+      
+      private void MyMatchmaking_OnError(MyMatchmakingResult myMatchmakingResult)
+      {
+         if (!RuntimeDataStorage.Instance.IsMatchmakingComplete)
+         {
+            string text = string.Format(TBFConstants.StatusText_Error,
+               myMatchmakingResult.Players.Count,
+               myMatchmakingResult.PlayerCountMax,
+               matchmaking.MyMatchmakingResult.ErrorMessage);
+
+            _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Immediate);
+
+            DebugLog($"MyMatchmaking_OnComplete() " +
+                     $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.PlayerCountMax} " +
+                     $"ErrorMessage={matchmaking.MyMatchmakingResult.ErrorMessage}");
 
          }
          else

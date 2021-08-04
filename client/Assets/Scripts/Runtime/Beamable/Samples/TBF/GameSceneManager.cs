@@ -103,13 +103,13 @@ namespace Beamable.Samples.TBF
                   DebugLog($"Scene '{gameObject.scene.name}' was loaded directly. That is ok. Setting defaults.");
                   RuntimeDataStorage.Instance.LocalPlayerDbid = _beamableAPI.User.id;
                   RuntimeDataStorage.Instance.TargetPlayerCount = 1;
-                  RuntimeDataStorage.Instance.RoomId = TBFMatchmaking.GetRandomRoomId();
+                  RuntimeDataStorage.Instance.MatchId = TBFMatchmaking.GetRandomMatchId();
                }
 
                _multiplayerSession = new TBFMultiplayerSession(
                   RuntimeDataStorage.Instance.LocalPlayerDbid,
                   RuntimeDataStorage.Instance.TargetPlayerCount,
-                  RuntimeDataStorage.Instance.RoomId) ;
+                  RuntimeDataStorage.Instance.MatchId) ;
 
                await _gameStateHandler.SetGameState(GameState.Initializing);
 

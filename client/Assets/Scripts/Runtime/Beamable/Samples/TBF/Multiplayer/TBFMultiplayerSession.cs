@@ -180,7 +180,7 @@ namespace Beamable.Samples.TBF.Multiplayer
          float sessionSeedFloat = Mathf.Min(Int32.MaxValue, sessionSeedLong);
          _sessionSeed = (int)sessionSeedLong;
 
-         DebugLog($"SimClient_OnInit() RoomId '{_roomId}' SessionSeed '{_sessionSeed}'");
+         DebugLog($"SimClient_OnInit() MatchId '{_roomId}' SessionSeed '{_sessionSeed}'");
 
          _random = new System.Random(_sessionSeed);
          OnInit?.Invoke(_random);

@@ -15,9 +15,14 @@ MonoBehaviour:
   _tags:
   - base
   maxPlayers: 1
-  minPlayersToStart:
-    HasValue: 0
-    Value: 0
+  teams:
+  - name: Team01
+    maxPlayers: 1
+    minPlayers:
+      HasValue: 1
+      Value: 1
+  numericRules: []
+  stringRules: []
   waitAfterMinReachedSecs:
     HasValue: 0
     Value: 0

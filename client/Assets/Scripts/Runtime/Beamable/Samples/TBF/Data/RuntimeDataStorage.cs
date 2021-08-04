@@ -11,7 +11,7 @@ namespace Beamable.Samples.TBF.Data
 
 		//  Properties  ----------------------------------
 		public long LocalPlayerDbid { get { return _localPlayerDbid; } set { _localPlayerDbid = value; } }
-		public string RoomId { get { return _roomId; } set { _roomId = value; } }
+		public string MatchId { get { return _matchId; } set { _matchId = value; } }
 		public int TargetPlayerCount { get { return _targetPlayerCount; } set { _targetPlayerCount = value; } }
       public bool IsMatchmakingComplete { get { return _isMatchmakingComplete; } set { _isMatchmakingComplete = value; } }
 
@@ -19,7 +19,7 @@ namespace Beamable.Samples.TBF.Data
 		public const int UnsetPlayerCount = -1;
 		private bool _isMatchmakingComplete;
 		private long _localPlayerDbid;
-		private string _roomId;
+		private string _matchId;
 		private int _targetPlayerCount;
 
 		//  Unity Methods  --------------------------------
@@ -39,7 +39,7 @@ namespace Beamable.Samples.TBF.Data
       {
 			_isMatchmakingComplete = false;
 			_localPlayerDbid = 0;
-			_roomId = "";
+			_matchId = "";
 			_targetPlayerCount = UnsetPlayerCount;
 		}
    }
