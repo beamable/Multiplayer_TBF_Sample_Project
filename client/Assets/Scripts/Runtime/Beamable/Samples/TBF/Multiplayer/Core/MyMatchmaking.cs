@@ -24,7 +24,8 @@ namespace Beamable.Samples.TBF.Multiplayer
       {
          get
          {
-            if (_matchmakingHandle == null)
+            if (_matchmakingHandle == null || _matchmakingHandle.Status == null ||
+                _matchmakingHandle.Status.Players == null)
             {
                return new List<long>();
             }
@@ -93,8 +94,8 @@ namespace Beamable.Samples.TBF.Multiplayer
       {
          return $"[MyMatchmakingResult (" +
             $"MatchId = {MatchId}, " +
-            $"Teams = {_matchmakingHandle.Match.teams}, " +
-            $"players.Count = {Players.Count})]";
+            $"Teams = {_matchmakingHandle?.Match?.teams}, " +
+            $"players.Count = {Players?.Count})]";
       }
    }
 
@@ -117,13 +118,13 @@ namespace Beamable.Samples.TBF.Multiplayer
       //  Fields  -----------------------------------------
       private MyMatchmakingResult _myMatchmakingResult = null;
       private Experimental.Api.Matchmaking.MatchmakingService _matchmakingService = null;
+      public const string TimeoutErrorMessage = "Timeout";
       
 
       //  Constructor  ------------------------------------
       public MyMatchmaking(Experimental.Api.Matchmaking.MatchmakingService matchmakingService,
          SimGameType simGameType, long localPlayerDbid)
       {
-         Debug.Log("a");
          _matchmakingService = matchmakingService;
          _myMatchmakingResult = new MyMatchmakingResult(simGameType, localPlayerDbid);
       }
@@ -139,8 +140,6 @@ namespace Beamable.Samples.TBF.Multiplayer
             return;
          }
          
-         Debug.Log("b");
-         
          _myMatchmakingResult.IsInProgress = true;
          
          _myMatchmakingResult.MatchmakingHandle =  await _matchmakingService.StartMatchmaking(
@@ -148,29 +147,47 @@ namespace Beamable.Samples.TBF.Multiplayer
             maxWait: TimeSpan.FromSeconds(10),
             updateHandler: handle =>
             {
-               Debug.Log("1");
-               OnProgress.Invoke(_myMatchmakingResult);
+               OnUpdateHandler(handle);
             },
             readyHandler: handle =>
             {
-               Debug.Log("2");
-               Debug.Assert(handle.State == MatchmakingState.Ready);
-               _myMatchmakingResult.IsInProgress = false;
-               OnComplete.Invoke(_myMatchmakingResult);
+               // Call both
+               OnUpdateHandler(handle);
+               OnReadyHandler(handle);
             },
             timeoutHandler: handle =>
             {
-               Debug.Log("3");
-               _myMatchmakingResult.IsInProgress = false;
-               _myMatchmakingResult.ErrorMessage = "Timeout";
-               OnError?.Invoke(_myMatchmakingResult);
+               // Call both
+               OnUpdateHandler(handle);
+               OnTimeoutHandler(handle);
             });
+      }
+
+
+      public async Task CancelMatchmaking()
+      {
+         await _matchmakingService.CancelMatchmaking(_myMatchmakingResult.MatchmakingHandle.Tickets[0].ticketId);
       }
       
       
-      public async void Stop()
+      //  Event Handlers  ----------------------------------
+      private void OnUpdateHandler(MatchmakingHandle handle)
       {
-         await _matchmakingService.CancelMatchmaking(_myMatchmakingResult.MatchmakingHandle.Tickets[0].ticketId);
+         OnProgress.Invoke(_myMatchmakingResult);
+      }
+      
+      private void OnReadyHandler(MatchmakingHandle handle)
+      {
+         Debug.Assert(handle.State == MatchmakingState.Ready);
+         _myMatchmakingResult.IsInProgress = false;
+         OnComplete.Invoke(_myMatchmakingResult);
+      }
+      
+      private void OnTimeoutHandler(MatchmakingHandle handle)
+      {
+         _myMatchmakingResult.IsInProgress = false;
+         _myMatchmakingResult.ErrorMessage = TimeoutErrorMessage;
+         OnError?.Invoke(_myMatchmakingResult);
       }
    }
 }

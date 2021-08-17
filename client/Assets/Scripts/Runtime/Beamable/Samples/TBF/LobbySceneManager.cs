@@ -90,7 +90,10 @@ namespace Beamable.Samples.TBF
          matchmaking.OnProgress.AddListener(MyMatchmaking_OnProgress);
          matchmaking.OnComplete.AddListener(MyMatchmaking_OnComplete);
          matchmaking.OnError.AddListener(MyMatchmaking_OnError);
-         _onDestroy = matchmaking.Stop;
+         _onDestroy = async () =>
+         {
+            await matchmaking.CancelMatchmaking(); 
+         };
 
          try
          {
@@ -115,7 +118,7 @@ namespace Beamable.Samples.TBF
       //  Event Handlers -------------------------------
       private void BackButton_OnClicked()
       {
-         matchmaking?.Stop();
+         matchmaking?.CancelMatchmaking();
 
          StartCoroutine(TBFHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
