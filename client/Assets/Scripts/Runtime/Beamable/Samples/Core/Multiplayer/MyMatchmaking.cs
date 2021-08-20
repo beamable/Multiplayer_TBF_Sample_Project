@@ -7,7 +7,7 @@ using Beamable.Experimental.Api.Matchmaking;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Beamable.Samples.TBF.Multiplayer
+namespace Beamable.Samples.Core.Multiplayer
 {
    public class MyMatchmakingEvent : UnityEvent<MyMatchmakingResult>{}
 

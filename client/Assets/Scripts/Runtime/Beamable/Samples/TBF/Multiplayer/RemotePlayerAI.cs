@@ -1,6 +1,6 @@
-﻿using Beamable.Samples.TBF.Exceptions;
-using Beamable.Samples.TBF.Multiplayer.Events;
+﻿using Beamable.Samples.TBF.Multiplayer.Events;
 using System;
+using Beamable.Samples.Core.Exceptions;
 using UnityEngine;
 
 namespace Beamable.Samples.TBF.Multiplayer

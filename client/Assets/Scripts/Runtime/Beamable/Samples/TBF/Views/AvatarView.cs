@@ -1,6 +1,6 @@
-﻿using Beamable.Samples.TBF.Audio;
+﻿using Beamable.Samples.Core.Audio;
+using Beamable.Samples.Core.Exceptions;
 using Beamable.Samples.TBF.Data;
-using Beamable.Samples.TBF.Exceptions;
 using UnityEngine;
 
 namespace Beamable.Samples.TBF.Views

@@ -1,11 +1,11 @@
-﻿using Beamable.Samples.TBF.Audio;
-using Beamable.Samples.TBF.Data;
+﻿using Beamable.Samples.TBF.Data;
 using Beamable.Samples.TBF.Multiplayer;
 using Beamable.Samples.TBF.Multiplayer.Events;
 using Beamable.Samples.TBF.Views;
 using System;
+using Beamable.Samples.Core.Audio;
+using Beamable.Samples.Core.UI;
 using UnityEngine;
-using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 
 namespace Beamable.Samples.TBF
 {
@@ -121,7 +121,7 @@ namespace Beamable.Samples.TBF
             }
             catch (Exception)
             {
-               SetStatusText(TBFHelper.InternetOfflineInstructionsText, BufferedTextMode.Immediate);
+               SetStatusText(TBFHelper.InternetOfflineInstructionsText, TMP_BufferedText.BufferedTextMode.Immediate);
             }
          });
       }
@@ -131,7 +131,7 @@ namespace Beamable.Samples.TBF
       /// </summary>
       /// <param name="message"></param>
       /// <param name="statusTextMode"></param>
-      public void SetStatusText(string message, BufferedTextMode statusTextMode)
+      public void SetStatusText(string message, TMP_BufferedText.BufferedTextMode statusTextMode)
       {
          _gameUIView.BufferedText.SetText(message, statusTextMode);
       }
@@ -240,7 +240,7 @@ namespace Beamable.Samples.TBF
 
          SetStatusText(string.Format(TBFConstants.StatusText_Multiplayer_OnDisconnect,
             _multiplayerSession.PlayerDbidsCount.ToString(),
-            _multiplayerSession.TargetPlayerCount), BufferedTextMode.Immediate);
+            _multiplayerSession.TargetPlayerCount), TMP_BufferedText.BufferedTextMode.Immediate);
 
          await _gameStateHandler.SetGameState(GameState.GameEnded);
       }

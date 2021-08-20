@@ -1,9 +1,9 @@
-﻿using Beamable.Samples.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+using Beamable.Samples.Core.Components;
 using UnityEngine;
 
-namespace Beamable.Samples.TBF.Audio
+namespace Beamable.Samples.Core.Audio
 {
 	/// <summary>
 	/// Maintain a list of AudioSources and play the next 
@@ -125,20 +125,17 @@ namespace Beamable.Samples.TBF.Audio
 					audioSource.clip = audioClip;
 					audioSource.pitch = pitch;
 					if (delay == UnsetFloat)
-               {
+					{
 						audioSource.Play();
 					}
 					else
-               {
+					{
 						//delay in seconds
 						audioSource.PlayDelayed(delay);
 					}
-					
 					return;
 				}
 			}
 		}
-
-
 	}
 }

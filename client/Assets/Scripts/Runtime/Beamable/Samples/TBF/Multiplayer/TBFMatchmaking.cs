@@ -1,5 +1,6 @@
 ﻿using Beamable.Common.Content;
 using Beamable.Experimental.Api.Matchmaking;
+using Beamable.Samples.Core.Multiplayer;
 
 namespace Beamable.Samples.TBF.Multiplayer
 {

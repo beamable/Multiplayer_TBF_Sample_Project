@@ -1,6 +1,6 @@
-﻿using Beamable.Samples.TBF.Animation;
-using Beamable.Samples.TBF.Data;
+﻿using Beamable.Samples.TBF.Data;
 using System.Collections.Generic;
+using Beamable.Samples.Core.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

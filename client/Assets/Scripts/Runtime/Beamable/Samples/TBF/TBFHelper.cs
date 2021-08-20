@@ -2,7 +2,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using Beamable.Samples.TBF.Audio;
+using Beamable.Samples.Core.Audio;
 using UnityEngine.SceneManagement;
 
 namespace Beamable.Samples.TBF

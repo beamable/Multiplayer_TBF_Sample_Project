@@ -4,8 +4,9 @@ using Beamable.Samples.TBF.Views;
 using System;
 using System.Collections;
 using Beamable.Common.Content;
+using Beamable.Samples.Core.Multiplayer;
+using Beamable.Samples.Core.UI;
 using UnityEngine;
-using static Beamable.Samples.TBF.UI.TMP_BufferedText;
 using SimGameTypeRef = Beamable.Common.Content.SimGameTypeRef;
 
 namespace Beamable.Samples.TBF
@@ -51,7 +52,7 @@ namespace Beamable.Samples.TBF
          var text = string.Format(TBFConstants.StatusText_Joining, 0,
             RuntimeDataStorage.Instance.TargetPlayerCount);
 
-         _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Immediate);
+         _lobbyUIView.BufferedText.SetText(text, TMP_BufferedText.BufferedTextMode.Immediate);
 
          SetupBeamable();
       }
@@ -102,7 +103,7 @@ namespace Beamable.Samples.TBF
          catch (Exception)
          {
             _lobbyUIView.BufferedText.SetText(TBFHelper.InternetOfflineInstructionsText,
-               BufferedTextMode.Queue);
+               TMP_BufferedText.BufferedTextMode.Queue);
          }
       }
 
@@ -135,7 +136,7 @@ namespace Beamable.Samples.TBF
             myMatchmakingResult.Players.Count,
             myMatchmakingResult.PlayerCountMax);
 
-         _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Queue);
+         _lobbyUIView.BufferedText.SetText(text, TMP_BufferedText.BufferedTextMode.Queue);
       }
 
 
@@ -147,7 +148,7 @@ namespace Beamable.Samples.TBF
                myMatchmakingResult.Players.Count,
                myMatchmakingResult.PlayerCountMax);
 
-            _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Queue);
+            _lobbyUIView.BufferedText.SetText(text, TMP_BufferedText.BufferedTextMode.Queue);
 
             DebugLog($"MyMatchmaking_OnComplete() " +
                $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.PlayerCountMax} " +
@@ -176,7 +177,7 @@ namespace Beamable.Samples.TBF
                myMatchmakingResult.PlayerCountMax,
                matchmaking.MyMatchmakingResult.ErrorMessage);
 
-            _lobbyUIView.BufferedText.SetText(text, BufferedTextMode.Immediate);
+            _lobbyUIView.BufferedText.SetText(text, TMP_BufferedText.BufferedTextMode.Immediate);
 
             DebugLog($"MyMatchmaking_OnComplete() " +
                      $"Players={myMatchmakingResult.Players.Count}/{myMatchmakingResult.PlayerCountMax} " +

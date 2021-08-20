@@ -1,5 +1,4 @@
-﻿using Beamable.Samples.TBF.Exceptions;
-using Beamable.Samples.TBF.Multiplayer.Events;
+﻿using Beamable.Samples.TBF.Multiplayer.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;

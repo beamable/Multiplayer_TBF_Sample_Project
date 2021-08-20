@@ -1,9 +1,9 @@
-﻿using Beamable.Samples.TBF.Exceptions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Beamable.Samples.Core.Exceptions;
 using TMPro;
 using UnityEngine;
 
-namespace Beamable.Samples.TBF.UI
+namespace Beamable.Samples.Core.UI
 {
    /// <summary>
    /// Wraps a <see cref="TMP_Text"/>. Allows game makers to 
