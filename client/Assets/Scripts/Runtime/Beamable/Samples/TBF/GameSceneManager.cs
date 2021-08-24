@@ -219,7 +219,6 @@ namespace Beamable.Samples.TBF
       {
          BindPlayerDbidToEvents(playerDbid, true);
 
-         Debug.Log($"CHECK {_multiplayerSession.PlayerDbidsCount} < {_multiplayerSession.TargetPlayerCount}");
          if (_multiplayerSession.PlayerDbidsCount < _multiplayerSession.TargetPlayerCount)
          {
             await _gameStateHandler.SetGameState (GameState.Connecting);

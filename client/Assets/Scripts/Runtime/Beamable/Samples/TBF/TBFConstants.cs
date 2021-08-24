@@ -13,7 +13,7 @@ namespace Beamable.Samples.TBF
       /// <summary>
       /// Determines if using Unity debug log statements.
       /// </summary>
-      public static bool IsDebugLogging = true;
+      public static bool IsDebugLogging = false;
 
       /// <summary>
       /// Toggle various modes for AI testing
