@@ -35,7 +35,7 @@ namespace Beamable.Samples.TBF
       [SerializeField]
       private SimGameTypeRef _twoPlayerSimGameTypeRef;
 
-      private IBeamableAPI _beamableAPI;
+      private BeamContext _beamContext;
       private TBFMatchmaking matchmaking;
 
       //  Unity Methods   ------------------------------
@@ -67,6 +67,9 @@ namespace Beamable.Samples.TBF
       //  Other Methods   ------------------------------
       private async void SetupBeamable()
       {
+         _beamContext = BeamContext.Default;
+         await _beamContext.OnReady;
+         
          SimGameType simGameType;
 
          if (RuntimeDataStorage.Instance.TargetPlayerCount == 1)
@@ -82,12 +85,10 @@ namespace Beamable.Samples.TBF
             throw new Exception("Codepath is never intended.");
          }
 
-         var beamable = await Beamable.API.Instance;
-         _beamableAPI = beamable;
          RuntimeDataStorage.Instance.IsMatchmakingComplete = false;
 
-         matchmaking = new TBFMatchmaking(beamable.Experimental.MatchmakingService, simGameType,
-            _beamableAPI.User.id);
+         matchmaking = new TBFMatchmaking(_beamContext.Api.Experimental.MatchmakingService, simGameType,
+            _beamContext.PlayerId);
          matchmaking.OnProgress.AddListener(MyMatchmaking_OnProgress);
          matchmaking.OnComplete.AddListener(MyMatchmaking_OnComplete);
          matchmaking.OnError.AddListener(MyMatchmaking_OnError);
@@ -100,10 +101,11 @@ namespace Beamable.Samples.TBF
          {
             await matchmaking.StartMatchmaking();
          }
-         catch (Exception)
+         catch (Exception e)
          {
             _lobbyUIView.BufferedText.SetText(TBFHelper.InternetOfflineInstructionsText,
                TMP_BufferedText.BufferedTextMode.Queue);
+            Debug.LogError(e);
          }
       }
 

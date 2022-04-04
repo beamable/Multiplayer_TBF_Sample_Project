@@ -7,15 +7,11 @@ namespace Beamable.Samples.TBF.Data
    /// Store the common configuration for easy editing ats
    /// EditTime and RuntTime with the Unity Inspector Window.
    /// </summary>
-   [CreateAssetMenu(
-      fileName = Title,
-      menuName = BeamableConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_SAMPLES + "/" +
-      "Multiplayer/Create New " + Title,
-      order = BeamableConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_ORDER_1)]
+   [CreateAssetMenu(fileName = Title, menuName = "Beamable/Samples/Multiplayer/Create New " + Title, order = 0)]
    public class Configuration : ScriptableObject
    {
       //  Constants  -----------------------------------
-      private const string Title = "TFB Configuration";
+      private const string Title = "TBF Configuration";
 
       //  Properties -----------------------------------
       public string IntroSceneName { get { return _introSceneName; } }
@@ -23,9 +19,6 @@ namespace Beamable.Samples.TBF.Data
       public string LobbySceneName { get { return _lobbySceneName; } }
       public float DelayBeforeLoadScene { get { return _delayBeforeLoadScene; } }
       public float DelayFadeInUI { get { return _delayFadeInUI; } }
-      public float DelayGameBeforeMove { get { return _delayGameBeforeMove; } }
-      public float DelayGameMaxDuringMove { get { return _delayGameMaxDuringMove; } }
-      public float DelayGameAfterMove { get { return _delayGameAfterMove; } }
       public float DelayBeforeSoundAttack_01a { get { return _delayBeforeSoundAttack_01a; } }
       public float DelayBeforeSoundAttack_01b { get { return _delayBeforeSoundAttack_01b; } }
       public float DelayBeforeSoundAttack_02a { get { return _delayBeforeSoundAttack_02a; } }
@@ -34,12 +27,6 @@ namespace Beamable.Samples.TBF.Data
       public float DelayGameBeforeGameOver { get { return _delayGameBeforeGameOver; } }
       public List<AvatarData> AvatarDatas { get { return _avatarDatas; } }
       public int GameRoundsTotal { get { return _gameRoundsTotal; } }
-      public int TargetPlayerCount { get { return _targetPlayerCount; } }
-
-      /// <summary>
-      /// Duration in seconds
-      /// </summary>
-      public float StatusMessageMinDuration { get { return _statusMessageMinDuration; } }
 
 
       //  Fields ---------------------------------------
