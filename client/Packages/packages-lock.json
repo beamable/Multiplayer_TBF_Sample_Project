@@ -11,15 +11,6 @@
       },
       "url": "https://nexus.beamable.com/nexus/content/repositories/unity"
     },
-    "com.beamable.server": {
-      "version": "1.0.8",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.beamable": "1.0.8"
-      },
-      "url": "https://nexus.beamable.com/nexus/content/repositories/unity"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
