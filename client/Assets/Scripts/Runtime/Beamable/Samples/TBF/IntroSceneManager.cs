@@ -25,7 +25,7 @@ namespace Beamable.Samples.TBF
       [SerializeField]
       private Configuration _configuration = null;
 
-      private IBeamableAPI _beamableAPI = null;
+      private BeamContext _beamContext = null;
       private bool _isConnected = false;
       private bool _isBeamableSDKInstalled = false;
       private string _isBeamableSDKInstalledErrorMessage = "";
@@ -41,13 +41,10 @@ namespace Beamable.Samples.TBF
       }
 
 
-      protected void OnDestroy()
+      protected async void OnDestroy()
       {
-         Beamable.API.Instance.Then(de =>
-         {
-            _beamableAPI = null;
-            de.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
-         });
+         _beamContext.Api.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
+         await _beamContext.ClearPlayerAndStop();
       }
 
 
@@ -56,34 +53,30 @@ namespace Beamable.Samples.TBF
       /// <summary>
       /// Login with Beamable and fetch user/session information
       /// </summary>
-      private void SetupBeamable()
+      private async void SetupBeamable()
       {
-         // Attempt Connection to Beamable
-         Beamable.API.Instance.Then(de =>
+         try
          {
-            try
+            _beamContext = BeamContext.Default;
+            await _beamContext.OnReady;
+            _isBeamableSDKInstalled = true;
+            
+            // Handle any changes to the internet connectivity
+            _beamContext.Api.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
+            ConnectivityService_OnConnectivityChanged(_beamContext.Api.ConnectivityService.HasConnectivity);
+            
+            if (IsDemoMode)
             {
-               _beamableAPI = de;
-               _isBeamableSDKInstalled = true;
-
-               // Handle any changes to the internet connectivity
-               _beamableAPI.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
-               ConnectivityService_OnConnectivityChanged(_beamableAPI.ConnectivityService.HasConnectivity);
-
-               if (IsDemoMode)
-               {
-                  //Set my player's name
-                  //MockDataCreator.SetCurrentUserAlias(_beamableAPI.Stats, "This_is_you:)");
-               }
+               //Set my player's name
+               //MockDataCreator.SetCurrentUserAlias(_beamableAPI.Stats, "This_is_you:)");
             }
-            catch (Exception e)
-            {
-               // Failed to connect (e.g. not logged in)
-               _isBeamableSDKInstalled = false;
-               _isBeamableSDKInstalledErrorMessage = e.Message;
-               ConnectivityService_OnConnectivityChanged(false);
-            }
-         });
+         }
+         catch (Exception e)
+         {
+            _isBeamableSDKInstalled = false;
+            _isBeamableSDKInstalledErrorMessage = e.Message;
+            ConnectivityService_OnConnectivityChanged(false);
+         }
       }
 
 
@@ -95,7 +88,7 @@ namespace Beamable.Samples.TBF
          long dbid = 0;
          if (_isConnected)
          {
-            dbid = _beamableAPI.User.id;
+            dbid = _beamContext.PlayerId;
          }
 
          string aboutBodyText = TBFHelper.GetIntroAboutBodyText(

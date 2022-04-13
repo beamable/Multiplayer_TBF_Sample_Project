@@ -21,14 +21,14 @@ namespace Beamable.Samples.TBF.Multiplayer
       //  Properties -----------------------------------
       public bool IsEnabled { get { return _isEnabled; } }
 
-      public readonly long RemotePlayerDbid = -999999999; //conspicous, fake dbid for production usage
+      public readonly long RemotePlayerDbid = -999999999; //conspicuous, fake dbid for production usage
 
       //  Fields ---------------------------------------
       private bool _isEnabled = false;
 
       /// <summary>
       /// A custom Random is used for deterministic results for all
-      /// players. This is a best practice for Beamable Multplayer.
+      /// players. This is a best practice for Beamable Multiplayer.
       /// </summary>
       private System.Random _random;
 

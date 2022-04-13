@@ -41,7 +41,7 @@ namespace Beamable.Samples.TBF
       [SerializeField]
       private GameUIView _gameUIView = null;
 
-      private IBeamableAPI _beamableAPI = null;
+      private BeamContext _beamContext;
       private TBFMultiplayerSession _multiplayerSession;
       private GameProgressData _gameProgressData;
       private RemotePlayerAI _remotePlayerAI;
@@ -90,40 +90,38 @@ namespace Beamable.Samples.TBF
       {
          await _gameStateHandler.SetGameState(GameState.Loading);
 
-         await Beamable.API.Instance.Then(async de =>
+         _beamContext = BeamContext.Default;
+         await _beamContext.OnReady;
+
+         await _gameStateHandler.SetGameState(GameState.Loaded);
+         try
          {
-            await _gameStateHandler.SetGameState (GameState.Loaded);
-
-            try
+            if (!RuntimeDataStorage.Instance.IsMatchmakingComplete)
             {
-               _beamableAPI = de;
-
-               if (!RuntimeDataStorage.Instance.IsMatchmakingComplete)
-               {
-                  DebugLog($"Scene '{gameObject.scene.name}' was loaded directly. That is ok. Setting defaults.");
-                  RuntimeDataStorage.Instance.LocalPlayerDbid = _beamableAPI.User.id;
-                  RuntimeDataStorage.Instance.TargetPlayerCount = 1;
-                  RuntimeDataStorage.Instance.MatchId = TBFMatchmaking.GetRandomMatchId();
-               }
-
-               _multiplayerSession = new TBFMultiplayerSession(
-                  RuntimeDataStorage.Instance.LocalPlayerDbid,
-                  RuntimeDataStorage.Instance.TargetPlayerCount,
-                  RuntimeDataStorage.Instance.MatchId) ;
-
-               await _gameStateHandler.SetGameState(GameState.Initializing);
-
-               _multiplayerSession.OnInit += MultiplayerSession_OnInit;
-               _multiplayerSession.OnConnect += MultiplayerSession_OnConnect;
-               _multiplayerSession.OnDisconnect += MultiplayerSession_OnDisconnect;
-               _multiplayerSession.Initialize();
-
+               DebugLog($"Scene '{gameObject.scene.name}' was loaded directly. That is ok. Setting defaults.");
+               RuntimeDataStorage.Instance.LocalPlayerDbid = _beamContext.PlayerId;
+               RuntimeDataStorage.Instance.TargetPlayerCount = 1;
+               RuntimeDataStorage.Instance.MatchId = TBFMatchmaking.GetRandomMatchId();
             }
-            catch (Exception)
-            {
-               SetStatusText(TBFHelper.InternetOfflineInstructionsText, TMP_BufferedText.BufferedTextMode.Immediate);
-            }
-         });
+
+            _multiplayerSession = new TBFMultiplayerSession(
+               RuntimeDataStorage.Instance.LocalPlayerDbid,
+               RuntimeDataStorage.Instance.TargetPlayerCount,
+               RuntimeDataStorage.Instance.MatchId);
+
+            await _gameStateHandler.SetGameState(GameState.Initializing);
+
+            _multiplayerSession.OnInit += MultiplayerSession_OnInit;
+            _multiplayerSession.OnConnect += MultiplayerSession_OnConnect;
+            _multiplayerSession.OnDisconnect += MultiplayerSession_OnDisconnect;
+            _multiplayerSession.Initialize();
+
+         }
+         catch (Exception e)
+         {
+            SetStatusText(TBFHelper.InternetOfflineInstructionsText, TMP_BufferedText.BufferedTextMode.Immediate);
+            Debug.LogError(e);
+         }
       }
 
       /// <summary>

@@ -54,7 +54,8 @@ namespace Beamable.Samples.TBF.Multiplayer
       public void Initialize()
       {
          // Create Multiplayer Session
-         _simClient = new SimClient(new SimNetworkEventStream(_roomId),
+         var dependencyProvider = BeamContext.Default.ServiceProvider;
+         _simClient = new SimClient(new SimNetworkEventStream(_roomId, dependencyProvider),
             FramesPerSecond, TargetNetworkLead);
 
          // Handle Common Events
