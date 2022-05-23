@@ -31,6 +31,6 @@ MonoBehaviour:
     Value: 0
   matchingIntervalSecs:
     HasValue: 1
-    Value: 30
+    Value: 5
   leaderboardUpdates: []
   rewards: []
