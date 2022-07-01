@@ -14,7 +14,7 @@ namespace Beamable.Samples.TBF
 
       /// <summary>
       /// Determines if we are demo mode. Demo mode does several operations
-      /// which are not recommended in a production project including 
+      /// which are not recommended in a production project including
       /// creating mock data for the game.
       /// </summary>
       private static bool IsDemoMode = true;
@@ -44,7 +44,7 @@ namespace Beamable.Samples.TBF
       protected async void OnDestroy()
       {
          _beamContext.Api.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
-         await _beamContext.ClearPlayerAndStop();
+         await _beamContext.Stop();
       }
 
 
@@ -60,11 +60,11 @@ namespace Beamable.Samples.TBF
             _beamContext = BeamContext.Default;
             await _beamContext.OnReady;
             _isBeamableSDKInstalled = true;
-            
+
             // Handle any changes to the internet connectivity
             _beamContext.Api.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
             ConnectivityService_OnConnectivityChanged(_beamContext.Api.ConnectivityService.HasConnectivity);
-            
+
             if (IsDemoMode)
             {
                //Set my player's name
@@ -92,9 +92,9 @@ namespace Beamable.Samples.TBF
          }
 
          string aboutBodyText = TBFHelper.GetIntroAboutBodyText(
-            _isConnected, 
-            dbid, 
-            _isBeamableSDKInstalled, 
+            _isConnected,
+            dbid,
+            _isBeamableSDKInstalled,
             _isBeamableSDKInstalledErrorMessage);
 
          _introUIView.AboutBodyText = aboutBodyText;
@@ -146,6 +146,6 @@ namespace Beamable.Samples.TBF
             Application.Quit();
          }
       }
-      
+
    }
 }
