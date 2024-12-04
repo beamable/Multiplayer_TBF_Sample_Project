@@ -4,11 +4,11 @@ using Beamable.Samples.TBF.Multiplayer.Events;
 using Beamable.Samples.TBF.Views;
 using System;
 using System.Threading.Tasks;
+using Beamable.Common;
 using Beamable.Samples.Core.Audio;
 using Beamable.Samples.Core.Exceptions;
 using Beamable.Samples.Core.UI;
 using Beamable.Samples.Core.Utilities;
-using UnityAsync;
 using UnityEngine;
 using static Beamable.Samples.TBF.Data.GameProgressData;
 
@@ -202,7 +202,7 @@ namespace Beamable.Samples.TBF
                   while (_gameSceneManager.GameUIView.BufferedText.HasRemainingQueueText)
                   {
                      // Wait for old messages to pass before allowing button clicks
-                     await Await.NextUpdate();
+                     await Task.Delay(100);
                   }
                   _gameSceneManager.GameUIView.MoveButtonsCanvasGroup.interactable = true;
 
@@ -307,7 +307,7 @@ namespace Beamable.Samples.TBF
                         while (_gameSceneManager.GameUIView.BufferedText.HasRemainingQueueText)
                         {
                            // Wait for old messages to pass before allowing button clicks
-                           await Await.NextUpdate();
+                           await Task.Delay(100);
                         }
 
                         await SetGameState(GameState.RoundStarting);
@@ -336,7 +336,7 @@ namespace Beamable.Samples.TBF
                   while (_gameSceneManager.GameUIView.BufferedText.HasRemainingQueueText)
                   {
                      // Wait for old messages to pass before allowing button clicks
-                     await Await.NextUpdate();
+                     await Task.Delay(100);
                   }
 
                   // Ex. Do 34 damage for each round of 3 rounds so that 3 hits = total death
@@ -437,6 +437,14 @@ namespace Beamable.Samples.TBF
          }
       }
 
+      private async Promise BusyWait(Func<bool> conditional)
+      {
+         while (!conditional.Invoke())
+         {
+            await Task.Delay(100);
+         }
+      }
+
 
       private async Task RenderPlayerMove(int playerIndex, GameMoveType gameMoveType)
       {
@@ -448,13 +456,13 @@ namespace Beamable.Samples.TBF
          avatarView.PlayAnimationByGameMoveType(gameMoveType);
 
          // 1 Unity needs time to START non-IDLE animation ...
-         await Await.While(() =>
+         await BusyWait(() =>
          {
             return avatarView.IsIdleAnimation;
          });
 
          // 2 Unity needs time to RETURN to the IDLE animation ...
-         await Await.While(() =>
+         await BusyWait(() =>
          {
             return !avatarView.IsIdleAnimation;
          });

@@ -1,5 +1,5 @@
-﻿using DG.Tweening;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Beamable.Samples.Core.Utilities
@@ -24,10 +24,16 @@ namespace Beamable.Samples.Core.Utilities
          foreach (CanvasGroup canvasGroup in canvasGroups)
          {
             // Fade out immediately
-            canvasGroup.DOFade(fromAlpha, 0);
+            foreach (var m in canvasGroup.GetComponent<Renderer>().materials)
+            {
+               m.DOFade(fromAlpha, 0);
+            }
 
             // Fade in slowly
-            canvasGroup.DOFade(toAlpha, duration).SetDelay(delay);
+            foreach (var m in canvasGroup.GetComponent<Renderer>().materials)
+            {
+               m.DOFade(toAlpha, duration).SetDelay(delay);;
+            }
 
             delay += delayDelta;
          }

@@ -1,0 +1,16 @@
+{
+    "name": "Samples.ABC",
+    "rootNamespace": "",
+    "references": [
+        "GUID:09970b082073c425785bbbc4277b69b4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

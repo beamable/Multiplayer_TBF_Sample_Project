@@ -1,0 +1,21 @@
+{
+    "name": "Runtime.Samples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:bec9e071b8bd74037abed99b77129431",
+        "GUID:8096aa2f7644d40f08b1fed854463288",
+        "GUID:3875eb1b681d45e9a92a3633454fd4ca",
+        "GUID:e17286d323c5f4117923b68624a6c13c",
+        "GUID:3140025892ece41f1bca5bdb43c5b512"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
