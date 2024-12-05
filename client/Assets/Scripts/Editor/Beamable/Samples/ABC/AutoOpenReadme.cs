@@ -1,6 +1,6 @@
 ﻿using Beamable.Samples.Core;
-using Beamable.Samples.SampleProjectBase;
 using UnityEditor;
+using Beamable.Samples.SampleProjectBase;
 
 namespace Beamable.Samples.TBF
 {

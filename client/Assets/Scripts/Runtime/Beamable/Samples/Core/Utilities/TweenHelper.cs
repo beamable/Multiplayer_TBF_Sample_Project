@@ -1,5 +1,5 @@
-﻿using DG.Tweening;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Beamable.Samples.Core.Utilities
