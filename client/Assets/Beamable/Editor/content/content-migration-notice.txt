@@ -1,0 +1,7 @@
+# Beamable Content Migration Notice
+On 2025-11-05T10:30:22, the content was migrated from Unity Scriptable Object 
+representation to raw JSON representation. The content now lives in the .beamable/content folder
+for this project. 
+
+If you go to the new Beamable Content Manager, and no longer see the Migration 
+workflow, then you may safely delete the Assets/Beamable/Editor/content folder. 
